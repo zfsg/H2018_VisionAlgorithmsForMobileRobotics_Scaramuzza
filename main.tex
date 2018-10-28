@@ -1,0 +1,1139 @@
+
+\documentclass[10pt,a4paper]{scrartcl}
+
+\usepackage[english]{babel}
+
+\input{../Headerfiles/Packages}
+\input{../Headerfiles/Titles}
+\input{../Headerfiles/Commands}
+\graphicspath{{Pictures/}}
+\parindent 0pt
+
+\title{Vision Algorithms For Mobile Robotics}
+\author{GianAndrea Müller}
+
+\newtheorem{define}{Definition}
+
+\begin{document}
+\begin{multicols*}{4}
+\maketitle
+\tableofcontents
+\end{multicols*}
+
+\begin{multicols*}{2}
+
+\section{Definitions}
+
+\begin{define}
+\textbf{Computer vision} is defined by automatic extraction of meaningful information from images and videos of either semantic or geometric nature.
+\end{define}
+
+\begin{define}
+\textbf{Structure from Motion (SFM)} is more general than VO and tackles the problem of 3D reconstruction and 6DOF pose estimation from unordered images sets.
+\end{define}
+
+\begin{define}
+\textbf{Visual SLAM} is simultaneous localization and mapping. It focuses on a globally consistent estimation by performing loop detection and graph optimization in connection with visual odometry. Worse performance, better accuracy then VO.
+\end{define}
+
+\begin{define}
+\textbf{Visual Odometry (VO)} is the process of incrementally estimating the pose of the vehicle by examining the changes that motion induces on the images of its onboard cameras in real time.
+\end{define}
+
+\begin{define}
+\textbf{Bundle adjustment} is the problem of refining a visual reconstruction to produce jointly optimal
+3D structure and viewing parameter (camera pose and/or calibration) estimates. Optimal means that the parameter estimates are found by minimizing some cost function that quantifies the model fitting
+error, and jointly that the solution is simultaneously optimal with respect to both structure and camera
+variations. The name refers to the ‘bundles’ of light rays leaving each 3D feature and converging on
+each camera centre, which are ‘adjusted’ optimally with respect to both feature and camera positions.
+\end{define}
+
+\begin{define}
+\textbf{Photogrammetry} is the science of making measurements from photographs, especially for recovering the exact positions of surface points.
+\end{define}
+
+\begin{define}
+\textbf{Pose-graph}: a network of nodes and edges where the nodes are robot poses and edges are constraints between poses.
+\end{define}
+
+\begin{define}
+\textbf{Loop closure}: a constraint between the a recent robot pose and a past pose when the robot revisits a previously visited location. Loop closure is highly sensitive to the current estimate of where the robot is. If your current estimate is bad you may not realize you are visiting a previously visited location! There are global loop closure approaches which try to match what the robot sees to everything seen in the past in order to find a closure, such approaches may be computationally expensive.
+\end{define}
+
+\section{Basics VO}
+
+\textbf{Advantages}
+\begin{itemize}
+\item More accurate than wheel odometry.
+\item Not affected by wheel slippage.
+\item Can be used complementary to
+\begin{itemize}
+\item wheel encoders
+\item GPS
+\item inertial measurement units
+\item laser odometry
+\end{itemize}
+\end{itemize}
+
+\textbf{Assumptions}
+\begin{itemize}
+\item sufficient illumination
+\item dominance of static scene
+\item enough texture
+\item sufficient scene overlap
+\end{itemize}
+
+\subsection{Working Principle}
+
+\importname{Homogeneous transformation matrix}{$T_k=\begin{bmatrix}
+R_{k,k-1}&t_{k,k-1}\\
+0&1
+\end{bmatrix}$}
+
+\textbf{Working Principle}
+
+\begin{enumerate}
+\item Compute the relative motion $T_k$ from images $I_{k-1}$ to $I_k$.
+\item Concatenate them to recover the full trajectory:
+
+\mportant{$C_n=C_{n-1}T_n$}
+\item An optimization over the last $m$ poses can be done to refine the trajectory locally (Pose-graph or Bundle adjustment).
+\end{enumerate}
+
+\subsection{How to find $T_k$}
+
+In general:
+
+\important{$T_k = \text{arg}\ \underset{T}{\text{min}}\iint_{\bar{B}}\rho\left[I_k\left(\pi(\mathbf{T}\cdot\pi^{-1}(\mathbf{u},d_\mathbf{u}))\right)-I_{k-1}(\mathbf{u})\right]d\mathbf{u}$}
+
+Direct image alignment
+
+\important{$T_{k,k-1}=\text{arg}\ \underset{T}{\text{min}}\sum\limits_{i}||I_k(\mathbf{u}_i')-I_{k-1}(u_i)||^2_\sigma$}
+
+minimizes the per-pixel intensity difference.
+
+This can be done at different resolutions: dense, semi-dense or sparse.
+
+\section{Image Formation}
+
+\subsection{Pinhole Camera}
+
+Tradeoff between narrowness of the hole and diffraction issues.
+
+\subsection{Converging Lens}
+
+\begin{itemize}
+\item Rays passing through the optical center are not deviated.
+\item All light rays that are parallel to the optical axis converge in the focal point.
+\end{itemize}
+
+\myspic{0.5}{ThinLensEquation}
+
+\importname{Thins lens equation}{$\frac{1}{f}=\frac{1}{z}+\frac{1}{e}$}
+
+\begin{TDefinitionTable*}
+$f$&focal length&$\siu{\meter}$\\
+$z$&distance between image and lens&$\siu{\meter}$\\
+$e$&distance between object and lens&$\siu{\meter}$\\
+\end{TDefinitionTable*}
+
+\myspic{0.5}{BlurCircle}
+
+\importname{Blur Circle Formula}{$R=\frac{L\delta}{2e}$}
+
+If the blur circle radius is smaller than a single pixel on the sensor, distance can no longer be calculated!
+
+\begin{TDefinitionTable*}
+$R$&blur radius&$\siu{\meter}$\\
+$L$&aperture&$\siu{\meter}$\\
+$\delta$&distance from the film&$\siu{\meter}$\\
+\end{TDefinitionTable*}
+
+\subsection{Pin-hole approximation}
+
+If $z\gg f$ and $z>>L$:
+
+\myspic{0.5}{PinholeApproximation}
+
+\important{$f\approx e$}
+
+\textbf{Do not confuse the center of projection and the focal point!}
+
+\importname{Relation between image and object}{$\frac{h'}{h}=\frac{f}{z}\Rightarrow h'=\frac{f}{z}h$}
+
+\importname{Perspective Camera Equations}{$\begin{matrix}
+x'=f\frac{x_c}{z_c}\\y'=f\frac{y_c}{z_c}
+\end{matrix}$}
+
+\subsection{Perspective Projection}
+
+Straight lines remain straight, angles are not preserved!
+
+\vspace{3ex}
+
+All parallel lines in reality intersect in the vanishing point in the projected picture, except for lines that are parallel to the camera plane, for those the vanishing point is infinitely far. All vanishing points lie on the vanishing lines, parallel planes intersect on the vanishing line.
+
+\begin{define}
+\textbf{Depth of Field (DOF)} is the distance between the nearest and farthest objects in a scene that appear acceptably sharp in the image.
+\end{define}
+
+\myspic{0.5}{FieldOfViewFocalLength}
+
+\importname{Relation between field of view and focal length}{$\tan(\frac{\theta}{2})=\frac{W}{2f}\text{ or }f=\frac{W}{2}\left[\tan(\frac{\theta}{2})\right]^{-1}$}
+
+\begin{TDefinitionTable*}
+$O=(u_0,v_0)$&Optical center&$\siu{\meter}\in\mathbb{R}^2$\\
+$k_u,k_v$&scale factors for pixel dimensions&$\left[\frac{pixel}{\si{\meter}}\right]$\\
+$\alpha_u=k_uf,\alpha_v=k_vf$&focal length in pixels&$[pixel]$\\
+\end{TDefinitionTable*}
+
+\important{$\begin{matrix}
+u=u_0+k_ux\Rightarrow u=u_0+\frac{k_ufX_c}{Z_c}\\
+v=v_0+k_vy\Rightarrow y=v_0+\frac{k_vfY_c}{Z_C}
+\end{matrix}$}
+
+Introduction of scale:
+
+\mportant{$p=\begin{pmatrix}
+u\\v
+\end{pmatrix}\Rightarrow\tilde{p}=\begin{bmatrix}
+\tilde{u}\\\tilde{v}\\\tilde{w}
+\end{bmatrix}=\lambda\begin{bmatrix}
+u\\v\\1
+\end{bmatrix}$}
+
+So the equations above can be expressed in matrix form:
+
+\important{$\begin{bmatrix}
+\lambda u\\\lambda v\\\lambda
+\end{bmatrix}=\underbrace{\begin{bmatrix}
+k_uf&0&u_0\\
+0&k_vf&v_0\\
+0&0&1
+\end{bmatrix}}_K\begin{bmatrix}
+X_c\\Y_c\\Z_c
+\end{bmatrix}=\begin{bmatrix}
+\alpha_u&0&u_0\\0&\alpha_v&v_0\\0&0&1
+\end{bmatrix}\begin{bmatrix}
+X_c\\Y_c\\Z_c
+\end{bmatrix}$}
+
+The $K$ matrix consists of the location of the intersection of the optical axis with the image plane $(u_0,v_0)$.
+
+\subsubsection{Summary: Projection of a Point from world coordinates to Pixels}
+
+\begin{enumerate}
+\item Given a point in world coordinates $P_w$ calculate its location in camera coordinates $P_c$ using a homogeneous transformation $T=[R t]$:
+
+\mportant{$\begin{bmatrix}
+X_c\\Y_c\\Z_c\\1
+\end{bmatrix}=\begin{bmatrix}
+R&t
+\end{bmatrix}\begin{bmatrix}
+X_w\\Y_w\\Z_w\\1
+\end{bmatrix}$}
+\item Project the point to the 1 meter image plane to get the \textbf{calibrated} or \textbf{normalized coordinates} $p$:
+
+\mportant{$\begin{bmatrix}
+x\\y
+\end{bmatrix}=\begin{bmatrix}
+\frac{X_c}{Z_c}\\\frac{Y_c}{Z_c}
+\end{bmatrix}$}
+\item Optionally apply lens distortion to get to \textbf{distorted normalized coordinates} $p_d$:
+
+\mportant{$\begin{bmatrix}
+x'\\y'
+\end{bmatrix}=(1+k_1r^2+k_2r^4)\begin{bmatrix}
+x\\y
+\end{bmatrix}$}
+\item Convert the distorted normalized coordinates to ge the discretized pixel coordinates $(u,v)^T$:
+
+\mportant{$\lambda\cdot\begin{bmatrix}
+u\\v\\1
+\end{bmatrix}=K\begin{bmatrix}
+x'\\y'\\1
+\end{bmatrix}$}
+\end{enumerate}
+
+\subsubsection{Summary: Undistoring and image}
+
+\begin{enumerate}
+\item Define all pixel coordinates of the destination image (undistorted image).
+\item Distort those coordinate location.
+\item Measure the image intensity of the source image at the calculated locations.
+\item Map the measured intensities back to the destination image.
+\end{enumerate}
+
+\subsection{Pose determination from $n$ Points (PnP)}
+
+\textbf{How many points are enough?}
+
+\begin{enumerate}
+\item A single point
+
+\myspic{0.5}{OnePoint}
+
+The camera can move along the line of projection. Thus we have infinitely many solutions.
+
+\item Two Points
+
+\myspic{0.5}{TwoPoints}
+
+Since we don't know size and orientation of the line between the two points, the camera position is still undetermined.
+
+Differently formulated the knowing of an angle between two points does not fix the location of the camera:
+
+\myspic{0.4}{InscribedAngle}
+
+\item Three Points
+
+\myspic{0.5}{ThreePoints}
+
+From Carnot's theorem:
+
+\begin{align*}
+s_1^2&=L_B^2+L_C^2-2L_BL_C\cos(\theta_{BC})\\
+s_2^2&=L_A^2+L_C^2-2L_AL_C\cos(\theta_{AC})\\
+s_3^2&=L_A^2+L_B^2-2L_AL_B\cos(\theta_{AB})\\
+\end{align*}
+
+A system of polynomial equations in $n$ unknowns can have no more solutions than the product of their respective degrees. In this case: $8$. Since all terms are constant or quadratic half of the solutions are negative and thus invalid. This leaves us with a total of four valid solutions. \textbf{A forth point disambiguates these solutions.}
+
+\end{enumerate}
+
+\subsection{Camera Calibration: Direct Linear Transform (DLT)} \label{sec:DLT}
+
+Estimate \textbf{intrinsic} and \textbf{extrinsic} parameters.
+
+Find the projection matrix $m$ as
+
+\begin{equation*}
+M = K[R|T]
+\end{equation*}
+
+Which can be used as follows:
+
+\begin{equation*}
+\begin{bmatrix}
+\tilde{u}\\
+\tilde{v}\\
+\tilde{w}\\
+\end{bmatrix}=
+\begin{bmatrix}
+m_1^T\\
+m_2^T\\
+m_3^T\\
+\end{bmatrix}
+\begin{bmatrix}
+X_w\\
+Y_w\\
+Z_w\\
+1
+\end{bmatrix}
+\end{equation*}
+
+where $m_i^T$ are the rows of the projection matrix $M$.
+
+Now assume that $P=\begin{bmatrix}
+X_w\\Y_w\\Z_w\\1
+\end{bmatrix}$
+
+And project the whole equation to pixel coordinates using
+
+\begin{align*}
+u=&\frac{\tilde{u}}{\tilde{w}}=\frac{m_1^T\cdot P}{m_3^T\cdot P}\\
+v=&\frac{\tilde{v}}{\tilde{w}}=\frac{m_2^Tcdot P}{m_3^T\cdot P}
+\end{align*}
+
+thus
+
+\begin{align*}
+(m_1^T-u_im_3^T)\cdot P_i&=0\\
+(m_2^T-v_im_3^T)\cdot P_i&=0
+\end{align*}
+
+By re-arranging and writing in matrix form:
+
+\begin{equation*}
+\underbrace{
+\begin{bmatrix}
+P_1^T&0^T&-u_1P_1^T\\
+0^T&P_1^T&-v_1P_1^T\\
+\vdots&\cdots&\vdots\\
+P_n^T&0^T&-u_nP_n^T\\
+0^T&P_n^T&-v_nP_n^T
+\end{bmatrix}}_Q
+\underbrace{\begin{bmatrix}
+m_1\\m_2\\m_3
+\end{bmatrix}}_M=
+\begin{bmatrix}
+0\\0\\\vdots\\0\\0
+\end{bmatrix}
+\end{equation*}
+
+where $Q$ can be written out as
+
+\setcounter{MaxMatrixCols}{20}
+\begin{equation*}
+Q=\begin{bmatrix}
+X_w^1&Y_w^1&Z_w^1&1&0&0&0&0&-u_1X_w^1&-u_1Y_w^1&-u_1Z_w^1&-u_1\\
+0&0&0&0&X_w^1&Y_w^1&Z_w^1&1&-v_1X_w^1&-v_1Y_w^1&-v_1Z_w^1&-v_1\\
+\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+X_w^n&Y_w^n&Z_w^n&1&0&0&0&0&-u_nX_w^n&-u_nY_w^n&-u_nZ_w^n&-u_n\\
+0&0&0&0&X_w^n&Y_w^n&Z_w^n&1&-v_nX_w^n&-v_nY_w^n&-v_nZ_w^n&-v_n
+\end{bmatrix}
+\end{equation*}
+
+and $M$ can be written out as
+
+\begin{tiny}
+\begin{equation*}
+M=\begin{bmatrix}
+m_{11}&m_{12}&m_{13}&m_{14}&
+m_{21}&m_{22}&m_{23}&m_{24}&
+m_{31}&m_{32}&m_{33}&m_{34}&
+m_{41}&m_{42}&m_{43}&m_{44}
+\end{bmatrix}^T
+\end{equation*}
+\end{tiny}
+
+For a minimal solution, the matrix $Q_{(2nx12)}$ should have at least rank 11 in order to have a unique (up to scale), non-trivial solution $M$. Since each 3D-to-2D correspondence provides 2 independent equations we need at least $5+\frac{1}{2}$ point correspondences, thus $6$.
+
+For an over-determined solution we can minimize the squarred error $QM$ subject to $||M||^2=1$.
+
+For maltab :\verb+[U,S,V] = svd(Q); M = V(:,12);+
+
+\vspace{3ex}
+
+Once $M$ is known the intrinsic and extrinsic parameters can be calculated using:
+
+\mportant{$M=K(R|T)$}
+
+\textbf{Degenerate configurations:}
+
+There are certain combinations of 3D-2D correspondences which are degenerate and do not deliver additional information:
+
+\begin{enumerate}
+\item Points lying on a plane and/or along a single line passing through the projection center.
+\item Camera and points on a twisted cubic (i.e. smooth curve in 3D space of degree 3)
+\end{enumerate}
+
+\subsubsection{Camera Calibration from 3D objects}
+
+Given the $M$ matrix we can recover the extrinsic and intrinsic parameters based on:
+
+\mportant{$\begin{bmatrix}
+m_{11}&m_{12}&m_{13}&m_{14}\\
+m_{21}&m_{22}&m_{23}&m_{24}\\
+m_{31}&m_{32}&m_{33}&m_{34}\\
+m_{41}&m_{42}&m_{43}&m_{44}
+\end{bmatrix}=\begin{bmatrix}
+\alpha_u r_{11}+u_0r_{31}&\alpha_u r_{12}+u_0r_{32}&\alpha_ur_{13}+u_0r_{33}&\alpha_ut_1+u_0t_3\\
+\alpha_v r_{21}+v_0r_{31}&\alpha_vt_{22}+v_0r_{32}&\alpha_vr_{23}+v_0r_{33}&\alpha t_2+v_0t_3\\
+r_{31}&r_{32}&r_{33}&t_3
+\end{bmatrix}$}
+
+To enforce that $R\cdot R^T=I$ we can use $QR$ factorization of M, which decomposes $M$ into a $R$(orthogonal), $T$, and upper triangular matrix i.e. $K$.
+
+A 3D calibration example is $Tsai's 1987$:
+
+\begin{enumerate}
+\item Edge detection
+\item Straight line fitting to the detected edges
+\item Intersection of the edges to find the corners
+\item Using more than 6 points, not all in a plane!
+\end{enumerate}
+
+The parameters describing the resulting calibration are:
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|l|}
+$f_y$&$f_x/f_y$&skew&$x_0$&$y_0$&residual\\
+\hline\hline
+1673.3&1.0063&1.39&379.96&305.78&0.365
+\end{tabular}
+\end{center}
+
+\begin{itemize}
+\item The ratio $f_x/f_y$ is not zero since the pixels were not squares.
+\item The skew indicates that the pixels were parallelograms.
+\item Today it can be mostly assumed that $\frac{\alpha_u}{\alpha_v}=1$ and $K_{12}=0$.
+\item The residual is the average reprojection error. Today algorithms are expected to deliver errors about around $0.2$.
+\end{itemize}
+
+\begin{define}
+The \textbf{reprojection error} is computed as the distance (in pixels) between the observed pixel point and the camera-reprojected 3D point.
+\end{define}
+
+\subsubsection{Camera Calibration from 2D objects}
+
+A 2D calibration example, which in contrast requires the points to lie on a plane is Zhang 1999.
+
+\begin{enumerate}
+\item Neglect radial distortion.
+\item All points lie on a plane $\Rightarrow Z_w =0$
+\begin{align*}
+\tilde{p}&=\begin{bmatrix}
+\tilde{u}\\\tilde{v}\\\tilde{w}
+\end{bmatrix}=\lambda\begin{bmatrix}
+u\\v\\1
+\end{bmatrix}=K[R|t]\begin{bmatrix}
+X_w\\Y_w\\0\\1
+\end{bmatrix}\\
+&=\begin{bmatrix}
+\alpha_u&0&u_0\\
+0&\alpha_v&v_0\\
+0&0&1
+\end{bmatrix}\begin{bmatrix}
+r_{11}&r_{12}&r_{13}&t_1\\
+r_{21}&r_{22}&r_{23}&t_2\\
+r_{31}&r_{32}&r_{33}&t_3
+\end{bmatrix}\begin{bmatrix}
+X_w\\Y_w\\0\\1
+\end{bmatrix}\\
+&=\begin{bmatrix}
+\alpha_u&0&u_0\\
+0&\alpha_v&v_0\\
+0&0&1\\
+\end{bmatrix}
+\begin{bmatrix}
+r_{11}&r_{12}&t_1\\
+r_{21}&r_{22}&t_2\\
+r_{31}&r_{32}&t_3\\
+\end{bmatrix}\begin{bmatrix}
+X_w\\Y_w\\1
+\end{bmatrix}\\
+&=\underbrace{\begin{bmatrix}
+h_{11}&h_{12}&h_{13}\\
+h_{21}&h_{22}&h_{23}\\
+h_{31}&h_{32}&h_{33}\\
+\end{bmatrix}}_{\text{Homography}}\begin{bmatrix}
+X_w\\Y_w\\1
+\end{bmatrix}\\
+\begin{bmatrix}
+\tilde{u}\\\tilde{v}\\\tilde{w}
+\end{bmatrix}&=\begin{bmatrix}
+h_1^T\\h_2^T\\h_3^T
+\end{bmatrix}
+\begin{bmatrix}
+X_w\\Y_w\\1
+\end{bmatrix}
+\end{align*}
+
+\item Conversion to pixel coordinates yields:
+
+\begin{align*}
+u&=\frac{\tilde{u}}{\tilde{w}}=\frac{h_1^T\cdot P}{h_3^T\cdot P}\\
+v&=\frac{\tilde{v}}{\tilde{v}}=\frac{h_2^T\cdot P}{h_3^T\cdot P}
+\end{align*}
+
+where $P=(X_w,Y_w,1)^T$, which leads to the two equations of interest:
+
+\begin{align*}
+(h_1^T-u_ih_3^T)\cdot P_i&=0\\
+(h_2^t-v_ih_3^T)\cdot P-i&=0
+\end{align*}
+
+\item By rearranging
+
+\begin{equation*}
+\underbrace{\begin{bmatrix}
+P_1^T&0^T&-u_1 P_1^T\\
+0^T&P_1^T&-v_1P_1^T\\
+\vdots&vdots&\vdots\\
+P_n^t&0^T&-u_nP_n^T\\
+0^T&P_n^T&-v_nP_n^T
+\end{bmatrix}}_{Q \text{ is known}}\underbrace{\begin{bmatrix}
+h_1\\h_2\\h_3
+\end{bmatrix}}_{H \text{ is unkown}}=\begin{bmatrix}
+0\\0\\\vdots\\0\\0
+\end{bmatrix}
+\end{equation*}
+
+\end{enumerate}
+
+\textbf{Minimal solution:}
+
+\begin{itemize}
+\item $Q_{(2n\times 0)}$ should have rank $8$ to have a unique (up to scale) non-trivial solution $H$.
+\item Each point correspondence provides 2 independent solutions, thus at least $4$ \textbf{non-collinear points} is required.
+\item For an overdetermined solution $n>4$ points SVD can deliver a solution.
+\end{itemize}
+
+Having found $H$, $K$ and $[R t]$ can be found making a QR decomposition such that:
+
+\begin{equation*}
+\begin{bmatrix}
+h_{11}&h_{12}&h_{13}\\
+h_{21}&h_{22}&h_{23}\\
+h_{31}&h_{32}&h_{33}\\
+\end{bmatrix}=\begin{bmatrix}\alpha_u&0&u_0\\0&\alpha_v&v_0\\0&0&1\end{bmatrix}\begin{bmatrix}
+r_{11}&r_{12}&t_1\\r_{21}&r_{22}&t_2\\r_{31}&r_{32}&t_3
+\end{bmatrix}
+\end{equation*}
+
+\subsubsection{Types of 2D Transformations}
+
+\myspic{0.7}{Transformations}
+
+\subsubsection{Find the camera pose from 2D-3D correspondences (DLT algorithm)}
+
+\begin{itemize}
+\item Goal: Calculation of $[R|t]$ that satisfy the perspective projection equation:
+
+\mportant{$\begin{bmatrix}
+\tilde{u}\\\tilde{v}\\\tilde{W}
+\end{bmatrix}=\lambda\begin{bmatrix}
+u\\v\\1
+\end{bmatrix}=K[R|t]\begin{bmatrix}
+X_w\\Y_w\\Z_w\\1
+\end{bmatrix}$}
+\item This leads to calculating the solution of $Q\cdot M = 0$, as described in section \ref{sec:DLT}. The following caveats are to be expected:
+\begin{enumerate}
+\item If $M$ solves $Q\cdot M = 0$, $\alpha M$ does as well, thus $M$ is recovered up to an unknown scaling factor.
+\item Remember that $Q$ is built using normalized coordinates, not pixel coordinates!
+\item To solve the overdetermined system of equations the least squares approach is implemented using singular value decomposition. It can be shown that the solution of this problem is the eigenvector corresponding to the smallest eigenvalue of $Q^TQ$, which simply corresponds to the last column of $V$ if $S$, where $Q = USV^T$, has its diagonal entries sorted in descending order. The \verb+svd+ function in matlab provides that.
+
+\begin{verbatim}
+[~,~,V] = svd(Q);
+M = reshape(V(:,12),4,3)';
+\end{verbatim}
+\item To enforce $R$ actually is a unitary matrix, we have to ensure that the $M$ matrix, being a transformation matrix, actually makes a shift in positive $z$ direction, thus $t_z=M_{34}>0$.
+
+\begin{verbatim}
+if M(3,4)<0
+    M=-M; 
+end
+\end{verbatim}
+\item Since the solution of the least squares problem only delivers the approximation of a homogeneous transformation matrix, we cannot be sure that $R$ is actually a rotation matrix in $SO(3)$. To extract the actual rotation matrix from $M$, that is closest to the original estimated $R$, singular value decompositions is used. Hereby $R=USV^T$, which can be made unitary by removing the scaling factors in $S$. Thus $\tilde{R}=UV^T$.
+
+\item Since our solution $M$ might actually be a scaled version $\alpha M$. Now, having found the correct rotation matrix $\tilde{R}$, we can compare it to the original $R$ to find the scale between the two. Thus $\alpha = \frac{||\tilde{R}||}{||R||}$. And the correct homogeneous transformation matrix is found as:
+
+\mportant{$\tilde{M}=[\tilde{R}|\alpha t]$}
+\end{enumerate}
+\end{itemize}
+
+\subsection{Omnidirectional Cameras}
+
+\myspic{1}{Cameras}
+
+Catadioptric cameras come in different versions:
+
+\begin{minipage}{0.45\linewidth}
+\mypic{NonCentral}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\linewidth}
+\mypic{Central}
+\end{minipage}
+
+\begin{define}
+A camera is a \textbf{central catadioptric camera} if the projection is such that there is a single effective viewpoint.
+\end{define}
+
+\textbf{It is important to have a single view point to enable:}
+
+\begin{itemize}
+\item Unwrapping an omnidirectional image into a perspective image.
+\item Transforming image points into normalized vectors on the unit sphere.
+\item Applying standard algorithms valid for perspective geometry.
+\end{itemize}
+
+\subsubsection{Example for central catadioptric lenses}
+
+\mypic{CentralCatadioptrics}
+
+\subsubsection{Equivalence between Perspective and Omnidirectional Model}
+
+\myspic{0.7}{Omnidirectional}
+
+\subsection{Digital Images}
+
+\begin{define}
+
+\textbf{Matlab coordinates:} $[rows,cols]$
+
+\textbf{C/C++ coordinates:} $[cols,rows]$
+\end{define}
+
+\section{Filtering}
+
+\begin{itemize}
+\item A smoothing filter has positive values, always sums up to 1 to preserve the overall brightness of the picture and removes high-frequency contents, is thus a low-pass filter.
+\item A derivative filter has opposite signs, used to get high responses in regions of high contrast, sums to 0 and highlights high frequency components.
+\end{itemize}
+
+\subsection{Types of noise}
+
+\begin{define}
+\textbf{Salt and pepper noise}: random occurences of black and white pixels. Resulting from electromagnetive waves.
+\end{define}
+
+\begin{define}
+\textbf{Impulse noise}: random occurences of white pixels.
+\end{define}
+
+\begin{define}
+\textbf{Gaussian noise}: variations in intensity drawn from a Gaussian distribution. Very useful model for real world sensor noise.
+\end{define}
+
+\subsection{Noise removal}
+
+\begin{itemize}
+\item Moving average filter. Based on the assumption of likeness of close pixels and the assumption of location-independent noise. It is possible to weigh pixels non-uniformly.
+\end{itemize}
+
+\myspic{0.5}{Convolution}
+
+\begin{define}
+\textbf{Convolution} defines the operation needed for the implementation of a moving average filter. One of the sequences is flipped and then slid over the other, multiplying each element with each other element and adding them up. A convolution is noted as $a_\star b$.
+
+Properties: linearity, associativity, commutativity
+\end{define}
+
+A convolution in 2D requires flipping the filter in both dimensions, which is equivalent to a $\SI{180}{\degree}$ rotation. Then the convolution is defined as:
+
+\mportant{$G[x,y]=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kF[x,y]H[x-u,y-v]\qquad G = F\ast H$}
+
+\begin{define}
+The \textbf{cross-correlation} is almost equivalent to a convolution, but does not include a flipping of the filter.
+
+Properties: linearity
+\end{define}
+
+\mportant{$G[x,y]=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kF[x,y]H[x+u,y+v]$}
+
+\subsection{Box filters}
+
+\subsubsection{Moving Average Filter}
+
+\mportname{Unweighted}{$\begin{bmatrix}
+1&1&1\\1&1&1\\1&1&1
+\end{bmatrix}\cdot\frac{1}{9}$}
+
+\mportname{Weighted}{$\begin{bmatrix}
+1&2&1\\2&4&2\\1&2&1
+\end{bmatrix}\frac{1}{16}$}
+
+\subsubsection{Gaussian Filter}
+
+\mportant{$H[u,v]=\frac{1}{2\pi\sigma^2}e^{-\frac{u^2+v^2}{2\sigma^2}}$}
+
+A finely resolving Gaussian filter will not introduce aliasing as a box filter would.
+
+\sbss{\mypic{BoxFilter}}{\mypic{GaussFilter}}
+
+Filter with sharp edges will cause aliasing, since they introduce high frequency contributions. A gaussian filter has the property of being smooth in the image domain as well as in the frequency domain. It does not introduce high frequency contributions.
+
+\textbf{Important parameters:}
+
+\begin{itemize}
+\item Size of the kernel (How large is the box?)
+
+Good choice: 3$\sigma$, since 90\% of the information is contained within that span.
+\item Variance of the filter (How large is sigma $\sigma$)
+The larger the image the more intense the blur.
+
+\end{itemize}
+
+\subsection{Boundary issues}
+
+Ho to treat boundaries when filtering an image?
+
+\begin{itemize}
+\item zero padding (black)
+\item wrap around
+\item copy edge
+\item reflect across edge
+\end{itemize}
+
+\subsection{Median Filter}
+
+A linear smoothing filter will not remove salt and pepper noise, but lead to more corruption of the image. For this reason a median filter is applied.
+
+\myspic{0.5}{MedianFilter}
+
+A median filter preserves sharp transitions but removes small brightness variations.
+
+\subsection{High-Pass Filtering}
+
+To accomplish edge detection it makes sense to consider the first order derivatives of the image. For a 2D function $F(x,y)$ the partial derivative is:
+
+\mportant{$\frac{\partial F(x,y)}{\partial x}=\lim\limits_{\epsilon \rightarrow 0}\frac{F(x+\epsilon,y)-F(x,y)}{\epsilon}$}
+
+For discrete data $\epsilon$ is set to 1.
+
+\mportant{$\frac{\partial F(x,y)}{\partial x}\approx\frac{F(x,+1,y)-F(x,y)}{1}$}
+
+Possibilities of filters implementing that are:
+
+\mportname{Prewitt filter}{$G_x = \begin{bmatrix}
+-1&0&1\\-1&0&1\\-1&0&1
+\end{bmatrix}$ and $G_y = \begin{bmatrix}
+-1&-1&-1\\0&0&0\\1&1&1
+\end{bmatrix}$}
+
+\mportname{Sobel filter}{$G_x=\begin{bmatrix}
+-1&0&1\\-2&0&2\\-1&0&1
+\end{bmatrix}$ and $G_y=\begin{bmatrix}
+-1&-2&-1\\0&0&0\\1&2&1
+\end{bmatrix}$}
+
+Since both direction are needed to represent all intensity changes within the image the gradient is used:
+
+\mportant{$\nabla F = \begin{bmatrix}
+\frac{\partial F}{\partial x},&\frac{\partial F}{\partial y}
+\end{bmatrix}$}
+
+\mportname{Gradient Direction}{$\theta = \tan^{-1}\left(\frac{\frac{\partial F}{\partial y}}{{\frac{\partial F}{\partial x}}}\right)$}
+
+\mportname{Edge strength}{$||\nabla F||=\sqrt{\left(\frac{\partial F}{\partial x}\right)^2+\left(\frac{\partial F}{\partial y}\right)^2}$}
+
+In order for the high pass filter not to pick up noise instead of the edge to be detected, the image needs smoothing before the edge detection. Convolution allows convolution of the two filters which, if using a gaussian for smoothing, is equivalent to filtering by the derivative of a gaussian filter.
+
+\vspace{3ex}
+
+This is implemented by the \textbf{Canny edge-detection algorithm (1986)}.
+
+\begin{enumerate}
+\item Conversion to grayscale.
+\item Application of smoothing and gradient filter. (Derivatives of Gaussian)
+\item Plotting of the edge strength.
+\item Thresholding of the image. Setting all pixels below threshold to zero.
+\item Non-maxima suppression (local-maxima detection) along edge direction.
+\end{enumerate}
+
+\subsection{Laplacian of the Gaussian}
+
+Instead of analysing the first derivative (searching for maxima to find edges) we can take the second derivative and detect the same maximum by finding the zero crossing of the second derivative.
+
+\myspic{0.7}{LaplacianGaussian}
+
+\myspic{0.7}{LaplacianGaussian2}
+
+\section{Point Feature Detection and Matching}
+
+\subsection{Template Matching}
+
+The correlation of a filter (a template) and the image can be used to find the location of the template, as the maximum of the filtered image. The matching will only work though if scale, orientation, illumination and the in general the appearance of the object and the template are similar.
+
+\subsubsection{Similarity Measures}
+
+\begin{define}
+The \textbf{Sum of Absolute Differences (SAD)} is defined as
+
+\mportant{$SAD = \sum\limits_{u=-k}^k\sum\limits_{v=-k}^k|H(u,v)-F(u,v)|$}
+\end{define}
+
+\begin{define}
+The \textbf{Sum of Squared Differences (SSD)} is defined as
+
+\mportant{$SSD=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^k(H(u,v)-F(u,v))^2$}
+\end{define}
+
+SSD is computationally expensive.
+
+\begin{define}
+The \textbf{Normalized Cross Correlation (NCC)} takes values between $-1$ and $+1$ where ($+1$ is taken if the images are identical). It is defined as
+
+\mportant{$NCC=\frac{\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kH(u,v)F(u,v)}{\sqrt{\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kH(u,v)^2}\sqrt{\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kF(u,v)^2}}$}
+\end{define}
+
+To account for illumination differences the mean of each image is subtracted before calculating similarity. This leads to the definition of
+
+\begin{define}
+\textbf{Zero-mean SAD, SSD, NCC}
+
+\mportant{$\mu_H=\frac{\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kH(u,v)}{(2N+1)^2}$}
+
+\important{$ZSAD = \sum\limits_{u=-k}^k\sum\limits_{v=-k}^k|(H(u,v)-\mu_H)-(F(u,v)-\mu_F)|$}
+
+\important{$ZSSD=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^k((H(u,v)-\mu_H)-(F(u,v)-\mu_F))^2$}
+
+The above are note invariant the affine illumination changes, ZNCC is.
+
+\important{$ZNCC=\frac{\sum\limits_{u=-k}^k\sum\limits_{v=-k}^k(H(u,v)-\mu_H)(F(u,v)-\mu_F)}{\sqrt{\sum\limits_{u=-k}^k\sum\limits_{v=-k}^k(H(u,v)-\mu_H)^2}\sqrt{\sum\limits_{u=-k}^k\sum\limits_{v=-k}^k(F(u,v)-\mu_F)^2}}$}
+\end{define}
+
+\begin{define}
+\textbf{Affine intensity changes} are defined as 
+
+\mportant{$I'(x,y) = \alpha I(x,y)+\beta$}
+\end{define}
+
+\subsubsection{Census Transform}
+
+\begin{define}
+The \textbf{Hamming distance} of two strings is the number of bits that are different.
+\end{define}
+
+The census transform maps an image patch to a bit string (value larger than center pixel $\rightarrow 1$ otherwise $\rightarrow 0$) and compares strings using the Hamming distance.
+
+\myspic{0.5}{CensusTransform}
+
+\textbf{Advantages}
+\begin{itemize}
+\item More robust to object-background problem (same object, different background yields less similarity).
+\item No square roots or division required, thus very efficient, especially on FPGA. 
+\item Intensities are considered relative to the center pixel of the patch making it invariant to monotonic intensity changes.
+\end{itemize}
+
+\begin{define}
+\textbf{FPGA} is a field programmable gate array. Thus an  integrated circuit designed to be configured by a customer or a designer after manufacturing.
+\end{define}
+
+\subsection{Feature Matching}
+
+\textbf{Challenges}
+\begin{itemize}
+\item Find distinctive features.
+\item Account for rotations, translations, distortions, color changes, illumination changes, lens-imperfections.
+\item Find the same feature in both images (repeatability).
+\item Match the corresponding points.
+\end{itemize}
+
+\begin{define}
+A \textbf{corner} is defined as the intersection of one or more edges.
+\end{define}
+
+\begin{itemize}
+\item[+] A corner has high localization accuracy (very good for VO)
+\item [-] Less distinctive than a blob.
+\item [\textbf{E}] Harris, Shi-Tomasi, SUSAN, FAST
+\end{itemize}
+
+\begin{define}
+A \textbf{blob} is any other image pattern, which is not a corner, that differs significantly form its neighbours in intensity and texture.
+\end{define}
+
+\begin{itemize}
+\item [-] Has less localization accuracy than a corner.
+\item [+] Blob detectors are better for place recognition.
+\item [+] More distinctive than a corner.
+\item [\textbf{E}] MSER, LOG, DOG (SIFt), SURF, CenSurE
+\end{itemize}
+
+\subsubsection{The Moravec Corner Detector}
+
+\begin{enumerate}
+\item A corner has a significant change in SSD in at least 2 directions and is thus repeatable and distinctive.
+\item Sums of squares of differences of pixels adjacent in each of four directions (horizontal, vertical and two diagonals) over each window are calculated, and the window's interest measure is the minimum of these four sums. This makes sense since a corner is indicated by changes in all directions.
+\end{enumerate}
+
+\myspic{0.5}{Moravec}
+
+\subsubsection{Harris Corner Detector}
+
+\begin{enumerate}
+\item consider the reference patch centered at (x,y) and the shifted windows centered at $(x+\Delta x,y+\delta y)$. The patch has size $P$.
+\item Apply SSD
+\item $I_x=\frac{\partial I(x,y)}{\partial x},\quad I_y=\frac{\partial I(x,y)}{\partial y}$, approximated with first order Taylor:
+
+\mportant{$I(x+\Delta x,y+\Delta y)\approx I(x,y)+I_x(x,y)\Delta x+I_y(x,y)\Delta y$}
+\item Thus SDD can be approximated as
+
+\mportant{$SSD(\Delta x,\Delta y)\approx \sum\limits_{x,y\in P}\left(I_x(x,y)\Delta x+I-y(x,y)\Delta y\right)^2$}
+
+\item This can be written in matrix form:
+
+\mportant{$SSD(\Delta x, \Delta y)\approx\sum\limits_{x,y\in P}\begin{bmatrix}
+\Delta x&\Delta y
+\end{bmatrix}\begin{bmatrix}
+I_x^2&I_xI_y\\I_xI_y&I_y^2
+\end{bmatrix}\begin{bmatrix}
+\Delta x\\\Delta y
+\end{bmatrix}\Rightarrow SSD(\Delta x, \Delta y)\approx \begin{bmatrix}
+\Delta x&\Delta y
+\end{bmatrix}M\begin{bmatrix}
+\Delta x\\\Delta y
+\end{bmatrix}
+$}
+
+where $M=\sum\limits_{x,y\in P}\begin{bmatrix}
+I_x^2&I_xI_y\\I_xI_y&I_y^2
+\end{bmatrix}=\begin{bmatrix}
+\sum I_x^2&\sum I_xI_y\\\sum I_xI_y&\sum I_y^2
+\end{bmatrix}$.
+
+\item For any corner rotated with $\phi$: $M=\begin{bmatrix}
+\cos(\phi)&-\sin(\phi)\\\sin(\phi)&\cos(\phi)
+\end{bmatrix}
+\begin{bmatrix}
+\lambda_1&0\\0&\lambda_2
+\end{bmatrix}
+\begin{bmatrix}
+\cos(\phi)&\sin(\phi)\\-\sin(\phi)&\cos(\phi)
+\end{bmatrix}$
+
+If any $\lambda$ is close to zero there is no corner.
+
+\item Using the singular value decomposition can be used to find $\lambda_i$ directly.
+\item $\lambda_i$ can be used to identify a corner. A corner has been found if the minimum of the two eigenvalues is larger than a certain threshold.
+\item \textbf{Cornerness function} $R=\min(\lambda_1,\lambda,2)$
+
+\item The corner detector using this criterion is called \textbf{Shi-Tomasi} detector.
+\item Alternatively, to avoid the calculation of the eigenvalues, another cornerness function can be defined: $R=\lambda_1-\lambda_2-k(\lambda_1+\lambda_2)^2=\det(M)-k\text{trace}^2(M)$, where $k\in(0.04,0.15)$.
+\end{enumerate}
+
+
+
+\subsection{Scale changes}
+
+\begin{itemize}
+\item Scale changes are difficult to detect using a patch of a defined size.
+\item A possible solution would be rescaling the patch in order to match a feature with itself after a scale change.
+\item To remedy to computational intensity included in testing all $n$ patches for $s$ different scales a possible solution would be to assign a scale to each feature.
+\end{itemize}
+
+\subsection{Automatic Scale Selection}
+
+\begin{itemize}
+\item Idea: Define a function that is invariant to scale changes.
+\item $f(x,y,patch-size)$ would be the candidate function that has a value for each patch size. Now this function has a maximum at a certain patch size, which allows defining the scale of the detected feature.
+\item \textbf{This has to be done for each feature individually!}
+\item After finding the scale of a picture it can be normalized, this reduces the computational effort of finding matches of features in different images can be reduced significantly, since the iteration over patch sizes is not needed anymore.
+\item If there are multiple local maxima, the feature is replicated multiple times at the corresponding scales. The computational effort is still reduced that way.
+\end{itemize}
+
+\subsubsection{How to find that function?}
+
+\begin{itemize}
+\item Convolution with a kernel that highlights edges:
+
+\mportant{$f=Kernel\ast Image$}
+\item The Laplacian of Gaussian kernel is most effective under \textcolor{red}{certain conditions}.
+
+\begin{equation*}
+L\circ G=\nabla G(x,y)
+\end{equation*}
+\item The $L\circ G$ Kernel already includes smoothing.
+\end{itemize}
+
+\subsubsection{How to describe features?}
+
+\begin{itemize}
+\item Idea: Find a feature descriptor that is \textbf{invariant} to geometric and photometric changes.
+\end{itemize}
+
+\subsubsection{How to achieve invariance with Patch descriptors?}
+
+\begin{enumerate}
+\item Re-scaling and De-rotation:
+\begin{enumerate}
+\item Find correct scale using LoG operator.
+\item Rescale the patch.
+\item Find local orientation (Dominant direction of gradient (Harris eigenvectors)).
+\item De-rotate patch through patch warping. $\rightarrow$ Canonical orientation.
+\begin{itemize}
+\item Start with an empty canonical patch.
+\item For each pixel in the destination patch find the corresponding location in the source patch as defined by the \textbf{warping function}.
+\item Interpolate in the source frame to find the intensity in the destination frame.
+\item \textbf{Roto-Translational Warping:} \begin{align*}
+x'&=x\cos\theta-y\sin\theta+a\\y'&=x\sin\theta+y\cos\theta+b
+\end{align*}
+\item \textbf{Affine Warping:} The second moment matrix $M$ can be used to identify the two directions of fastest and slowest change of intensity, which can be used to define an elliptic patch, that is then normalized to a circular patch.
+\mypic{AffineWarping}
+\end{itemize}
+\end{enumerate}
+\item \textbf{Disadvantages:}
+\begin{itemize}
+\item If warping not accurate the matching score decreases significantly.
+\item Computationally expensive.
+\end{itemize}
+\item HOG descriptor (Histogram of Oriented Gradients)
+\begin{enumerate}
+\item Multiply the patch by a Gaussian kernel.
+\item Compute gradients vectors at each pixe.
+\item Build a histogram of gradient orientations, weighted by the gradient magnitudes.
+\item Extract all local maxima and make a descriptor (HOG) for each.
+\item Apply a circular shift to the descriptor such that the detected maximum corresponds with $0$ degrees.
+
+\mypic{HOG} 
+\end{enumerate}
+
+\end{enumerate}
+
+\subsection{SIFT Descriptor}
+
+\begin{enumerate}
+\item Multiply the patch by a Gaussian filter
+\item Divide the patch into 4x4 sub-patches
+\item Compuge HOG (8bins, i.e. 8 directions) for all pixels inside each sub-patch.
+\item Concatenate all HOGs into a single 1D vector. $4x4x8=128$ values.
+\item The descriptor vector $v$ is then normalized such that:
+
+\mportant{$\bar{\vec{v}}=\frac{\vec{v}}{\sqrt{\sum\limits_i^n v_i^2}}$}
+This guarantees invariance to linear illumination changes. Overall the SIFT descriptor is invariant to affine illumination changes.
+\end{enumerate}
+
+\begin{itemize}
+\item [+] Can handle severe viewpoint changes (up to $\SI{50}{\degree}$.
+\item [+] Can handle even non affine changes in illumination (low to bright scenes).
+\item [-] Computationally expensive: 10 frames per second on an i7.
+\end{itemize}
+
+\subsection{SIFT detector}
+
+\textbf{Idea}: Detect keypoints as local extrema over the image as well as over the patch scale, using a Difference of Gaussian (DoG) kernel.
+
+\begin{enumerate}
+\item Incrementally convolve the initial image with Gaussians $G(k^i\sigma)$ to produce blurred images separated by a constant factor $k$ in scale space.
+\begin{enumerate}
+\item Initial Gaussian: $\sigma = 1.6$.
+\item $k$ is chosen. $k=2^{1/s}$ where $s$ is the number of intervals into which each octave of scale space is divided.
+\item For efficiency reasons, when $k^i$ equals 2, the images is downsampled by a factor of 2 and the procedure is repeated again up to 5 octaves. Downsampling and reusing the gaussian kernels is equivalent to increasing $i$ further, but much more computationally efficient.
+\end{enumerate}
+\item Ajdacent blurred images are then subtracted to produce the Difference-of-Gaussian (DoG) images.
+\item Local Maxima a found in the resulting scales (scale = 3 DoGs).
+
+\myspic{0.7}{LocalMaxima}
+
+An efficient approach to that problem is using an image dilation algorithm for detecting maxima. \verb+imdilate(image,mask)+
+
+For a twodimensional peak-search the algorithm using imdilate would do the following:
+
+\begin{enumerate}
+\item Define the mask as: $\begin{bmatrix}
+1&1&1\\1&0&1\\1&1&1
+\end{bmatrix}$.
+\item Then the dilation serves to calculate the neighbouring maximum for each pixel.
+\item Finally the resulting dilated image is compared to the original image. The local maxima are found as \verb+original>filtered+ which in Matlab results in a logical array, where 1s indicate a local maximum. In other words this comparison yields \verb+true+ if the pixel is larger than the maximum of its neighbours.
+\end{enumerate}
+
+In this case the used mask is the 3D equivalent of the mask used above.
+\end{enumerate}
+
+\subsubsection{Summary}
+
+\begin{itemize}
+\item Based on the property of the LoG allowing to recognize features of a certain radius, and on the idea that that radius may be changed by changing the standard deviation of the gaussian curve, one can vary the peak-finding function over the scale by varying $\sigma$. In addition, instead of increasing the radius of the filter, the image size is decreased for the next octave of Gaussians.
+\end{itemize}
+
+\section{Matlab}
+
+%\subsection{Apply Gauss Filter to Image}
+%
+%\begin{TPMatlab}
+%hsize = 20;
+%sigma = 5;
+%h = fspecial('gaussian',hsize,sigma);
+%mesh(h); %To show the filter in 3D
+%imagesc(h); %To show the filter in 2D
+%im = imread('panda.jpg');
+%outim = imfilter(im,h);
+%imshow(outim);
+%\end{TPMatlab}
+%
+%\subsection{Apply Sobel Filter to Image}
+%
+%\begin{TPMatlab}
+%im = imread('lion.jpg');
+%h = fspecial('sobel');
+%outim = imfilter(double(im),h);
+%imagesc(outim);
+%colormap gray;
+%\end{TPMatlab}
+
+\end{multicols*}
+
+\end{document}

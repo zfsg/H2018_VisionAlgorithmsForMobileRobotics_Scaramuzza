@@ -1,0 +1,48 @@
+\select@language {english}
+\contentsline {section}{\numberline {1}Definitions}{2}{section.1}
+\contentsline {section}{\numberline {2}Basics VO}{2}{section.2}
+\contentsline {subsection}{\numberline {2.1}Working Principle}{2}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}How to find $T_k$}{2}{subsection.2.2}
+\contentsline {section}{\numberline {3}Image Formation}{2}{section.3}
+\contentsline {subsection}{\numberline {3.1}Pinhole Camera}{2}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Converging Lens}{3}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}Pin-hole approximation}{3}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Perspective Projection}{3}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Summary: Projection of a Point from world coordinates to Pixels}{4}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}Summary: Undistoring and image}{4}{subsubsection.3.4.2}
+\contentsline {subsection}{\numberline {3.5}Pose determination from $n$ Points (PnP)}{4}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.6}Camera Calibration: Direct Linear Transform (DLT)}{5}{subsection.3.6}
+\contentsline {subsubsection}{\numberline {3.6.1}Camera Calibration from 3D objects}{6}{subsubsection.3.6.1}
+\contentsline {subsubsection}{\numberline {3.6.2}Camera Calibration from 2D objects}{6}{subsubsection.3.6.2}
+\contentsline {subsubsection}{\numberline {3.6.3}Types of 2D Transformations}{7}{subsubsection.3.6.3}
+\contentsline {subsubsection}{\numberline {3.6.4}Find the camera pose from 2D-3D correspondences (DLT algorithm)}{7}{subsubsection.3.6.4}
+\contentsline {subsection}{\numberline {3.7}Omnidirectional Cameras}{7}{subsection.3.7}
+\contentsline {subsubsection}{\numberline {3.7.1}Example for central catadioptric lenses}{8}{subsubsection.3.7.1}
+\contentsline {subsubsection}{\numberline {3.7.2}Equivalence between Perspective and Omnidirectional Model}{8}{subsubsection.3.7.2}
+\contentsline {subsection}{\numberline {3.8}Digital Images}{9}{subsection.3.8}
+\contentsline {section}{\numberline {4}Filtering}{9}{section.4}
+\contentsline {subsection}{\numberline {4.1}Types of noise}{9}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Noise removal}{9}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Box filters}{9}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Moving Average Filter}{9}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}Gaussian Filter}{10}{subsubsection.4.3.2}
+\contentsline {subsection}{\numberline {4.4}Boundary issues}{10}{subsection.4.4}
+\contentsline {subsection}{\numberline {4.5}Median Filter}{10}{subsection.4.5}
+\contentsline {subsection}{\numberline {4.6}High-Pass Filtering}{10}{subsection.4.6}
+\contentsline {subsection}{\numberline {4.7}Laplacian of the Gaussian}{11}{subsection.4.7}
+\contentsline {section}{\numberline {5}Point Feature Detection and Matching}{11}{section.5}
+\contentsline {subsection}{\numberline {5.1}Template Matching}{11}{subsection.5.1}
+\contentsline {subsubsection}{\numberline {5.1.1}Similarity Measures}{11}{subsubsection.5.1.1}
+\contentsline {subsubsection}{\numberline {5.1.2}Census Transform}{12}{subsubsection.5.1.2}
+\contentsline {subsection}{\numberline {5.2}Feature Matching}{12}{subsection.5.2}
+\contentsline {subsubsection}{\numberline {5.2.1}The Moravec Corner Detector}{13}{subsubsection.5.2.1}
+\contentsline {subsubsection}{\numberline {5.2.2}Harris Corner Detector}{13}{subsubsection.5.2.2}
+\contentsline {subsection}{\numberline {5.3}Scale changes}{13}{subsection.5.3}
+\contentsline {subsection}{\numberline {5.4}Automatic Scale Selection}{13}{subsection.5.4}
+\contentsline {subsubsection}{\numberline {5.4.1}How to find that function?}{14}{subsubsection.5.4.1}
+\contentsline {subsubsection}{\numberline {5.4.2}How to describe features?}{14}{subsubsection.5.4.2}
+\contentsline {subsubsection}{\numberline {5.4.3}How to achieve invariance with Patch descriptors?}{14}{subsubsection.5.4.3}
+\contentsline {subsection}{\numberline {5.5}SIFT Descriptor}{14}{subsection.5.5}
+\contentsline {subsection}{\numberline {5.6}SIFT detector}{15}{subsection.5.6}
+\contentsline {subsubsection}{\numberline {5.6.1}Summary}{15}{subsubsection.5.6.1}
+\contentsline {section}{\numberline {6}Matlab}{15}{section.6}
