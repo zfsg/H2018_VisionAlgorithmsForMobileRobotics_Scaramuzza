@@ -25,7 +25,7 @@
 \section{Definitions}
 
 \begin{define}
-\textbf{Computer vision} is defined by automatic extraction of meaningful information from images and videos of either semantic or geometric nature.
+\textbf{Computer vision} is defined as automatic extraction of meaningful information from images and videos of either semantic or geometric nature.
 \end{define}
 
 \begin{define}
@@ -34,6 +34,9 @@
 
 \begin{define}
 \textbf{Visual SLAM} is simultaneous localization and mapping. It focuses on a globally consistent estimation by performing loop detection and graph optimization in connection with visual odometry. Worse performance, better accuracy then VO.
+
+\important{Visual SLAM = 
+VO + Loop detection + graph optimization}
 \end{define}
 
 \begin{define}
@@ -59,6 +62,118 @@ each camera centre, which are ‘adjusted’ optimally with respect to both feat
 \begin{define}
 \textbf{Loop closure}: a constraint between the a recent robot pose and a past pose when the robot revisits a previously visited location. Loop closure is highly sensitive to the current estimate of where the robot is. If your current estimate is bad you may not realize you are visiting a previously visited location! There are global loop closure approaches which try to match what the robot sees to everything seen in the past in order to find a closure, such approaches may be computationally expensive.
 \end{define}
+
+\begin{define}
+\textbf{LIDAR} is used as an acronym for light detection and ranging and describes the process of measuring the distance to a target by illuminating the target with pulsed laser light and measuring the reflected pulses with a sensor.
+\end{define}
+
+\begin{define}
+\textbf{Subpixel accuracy} is description of a point of interest not in terms of its integer pixel position but in terms of where it lies exactly between pixels.
+\end{define}
+
+\begin{define}
+\textbf{Feature based methods} extract a sparse set of features, match them in successive frames, robustly recover camera pose and structure and then refine both through reprojection error minimization.
+\end{define}
+
+\begin{define}
+In contrast to feature-based methods \textbf{direct methods} estimate structure and motion directly from intensity values in the image. Their advantage is the full exploitation of the available information which makes for greater robustness. On the other hand the evaluation of the photometric error more expensive than the calculation of the reprojection error, but the time saved when not finding and matching features makes up for that. 
+\end{define}
+
+\section{Research Collection}
+
+\NewDocumentEnvironment{Paper}{mm} %Used to define variables in an equation
+{
+
+\vspace{0.25ex}
+
+\href{run:./Papers/#2}{#1}
+\begin{em}
+}
+{
+\end{em}
+
+\vspace{0.5ex}
+
+}
+
+\subsection{Direct Image Alignment}
+
+\begin{Paper}{LSD-SLAM (2014 TUM, DE)}{LSD_SLAM_2014_TUM.pdf}
+Large-Scale
+Direct Monocular SLAM
+\end{Paper}
+
+\begin{Paper}{SVO (2014 UZH, CH)}{SVO_2014_UZH.pdf}
+Fast Semi-Direct Monocular Visual Odometry
+\end{Paper}
+
+\begin{Paper}{DTAM (2011 ICL, UK)}{DTAM_2011_ICL.pdf}
+Dense Tracking and Mapping in Real-Time
+\end{Paper}
+
+\subsection{Features}
+
+\begin{Paper}{Harris}{Harris_1988.pdf}
+A combined corner and edge detector
+\end{Paper}
+
+\begin{Paper}{CANNY (1986 IEEE)}{CANNY_1986_IEEE.pdf}
+Canny edge detection
+\end{Paper}
+
+\begin{Paper}{Scale-space theory (1994 CVAP)}{Scale-Space-Theory_1994_CVAP.pdf}
+Scale-space theory: A basic tool for analysing structures a different scales. (Basics for SIFT)
+\end{Paper}
+
+\begin{Paper}{SIFT (2004 IJCV)}{SIFT_2004_IJCV.pdf}
+Distinctive Image Features from Scale-Invariant Keypoints
+\end{Paper}
+
+\begin{Paper}{SIFT Object Recognition (2004)}{SIFT_ObjectRecognition_2004.pdf}
+Object Recognition from Local Scale-Invariant Features
+\end{Paper}
+
+\begin{Paper}{SURF (2006)}{SURF_2006_ECCV.pdf}
+Speeded-Up Robuts Features
+\end{Paper}
+
+\begin{Paper}{FAST detector (2005)}{FAST_2005_ICCV.pdf}
+Fusing Points and Lines for High Performance Tracking
+\end{Paper}
+
+\begin{Paper}{BRIEF descriptor (2010)}{BRIEF_2010_ECCV.pdf}
+Binary Robust Independent Elementary Features
+\end{Paper}
+
+\begin{Paper}{ORB descriptor (2011)}{ORB_2011_ICCV.pdf}
+Oriented FAST and Rotated BRIEF
+\end{Paper}
+
+\begin{Paper}{BRISK descriptor (2011)}{BRISK_2011_ICCV.pdf}
+Binary Robust Invariant Scalable Keypoints
+\end{Paper}
+
+\begin{Paper}{FREAK descriptor (2012)}{FREAK_2012_CVPR.pdf}
+Fast Retina Keypoint
+\end{Paper}
+
+\subsection{Multi View Geometry}
+
+\begin{Paper}{Stereo Rectification (2000)}{Rectification_2000.pdf}
+A Compact Algorithm for Rectification of Stereo Pairs
+\end{Paper}
+
+\begin{Paper}{PTAM (2007 ISMAR)}{PTAM_2007_ISMAR.pdf}
+Parallel Tracking and Mapping for Small AR Workspaces
+\end{Paper}
+
+\begin{Paper}{DSO (2017 PAMI)}{DSO_2017_PAMI.pdf}
+Direct Sparse Odometry
+\end{Paper}
+
+\begin{Paper}{ORB-SLAM (2015 TRO)}{ORB-SLAM_2015_TRO.pdf}
+ORB-SLAM: a Versatile and Accurate Monocular SLAM System
+\end{Paper}
 
 \section{Basics VO}
 
@@ -118,7 +233,7 @@ This can be done at different resolutions: dense, semi-dense or sparse.
 
 \subsection{Pinhole Camera}
 
-Tradeoff between narrowness of the hole and diffraction issues.
+Tradeoff between narrowness of the hole and diffraction issues. Best choice: $\sim \SI{0.35}{\milli\meter}$.
 
 \subsection{Converging Lens}
 
@@ -151,9 +266,11 @@ $\delta$&distance from the film&$\siu{\meter}$\\
 
 \subsection{Pin-hole approximation}
 
-If $z\gg f$ and $z>>L$:
+If $z\gg f$ and $z\gg L$:
 
 \myspic{0.5}{PinholeApproximation}
+
+Thus when focussing on objects at an infinite distance, the image plane lies in the focal plane.
 
 \important{$f\approx e$}
 
@@ -179,20 +296,67 @@ All parallel lines in reality intersect in the vanishing point in the projected 
 
 \myspic{0.5}{FieldOfViewFocalLength}
 
+\begin{TDefinitionTable*}
+$W$ & width of the normalized screen&$\siu{m}$\\
+$\theta$&angle of view&$\siu{\degree}$\\
+\end{TDefinitionTable*}
+
 \importname{Relation between field of view and focal length}{$\tan(\frac{\theta}{2})=\frac{W}{2f}\text{ or }f=\frac{W}{2}\left[\tan(\frac{\theta}{2})\right]^{-1}$}
 
+\subsection{Perspective Camera Model}
+
+\myspic{0.5}{PerspectiveCameraModel}
+
+\begin{enumerate}
+\item Given a point in world coordinates $P_w$ calculate its location in camera coordinates $P_c$ using a homogeneous transformation $T=[R|t]$:
+
+\mportant{$\begin{bmatrix}
+X_c\\Y_c\\Z_c\\1
+\end{bmatrix}=\begin{bmatrix}
+R&t
+\end{bmatrix}\begin{bmatrix}
+X_w\\Y_w\\Z_w\\1
+\end{bmatrix}$}
+
+\myspic{0.5}{PerspectiveCameraModel2}
+
+\item Using similarity of triangles the point in camera frame is projected to the 1 meter image plane to get $p$ in \textbf{calibrated} or \textbf{normalized coordinates}.
+
+\mportant{$\begin{bmatrix}
+x\\y
+\end{bmatrix}=\begin{bmatrix}
+\frac{X_c}{Z_c}\\\frac{Y_c}{Z_c}
+\end{bmatrix}$}
+
+There is a homogeneous form of the same coordinates:
+
+\mportant{$\begin{bmatrix}
+x\\y\\1
+\end{bmatrix}=\begin{bmatrix}
+\frac{X_c}{Z_c}\\\frac{Y_c}{Z_c}\\\frac{Z_c}{Z_c}
+\end{bmatrix}$}
+\item Optionally apply lens distortion to get to \textbf{distorted normalized coordinates} $p_d$:
+
+\mportant{$\begin{bmatrix}
+x'\\y'
+\end{bmatrix}=(1+k_1r^2+k_2r^4)\begin{bmatrix}
+x\\y
+\end{bmatrix}$}
+\item To accomplish the projection of the camera coordinates to the $Z_c$ meter image plane and the transformation to pixel coordinates the following equations are used:
+
+\mportant{$\begin{matrix}
+\tilde{u}=u_0+k_ux\Rightarrow u=u_0+\frac{k_ufX_c}{Z_c}\\
+\tilde{v}=v_0+k_vy\Rightarrow v=v_0+\frac{k_vfY_c}{Z_C}\\
+\tilde{w}=Z_C
+\end{matrix}$}
+
 \begin{TDefinitionTable*}
-$O=(u_0,v_0)$&Optical center&$\siu{\meter}\in\mathbb{R}^2$\\
+$O=(u_0,v_0)$&Image center&$\siu{\meter}\in\mathbb{R}^2$\\
 $k_u,k_v$&scale factors for pixel dimensions&$\left[\frac{pixel}{\si{\meter}}\right]$\\
 $\alpha_u=k_uf,\alpha_v=k_vf$&focal length in pixels&$[pixel]$\\
 \end{TDefinitionTable*}
 
-\important{$\begin{matrix}
-u=u_0+k_ux\Rightarrow u=u_0+\frac{k_ufX_c}{Z_c}\\
-v=v_0+k_vy\Rightarrow y=v_0+\frac{k_vfY_c}{Z_C}
-\end{matrix}$}
-
-Introduction of scale:
+Next the coordinates are normalized by dividing by the scale factor $\lambda = Z_c = \tilde{w}$ which yields the location in pixel coordinates.
 
 \mportant{$p=\begin{pmatrix}
 u\\v
@@ -218,44 +382,10 @@ X_c\\Y_c\\Z_c
 X_c\\Y_c\\Z_c
 \end{bmatrix}$}
 
-The $K$ matrix consists of the location of the intersection of the optical axis with the image plane $(u_0,v_0)$.
-
-\subsubsection{Summary: Projection of a Point from world coordinates to Pixels}
-
-\begin{enumerate}
-\item Given a point in world coordinates $P_w$ calculate its location in camera coordinates $P_c$ using a homogeneous transformation $T=[R t]$:
-
-\mportant{$\begin{bmatrix}
-X_c\\Y_c\\Z_c\\1
-\end{bmatrix}=\begin{bmatrix}
-R&t
-\end{bmatrix}\begin{bmatrix}
-X_w\\Y_w\\Z_w\\1
-\end{bmatrix}$}
-\item Project the point to the 1 meter image plane to get the \textbf{calibrated} or \textbf{normalized coordinates} $p$:
-
-\mportant{$\begin{bmatrix}
-x\\y
-\end{bmatrix}=\begin{bmatrix}
-\frac{X_c}{Z_c}\\\frac{Y_c}{Z_c}
-\end{bmatrix}$}
-\item Optionally apply lens distortion to get to \textbf{distorted normalized coordinates} $p_d$:
-
-\mportant{$\begin{bmatrix}
-x'\\y'
-\end{bmatrix}=(1+k_1r^2+k_2r^4)\begin{bmatrix}
-x\\y
-\end{bmatrix}$}
-\item Convert the distorted normalized coordinates to ge the discretized pixel coordinates $(u,v)^T$:
-
-\mportant{$\lambda\cdot\begin{bmatrix}
-u\\v\\1
-\end{bmatrix}=K\begin{bmatrix}
-x'\\y'\\1
-\end{bmatrix}$}
+The $K$ matrix consists of the location of the intersection of the optical axis with the image plane $(u_0,v_0)$ and the transformation to pixel coordinates. After that the normalization is still necessary.
 \end{enumerate}
 
-\subsubsection{Summary: Undistoring and image}
+\subsubsection{Undistoring and image}
 
 \begin{enumerate}
 \item Define all pixel coordinates of the destination image (undistorted image).
@@ -271,23 +401,23 @@ x'\\y'\\1
 \begin{enumerate}
 \item A single point
 
-\myspic{0.5}{OnePoint}
+\myspic{0.3}{OnePoint}
 
 The camera can move along the line of projection. Thus we have infinitely many solutions.
 
 \item Two Points
 
-\myspic{0.5}{TwoPoints}
+\myspic{0.3}{TwoPoints}
 
 Since we don't know size and orientation of the line between the two points, the camera position is still undetermined.
 
 Differently formulated the knowing of an angle between two points does not fix the location of the camera:
 
-\myspic{0.4}{InscribedAngle}
+\myspic{0.2}{InscribedAngle}
 
-\item Three Points
+\item Three Points (P3P Problem)
 
-\myspic{0.5}{ThreePoints}
+\myspic{0.3}{ThreePoints}
 
 From Carnot's theorem:
 
@@ -297,7 +427,7 @@ s_2^2&=L_A^2+L_C^2-2L_AL_C\cos(\theta_{AC})\\
 s_3^2&=L_A^2+L_B^2-2L_AL_B\cos(\theta_{AB})\\
 \end{align*}
 
-A system of polynomial equations in $n$ unknowns can have no more solutions than the product of their respective degrees. In this case: $8$. Since all terms are constant or quadratic half of the solutions are negative and thus invalid. This leaves us with a total of four valid solutions. \textbf{A forth point disambiguates these solutions.}
+A system of polynomial equations in $n$ unknowns can have no more solutions than the product of their respective degrees\footnote{Intuition: Think of a decoupled system of polynomial equations. Then the solution of one equation can be interpreted as finding zeros of that polynomial. The maximum number of zeros found equals the degree of the polynomial. Thus for multiple equations the number of solutions multiplies. Also for a general case coupling terms may be added.}. In this case: $8$. Since all terms are constant or quadratic half of the solutions are negative and thus invalid. This leaves us with a total of four valid solutions. \textbf{A forth point disambiguates these solutions.}
 
 \end{enumerate}
 
@@ -335,22 +465,23 @@ Z_w\\
 where $m_i^T$ are the rows of the projection matrix $M$.
 
 Now assume that $P=\begin{bmatrix}
-X_w\\Y_w\\Z_w\\1
-\end{bmatrix}$
+X_w&Y_w&Z_w&1
+\end{bmatrix}^T$
 
 And project the whole equation to pixel coordinates using
 
+\sbss{
 \begin{align*}
 u=&\frac{\tilde{u}}{\tilde{w}}=\frac{m_1^T\cdot P}{m_3^T\cdot P}\\
-v=&\frac{\tilde{v}}{\tilde{w}}=\frac{m_2^Tcdot P}{m_3^T\cdot P}
+v=&\frac{\tilde{v}}{\tilde{w}}=\frac{m_2^T\cdot P}{m_3^T\cdot P}
 \end{align*}
-
-thus
-
+}{
 \begin{align*}
 (m_1^T-u_im_3^T)\cdot P_i&=0\\
 (m_2^T-v_im_3^T)\cdot P_i&=0
-\end{align*}
+\end{align*}}
+
+\vspace{3ex}
 
 By re-arranging and writing in matrix form:
 
@@ -401,9 +532,10 @@ For a minimal solution, the matrix $Q_{(2nx12)}$ should have at least rank 11 in
 
 For an over-determined solution we can minimize the squarred error $QM$ subject to $||M||^2=1$.
 
-For maltab :\verb+[U,S,V] = svd(Q); M = V(:,12);+
-
-\vspace{3ex}
+\begin{TPMatlab}
+[U,S,V] = svd(Q); 
+M = V(:,12);
+\end{TPMatlab} 
 
 Once $M$ is known the intrinsic and extrinsic parameters can be calculated using:
 
@@ -415,7 +547,8 @@ There are certain combinations of 3D-2D correspondences which are degenerate and
 
 \begin{enumerate}
 \item Points lying on a plane and/or along a single line passing through the projection center.
-\item Camera and points on a twisted cubic (i.e. smooth curve in 3D space of degree 3)
+\item Camera and points on a twisted cubic (i.e. smooth curve in 3D space of degree 3) \textcolor{red}{why?}
+%TODO find out why
 \end{enumerate}
 
 \subsubsection{Camera Calibration from 3D objects}
@@ -434,6 +567,8 @@ r_{31}&r_{32}&r_{33}&t_3
 \end{bmatrix}$}
 
 To enforce that $R\cdot R^T=I$ we can use $QR$ factorization of M, which decomposes $M$ into a $R$(orthogonal), $T$, and upper triangular matrix i.e. $K$.
+
+\vspace{3ex}
 
 A 3D calibration example is $Tsai's 1987$:
 
@@ -457,7 +592,7 @@ $f_y$&$f_x/f_y$&skew&$x_0$&$y_0$&residual\\
 \begin{itemize}
 \item The ratio $f_x/f_y$ is not zero since the pixels were not squares.
 \item The skew indicates that the pixels were parallelograms.
-\item Today it can be mostly assumed that $\frac{\alpha_u}{\alpha_v}=1$ and $K_{12}=0$.
+\item Today it can be mostly assumed that $\frac{\alpha_u}{\alpha_v}=1$ and $K_{12}=0$, where $K_{12}$ is the skewness factor. If it is non-zero the pixels are parallelograms instead of rectangles. 
 \item The residual is the average reprojection error. Today algorithms are expected to deliver errors about around $0.2$.
 \end{itemize}
 
@@ -531,7 +666,7 @@ where $P=(X_w,Y_w,1)^T$, which leads to the two equations of interest:
 
 \begin{align*}
 (h_1^T-u_ih_3^T)\cdot P_i&=0\\
-(h_2^t-v_ih_3^T)\cdot P-i&=0
+(h_2^t-v_ih_3^T)\cdot P_i&=0
 \end{align*}
 
 \item By rearranging
@@ -540,7 +675,7 @@ where $P=(X_w,Y_w,1)^T$, which leads to the two equations of interest:
 \underbrace{\begin{bmatrix}
 P_1^T&0^T&-u_1 P_1^T\\
 0^T&P_1^T&-v_1P_1^T\\
-\vdots&vdots&\vdots\\
+\vdots&\vdots&\vdots\\
 P_n^t&0^T&-u_nP_n^T\\
 0^T&P_n^T&-v_nP_n^T
 \end{bmatrix}}_{Q \text{ is known}}\underbrace{\begin{bmatrix}
@@ -576,7 +711,7 @@ r_{11}&r_{12}&t_1\\r_{21}&r_{22}&t_2\\r_{31}&r_{32}&t_3
 
 \myspic{0.7}{Transformations}
 
-\subsubsection{Find the camera pose from 2D-3D correspondences (DLT algorithm)}
+\subsubsection{Exercise Summary: Find the camera pose from 2D-3D correspondences (DLT algorithm)}
 
 \begin{itemize}
 \item Goal: Calculation of $[R|t]$ that satisfy the perspective projection equation:
@@ -594,17 +729,19 @@ X_w\\Y_w\\Z_w\\1
 \item Remember that $Q$ is built using normalized coordinates, not pixel coordinates!
 \item To solve the overdetermined system of equations the least squares approach is implemented using singular value decomposition. It can be shown that the solution of this problem is the eigenvector corresponding to the smallest eigenvalue of $Q^TQ$, which simply corresponds to the last column of $V$ if $S$, where $Q = USV^T$, has its diagonal entries sorted in descending order. The \verb+svd+ function in matlab provides that.
 
-\begin{verbatim}
+\begin{TPMatlab}
 [~,~,V] = svd(Q);
 M = reshape(V(:,12),4,3)';
-\end{verbatim}
+\end{TPMatlab}
+
 \item To enforce $R$ actually is a unitary matrix, we have to ensure that the $M$ matrix, being a transformation matrix, actually makes a shift in positive $z$ direction, thus $t_z=M_{34}>0$.
 
-\begin{verbatim}
+\begin{TPMatlab}
 if M(3,4)<0
     M=-M; 
 end
-\end{verbatim}
+\end{TPMatlab}
+
 \item Since the solution of the least squares problem only delivers the approximation of a homogeneous transformation matrix, we cannot be sure that $R$ is actually a rotation matrix in $SO(3)$. To extract the actual rotation matrix from $M$, that is closest to the original estimated $R$, singular value decompositions is used. Hereby $R=USV^T$, which can be made unitary by removing the scaling factors in $S$. Thus $\tilde{R}=UV^T$.
 
 \item Since our solution $M$ might actually be a scaled version $\alpha M$. Now, having found the correct rotation matrix $\tilde{R}$, we can compare it to the original $R$ to find the scale between the two. Thus $\alpha = \frac{||\tilde{R}||}{||R||}$. And the correct homogeneous transformation matrix is found as:
@@ -615,16 +752,16 @@ end
 
 \subsection{Omnidirectional Cameras}
 
-\myspic{1}{Cameras}
+\myspic{0.6}{Cameras}
 
 Catadioptric cameras come in different versions:
 
-\begin{minipage}{0.45\linewidth}
+\begin{minipage}[b]{0.45\linewidth}
 \mypic{NonCentral}
 \end{minipage}
 \hfill
-\begin{minipage}{0.45\linewidth}
-\mypic{Central}
+\begin{minipage}[b]{0.45\linewidth}
+\myspic{1}{Central}
 \end{minipage}
 
 \begin{define}
@@ -641,11 +778,11 @@ A camera is a \textbf{central catadioptric camera} if the projection is such tha
 
 \subsubsection{Example for central catadioptric lenses}
 
-\mypic{CentralCatadioptrics}
+\myspic{0.6}{CentralCatadioptrics}
 
 \subsubsection{Equivalence between Perspective and Omnidirectional Model}
 
-\myspic{0.7}{Omnidirectional}
+\myspic{0.5}{Omnidirectional}
 
 \subsection{Digital Images}
 
@@ -659,8 +796,8 @@ A camera is a \textbf{central catadioptric camera} if the projection is such tha
 \section{Filtering}
 
 \begin{itemize}
-\item A smoothing filter has positive values, always sums up to 1 to preserve the overall brightness of the picture and removes high-frequency contents, is thus a low-pass filter.
-\item A derivative filter has opposite signs, used to get high responses in regions of high contrast, sums to 0 and highlights high frequency components.
+\item A smoothing filter has \textbf{positive values}, always \textbf{sums up to 1} to \textbf{preserve the overall brightness} of the picture and \textbf{removes high-frequency} contents, is thus a \textbf{low-pass filter}.
+\item A derivative filter has \textbf{opposite signs}, used to get high \textbf{responses in regions of high contrast}, \textbf{sums to 0} and highlights \textbf{high frequency components}.
 \end{itemize}
 
 \subsection{Types of noise}
@@ -688,7 +825,7 @@ A camera is a \textbf{central catadioptric camera} if the projection is such tha
 \begin{define}
 \textbf{Convolution} defines the operation needed for the implementation of a moving average filter. One of the sequences is flipped and then slid over the other, multiplying each element with each other element and adding them up. A convolution is noted as $a_\star b$.
 
-Properties: linearity, associativity, commutativity
+\textbf{Properties: linearity, associativity, commutativity}
 \end{define}
 
 A convolution in 2D requires flipping the filter in both dimensions, which is equivalent to a $\SI{180}{\degree}$ rotation. Then the convolution is defined as:
@@ -698,7 +835,7 @@ A convolution in 2D requires flipping the filter in both dimensions, which is eq
 \begin{define}
 The \textbf{cross-correlation} is almost equivalent to a convolution, but does not include a flipping of the filter.
 
-Properties: linearity
+\textbf{Properties: linearity}
 \end{define}
 
 \mportant{$G[x,y]=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kF[x,y]H[x+u,y+v]$}
@@ -735,6 +872,10 @@ Good choice: 3$\sigma$, since 90\% of the information is contained within that s
 The larger the image the more intense the blur.
 
 \end{itemize}
+
+\begin{TPMatlab}
+gausswindow = fspecial('gaussian', [16, 16], 16 * 1.5);
+\end{TPMatlab}
 
 \subsection{Boundary issues}
 
@@ -779,6 +920,15 @@ Possibilities of filters implementing that are:
 -1&-2&-1\\0&0&0\\1&2&1
 \end{bmatrix}$}
 
+\begin{TPMatlab}
+%Apply Sobel Filter to Image
+im = imread('lion.jpg');
+h = fspecial('sobel');
+outim = imfilter(double(im),h);
+imagesc(outim);
+colormap gray;
+\end{TPMatlab}
+
 Since both direction are needed to represent all intensity changes within the image the gradient is used:
 
 \mportant{$\nabla F = \begin{bmatrix}
@@ -803,13 +953,36 @@ This is implemented by the \textbf{Canny edge-detection algorithm (1986)}.
 \item Non-maxima suppression (local-maxima detection) along edge direction.
 \end{enumerate}
 
+\begin{TPMatlab}
+I_x_filter =...
+    [-1 0 1;...
+    -2 0 2;...
+    -1 0 1];
+
+%Calculate the gradient
+I_x = conv2(img,I_x_filter,'valid');
+%'valid' => only include domain in which the whole filter fits on the image
+\end{TPMatlab}
+
 \subsection{Laplacian of the Gaussian}
 
 Instead of analysing the first derivative (searching for maxima to find edges) we can take the second derivative and detect the same maximum by finding the zero crossing of the second derivative.
 
-\myspic{0.7}{LaplacianGaussian}
+\myspic{0.5}{LaplacianGaussian}
 
-\myspic{0.7}{LaplacianGaussian2}
+\myspic{0.5}{LaplacianGaussian2}
+
+\begin{TPMatlab}
+gausswindow = fspecial('gaussian', [16, 16], 16 * 1.5);
+\end{TPMatlab}
+
+\subsection{Canny edge-detection}
+
+\begin{enumerate}
+\item Compute gradient of smoothed image in both directions.
+\item Discard Pixels whose gradient is below a certain threshold.
+\item Non-maxima suppression: identify local maxima along gradient direction.
+\end{enumerate}
 
 \section{Point Feature Detection and Matching}
 
@@ -869,7 +1042,7 @@ The \textbf{Hamming distance} of two strings is the number of bits that are diff
 
 The census transform maps an image patch to a bit string (value larger than center pixel $\rightarrow 1$ otherwise $\rightarrow 0$) and compares strings using the Hamming distance.
 
-\myspic{0.5}{CensusTransform}
+\myspic{0.3}{CensusTransform}
 
 \textbf{Advantages}
 \begin{itemize}
@@ -903,14 +1076,14 @@ A \textbf{corner} is defined as the intersection of one or more edges.
 \end{itemize}
 
 \begin{define}
-A \textbf{blob} is any other image pattern, which is not a corner, that differs significantly form its neighbours in intensity and texture.
+A \textbf{blob} is any other image pattern, which is not a corner, that differs significantly from its neighbours in intensity and texture.
 \end{define}
 
 \begin{itemize}
 \item [-] Has less localization accuracy than a corner.
 \item [+] Blob detectors are better for place recognition.
 \item [+] More distinctive than a corner.
-\item [\textbf{E}] MSER, LOG, DOG (SIFt), SURF, CenSurE
+\item [\textbf{E}] MSER, LOG, DOG (SIFT), SURF, CenSurE
 \end{itemize}
 
 \subsubsection{The Moravec Corner Detector}
@@ -925,12 +1098,13 @@ A \textbf{blob} is any other image pattern, which is not a corner, that differs 
 \subsubsection{Harris Corner Detector}
 
 \begin{enumerate}
-\item consider the reference patch centered at (x,y) and the shifted windows centered at $(x+\Delta x,y+\delta y)$. The patch has size $P$.
-\item Apply SSD
+\item Consider the reference patch centered at (x,y) and the shifted windows centered at $(x+\Delta x,y+\delta y)$. The patch has size $P$.
+\item Calculate the sum of squared differences (SSD):
+\begin{enumerate}
 \item $I_x=\frac{\partial I(x,y)}{\partial x},\quad I_y=\frac{\partial I(x,y)}{\partial y}$, approximated with first order Taylor:
 
 \mportant{$I(x+\Delta x,y+\Delta y)\approx I(x,y)+I_x(x,y)\Delta x+I_y(x,y)\Delta y$}
-\item Thus SDD can be approximated as
+\item Thus SSD can be approximated as
 
 \mportant{$SSD(\Delta x,\Delta y)\approx \sum\limits_{x,y\in P}\left(I_x(x,y)\Delta x+I-y(x,y)\Delta y\right)^2$}
 
@@ -955,6 +1129,10 @@ I_x^2&I_xI_y\\I_xI_y&I_y^2
 \sum I_x^2&\sum I_xI_y\\\sum I_xI_y&\sum I_y^2
 \end{bmatrix}$.
 
+Notice that $I_x^2$ for example is note a matrix product but a pixel-wise product!
+
+\end{enumerate}
+
 \item For any corner rotated with $\phi$: $M=\begin{bmatrix}
 \cos(\phi)&-\sin(\phi)\\\sin(\phi)&\cos(\phi)
 \end{bmatrix}
@@ -967,15 +1145,18 @@ I_x^2&I_xI_y\\I_xI_y&I_y^2
 
 If any $\lambda$ is close to zero there is no corner.
 
-\item Using the singular value decomposition can be used to find $\lambda_i$ directly.
+\item Singular value decomposition can be used to find $\lambda_i$ directly.
 \item $\lambda_i$ can be used to identify a corner. A corner has been found if the minimum of the two eigenvalues is larger than a certain threshold.
-\item \textbf{Cornerness function} $R=\min(\lambda_1,\lambda,2)$
+\item \textbf{Cornerness function} $R=\min(\lambda_1,\lambda_2)$
 
 \item The corner detector using this criterion is called \textbf{Shi-Tomasi} detector.
 \item Alternatively, to avoid the calculation of the eigenvalues, another cornerness function can be defined: $R=\lambda_1-\lambda_2-k(\lambda_1+\lambda_2)^2=\det(M)-k\text{trace}^2(M)$, where $k\in(0.04,0.15)$.
 \end{enumerate}
 
-
+\begin{itemize}
+\item[+] Invariant to image rotation.
+\item[-] Not invariant to image scale.
+\end{itemize}
 
 \subsection{Scale changes}
 
@@ -995,7 +1176,7 @@ If any $\lambda$ is close to zero there is no corner.
 \item If there are multiple local maxima, the feature is replicated multiple times at the corresponding scales. The computational effort is still reduced that way.
 \end{itemize}
 
-\subsubsection{How to find that function?}
+\textbf{How to find that function?}
 
 \begin{itemize}
 \item Convolution with a kernel that highlights edges:
@@ -1009,13 +1190,13 @@ L\circ G=\nabla G(x,y)
 \item The $L\circ G$ Kernel already includes smoothing.
 \end{itemize}
 
-\subsubsection{How to describe features?}
+\textbf{How to describe features?}
 
 \begin{itemize}
 \item Idea: Find a feature descriptor that is \textbf{invariant} to geometric and photometric changes.
 \end{itemize}
 
-\subsubsection{How to achieve invariance with Patch descriptors?}
+\textbf{How to achieve invariance with Patch descriptors?}
 
 \begin{enumerate}
 \item Re-scaling and De-rotation:
@@ -1058,7 +1239,7 @@ x'&=x\cos\theta-y\sin\theta+a\\y'&=x\sin\theta+y\cos\theta+b
 \begin{enumerate}
 \item Multiply the patch by a Gaussian filter
 \item Divide the patch into 4x4 sub-patches
-\item Compuge HOG (8bins, i.e. 8 directions) for all pixels inside each sub-patch.
+\item Compute HOG (8bins, i.e. 8 directions) for all pixels inside each sub-patch.
 \item Concatenate all HOGs into a single 1D vector. $4x4x8=128$ values.
 \item The descriptor vector $v$ is then normalized such that:
 
@@ -1109,30 +1290,2264 @@ In this case the used mask is the 3D equivalent of the mask used above.
 \item Based on the property of the LoG allowing to recognize features of a certain radius, and on the idea that that radius may be changed by changing the standard deviation of the gaussian curve, one can vary the peak-finding function over the scale by varying $\sigma$. In addition, instead of increasing the radius of the filter, the image size is decreased for the next octave of Gaussians.
 \end{itemize}
 
+\textbf{Number of parameters used:}
+
+\begin{itemize}
+\item \textbf{Descriptor:} 4x4x8 = 128-element 1D vector
+\item \textbf{Location:} (pixel coordinates of the center of the patch): 2D vector
+\item \textbf{Scale:} (i.e. size) of the patch: 1 scalar value
+\item \textbf{Orientation:} (i.e. angle of the patch): 1 scalar value
+\end{itemize}
+
+\textcolor{red}{Finish summary}
+
+\begin{TPMatlab}
+%use of imdilate
+%Finding local maxima
+%For example in a DoG pyramid
+DoG_dilated = imdilate(DoG, true(3,3,3));
+%Including all values
+DoG_ind_max = DoG_dilated == DoG_dilated;
+%Excluding nonzero values
+DoG_ind_max = DoG_dilated == DoG_dilated & DoG;
+%Dilate multiplies the given pattern with each position in an array and sets the corresponding position to the maximum of the multiplication
+\end{TPMatlab}
+
+\subsection{Feature matching}
+
+How to find the best match for patch in $I_1$ with patch in $I_2$?
+
+\begin{enumerate}
+\item Define distance function for comparison ((Z)SSD, SAD, NCC or Hamming distance for binary descriptors (Census, BRIEF, BRISK)).
+\item Brute-force matchin
+\begin{enumerate}
+\item Test all the features in $I_2$.
+\item Take the one a min distance.
+\end{enumerate}
+\end{enumerate}
+
+The closest descriptor can give very good scores to ambiguous matches. The solution is to \textbf{compute the ratio of distances} between first and second match.
+
+\mportant{$d(f_1)/d(f_2) < Threshold$ (usually 0.8)}
+
+\textbf{Motivation for distance ratio}
+
+\begin{itemize}
+\item Features in SIFT are matched based on euclidean distance, but there might be many features that appear in one image but not in the other.
+\item Comparison of the distances between closest neighbour and second closest neighbour performs well, since for a match to be true the closest neighbour needs to be significantly closer than the second closest.
+\item For false matches there will likely be a number of additional false matches, which will make $d(f_1)/d(f_2)$ go closer to $1$. It can be thought of as an estimate of the density of false matches in a region.
+\end{itemize}
+
+\def\slidesizehere{0.8}
+\subsection{SURF}
+\myspic{\slidesizehere}{SURF}
+\subsection{FAST}
+\myspic{\slidesizehere}{FAST}
+\subsection{BRIEF}
+\myspic{\slidesizehere}{BRIEF}
+\subsection{ORB}
+\myspic{\slidesizehere}{ORB}
+\subsection{BRISK}
+\myspic{\slidesizehere}{BRISK}
+\subsection{FREAK}
+\myspic{\slidesizehere}{FREAK}
+\subsection{Overview}
+\myspic{\slidesizehere}{RecapTable}
+\section{Multi View Geometry}
+
+\subsection{3D Reconstruction from Multiple Views}
+
+\begin{center}
+\begin{tabular}{l|p{0.4\linewidth}|p{0.4\linewidth}}
+&3D Reconstruction &Structure from Motion\\\midrule
+K, T, R&known&unknown\\\midrule
+Goal&Find 3D structure&Simultaneous recovery of 3D scene and camera pose graph (up to scale).
+\end{tabular}
+\end{center}
+
+\subsection{Triangulation}
+
+\begin{itemize}
+\item From a single camera only the ray on which each image point lies can be calculated.
+\item With a stereo camera (binocular) the intersection of rays delivers the 3D structure.
+\end{itemize}
+
+\begin{define}
+\textbf{Stereopsys} is the brains ability to reproduce a single 3D image from the two retinal 2D images.
+\end{define}
+
+\begin{define}
+The process of flipping retinal images upside down and the removal of radial distortion is called \textbf{rectification}.
+\end{define}
+
+\begin{define}
+The \textbf{disparity} between two images describes the distance between the projections of a single 3D point on the two images. The closer the object the larger the disparity.
+\end{define}
+
+\sbs{0.6}{0.4}{
+\myspic{1}{Triangulation1}}{
+\begin{align*}
+\frac{f}{Z_P}&=\frac{u_l}{X_P}\\
+\frac{f}{Z_P}&=\frac{-u_r}{b-X_P}\\
+Z_P&=\frac{bf}{u_l-u_r}
+\end{align*}
+\begin{TDefinitionTable*}
+$b$&Baseline&$\siu{\milli\meter}$\\
+$u_l-u_r$&Disparity&$\siu{\milli\meter}$\\
+$f$&focal length&$\siu{\milli\meter}$\\
+$Z_P$&Depth&$\siu{\milli\meter}$\\
+\end{TDefinitionTable*}}
+
+\begin{itemize}
+\item Maximum disparity: Sensor width.
+\item Disparity of a point at infinity: 0.
+\item The uncertainty of the disparity depends on the distance of the viewed object. The further away the more uncertain the disparity estimation.
+\item How to increase the accuracy of a stereo system: Optimize the baseline \textbf{b}.
+\begin{itemize}
+\item [$\downarrow\ $\textbf{b}] Large depth error.
+\item [$\uparrow\ $\textbf{b}] Minimum measurable distance increases.
+\item [$\uparrow\ $\textbf{b}] Difficult search problem for close objects.
+\end{itemize}
+\end{itemize}
+
+\subsubsection{General Case}
+
+\myspic{0.5}{StereoVisionGeneralCase}
+
+\begin{enumerate}
+\item Parallel alignment of cameras is hard.
+\item For the use of a stereocamera the following are needed:
+\begin{itemize}
+\item Extrinsic parameters (relative rotation and translation)
+\item Intrinsic parameter (focal length, optical center, radial distortion of each camera)
+\end{itemize}
+\end{enumerate}
+
+\begin{equation*}
+\tilde{p}_l=\lambda_l\begin{bmatrix}u_l\\v_l\\1\end{bmatrix} = K_l\begin{bmatrix}X_W\\Y_W\\Z_W\end{bmatrix}\qquad \tilde{p}_r=\lambda_r\begin{bmatrix}u_r\\v_r\\1\end{bmatrix}=K_rR\begin{bmatrix}X_W\\Y_W\\Z_W\end{bmatrix}+T
+\end{equation*}
+
+\vspace{3ex}
+
+which can be formulated as 
+
+\vspace{3ex}
+
+\begin{center}
+\begin{tabular}{l|l}
+Left camera&Right camera\\
+$\begin{aligned}
+\lambda_1\begin{bmatrix}
+u_1\\v_1\\1
+\end{bmatrix}&=\underbrace{K[I|0]}_{M_1}\begin{bmatrix}
+X_w\\Y_w\\Z_w\\1
+\end{bmatrix}\\
+p_1\times M_1\cdot P &= 0\\
+\left[p_{1\times}\right]M_1\cdot P &= 0
+\end{aligned}$
+&
+$\begin{aligned}
+\lambda_2\begin{bmatrix}
+u_2\\v_2\\1
+\end{bmatrix}&=\underbrace{K[R|T]}_{M_2}\begin{bmatrix}
+X_w\\Y_w\\Z_w\\2
+\end{bmatrix}\\
+p_2\times M_2\cdot P &= 0\\
+\left[p_{2\times}\right]M_2\cdot P&=0
+\end{aligned}$
+\end{tabular}
+\end{center}
+
+where the cross product can be interpreted as a matrix vector product:
+
+\mportant{$a\times b =\begin{bmatrix}0&-a_z&a_y\\a_z&0&-a_x\\-a_y&a_x&0\end{bmatrix}\begin{bmatrix}b_x\\b_y\\b_z\end{bmatrix}= [a_\times]b$}
+
+The two matrix equations above deliver an overdetermined set of equations that can be solved using singular value decomposition.
+
+\vspace{3ex}
+
+\textbf{Geometric interpretation and Nonlinear Approach of the triangulation:}
+
+\vspace{3ex}
+
+Even for the best possible solution the two rays corresponding to the same object might not have an intersection in 3D. Thus the challenge is to minimize the smallest distance between two corresponding rays.
+
+\myspic{0.5}{Triangulation3}
+
+\begin{itemize}
+\item Find $P$ that minimizes the \textbf{Sum of Squared Reprojection Error}:
+
+\mportant{$SSRE=d^2(p_1,\pi_1(P))+d^2(p_2,\pi_2(P))$}
+
+where $d(p_1,\pi_1(P))=||p_1-\pi_1(P)||$ is called \textbf{Reprojection Error}.
+\item Use Gauss-Newton or Levenberg-Marquardt for minimization of the SSRE.
+\end{itemize}
+
+\subsection{Epipolar Geometry}
+
+\subsubsection{Correspondence Problem}
+
+\textbf{Problem:} Identify corresponding points in 2 images. \textbf{Solution:} Use epipolar geometry to reduce the number of possibly matching points by one dimension (!), thus omitting an exhaustive search.
+
+\begin{define}
+The \textbf{epipolar} line is the projection of the infinite ray $\pi^{-1}(p)$ corresponding to $p$ in the other camera image.
+\end{define}
+
+\begin{define}
+The \textbf{epipole} is the projection of the optical center on the other camera image.
+\end{define}
+
+\myspic{0.5}{Epipole}
+
+\begin{define}
+The \textbf{epipolar plane} is uniquely defined by the two optical centers $C_l,C_r$ and one image point $p$.
+\end{define}
+
+\begin{define}
+The \textbf{epipolar constraint} constrains the location, in the second view of the corresponding point to a given point in the first view.
+\end{define}
+
+\myspic{0.5}{EpipolarPlane}
+
+\subsection{Stereo rectification}
+
+Since even commercial stereocameras are never perfectly aligned and for computational reasons, it is practical to have the scanlines aligned with the epipolar lines a stereo rectification is performed to make for such an alignment.
+
+\vspace{3ex}
+
+\textbf{Idea:} Project both images on a common plane parallel to the baseline.
+
+\vspace{3ex}
+
+\textbf{Approach}
+
+\begin{enumerate}
+\item Rotate the optical planes around their optical centers until they are coplanar.
+\item Thus the epipoles are at infinity and the epipolar lines are parallel.
+\item To have horizontal epipolar lines the baseline must be parallel to the new $X$ axis of both cameras.
+\item Further, the corresponding points must have the same $y$ coordinate. Thus both camera must have the same intrinsic parameters.
+\end{enumerate}
+
+\subsubsection{Mathematical solution}
+
+\begin{enumerate}
+\item \mportant{$\lambda\begin{bmatrix}u\\v\\1\end{bmatrix} = KR^{-1}\left[\begin{bmatrix}X_w\\Y_w\\Z_w\end{bmatrix}-C\right]$}
+\item Apply the perspective equation to both images.
+
+\myspic{0.5}{StereoRectification1}
+
+\item Mapping of both cameras to coplanar planes.
+
+\begin{align*}
+\lambda_L\begin{bmatrix}
+u_L\\v_L\\1
+\end{bmatrix}=K_LR_L^{-1}\left[\begin{bmatrix}
+X_W\\Y_W\\Z_W
+\end{bmatrix}-C_L\right]&\rightarrow
+\tilde{\lambda}_L\begin{bmatrix}
+\tilde{u}_L\\\tilde{v}_L\\1
+\end{bmatrix}=\tilde{K}\tilde{R}^{-1}\left[\begin{bmatrix}
+X_W\\Y_W\\Z_W
+\end{bmatrix}-C_L\right]\\
+\lambda_R\begin{bmatrix}
+u_R\\v_R\\1
+\end{bmatrix}=K_RR_R^{-1}\left[\begin{bmatrix}
+X_W\\Y_W\\Z_W
+\end{bmatrix}-C_R\right]&\rightarrow
+\tilde{\lambda}_R\begin{bmatrix}
+\tilde{u}_R\\\tilde{v}_R\\1
+\end{bmatrix}=\tilde{K}\tilde{R}^{-1}\left[\begin{bmatrix}
+X_W\\Y_W\\Z_W
+\end{bmatrix}-C_R\right]\\
+\end{align*}
+\item By solving for $\begin{bmatrix}
+X_W\\Y_W\\Z_W
+\end{bmatrix}$ for each camera (between new and old mapping) we can find the homography that has to be applied to each camera for rectification.
+
+\begin{equation*}
+\bar{\lambda}_L\begin{bmatrix}
+\bar{u}_L\\
+\bar{v}_L\\
+1
+\end{bmatrix}=\lambda_L\bar{K}\bar{R}^{-1}R_LK_L^{-1}\begin{bmatrix}
+u_L\\
+v_L\\
+1
+\end{bmatrix}\qquad\bar{\lambda}_R\begin{bmatrix}
+\bar{u}_R\\
+\bar{v}_R\\
+1
+\end{bmatrix}=\lambda_R\bar{K}\bar{R}^{-1}R_RK_R^{-1}\begin{bmatrix}
+u_R\\
+v_R\\
+1
+\end{bmatrix}
+\end{equation*}
+\item How to choose the new $\bar{K}$ and $\bar{R}$:
+
+\begin{align*}
+\bar{K}&=(K_L+K_R)/2\\
+\bar{R}&=\begin{bmatrix}
+\bar{r}_1&\bar{r}_2&\bar{r}_3
+\end{bmatrix}
+\end{align*}
+
+with $\bar{r}_1,\bar{r}_2,\bar{r}_3$ being the column vectors of $\bar{R}$, where
+
+\sbss{
+\begin{align*}
+\bar{r}_1&=\frac{C_2-C_1}{||C_2-C_1||}\\
+\end{align*}
+}{
+\begin{align*}
+\bar{r}_2&=r_3\times\bar{r}_1\\
+\bar{r}_3&=\bar{r}_1\times\bar{r}_2
+\end{align*}}
+\end{enumerate}
+
+\subsection{Correspondence Search}
+
+After rectification the correspondence search can be done along the same lines. The complexity has been reduced by one dimension.
+
+To improve on ambiguity in textureless regions, the window size is increased.
+
+\myspic{0.7}{CorrespondenceSearch}
+
+\sbss{
+\begin{itemize}
+\item Smaller Window
+\begin{itemize}
+\item[+] More detail
+\item[-] More noise
+\end{itemize}
+\end{itemize}
+}{
+\begin{itemize}
+\item Larger Window
+\begin{itemize}
+\item[+] Smoother disparity maps
+\item[-] Less detail
+\end{itemize}
+\end{itemize}
+}
+
+\subsubsection{Disparity Map}
+
+\begin{enumerate}
+\item For each pixel on the left image, find its corresponding point on the right image.
+\item Compute the disparity for each pair of correspondences.
+\item Visualize it in gray-scale or color-coded image.
+\end{enumerate}
+
+\subsubsection{Correspondence Problems}
+
+\textbf{Multiple Matches}
+
+\myspic{0.5}{MultipleMatches}
+
+To improve on that introduce soft constraints:
+
+\begin{itemize}
+\item Uniqueness: Only one match in right image for every point in left image.
+\item Ordering: Points on same surface will be in same order in both views.
+\item Disparity gradient: Disparity changes smoothly between points on the same surface.
+\end{itemize}
+
+\section{Two-View Structure from Motion}
+
+Given $n$ point correspondence between two images $\{p^i_1=(u^i_1,v^i_1),\ p^i_2 = (u^i_2,v^i_2)\}$, simultaneously estimate the 3D points $\vec{P}^i$, the camera relative motion parameters $(\vec{R},\vec{T})$ and the camera intrinsics $\vec{K}_1,\vec{K}_2$ that satisfy
+
+\begin{align*}
+\lambda_1\begin{bmatrix}u^i_1\\v^i_1\\1\end{bmatrix}&=K_1[I|0]\begin{bmatrix}
+X^i_W\\Y^i_W\\Z^i_W\\1
+\end{bmatrix}\\
+\lambda_2\begin{bmatrix}u^i_2\\v^i_2\\1\end{bmatrix}&=K_2[I|0]\begin{bmatrix}
+X^i_W\\Y^i_W\\Z^i_W\\1
+\end{bmatrix}
+\end{align*}
+
+\textbf{For the calibrated case the intrinsics are know.}
+
+Thus the equations are normalized:
+
+\begin{align*}
+\lambda_1\begin{bmatrix}\bar{u}^i_1\\\bar{v}^i_1\\1\end{bmatrix}&=[I|0]\begin{bmatrix}
+X^i_W\\Y^i_W\\Z^i_W\\1
+\end{bmatrix}\\
+\lambda_2\begin{bmatrix}\bar{u}^i_2\\\bar{v}^i_2\\1\end{bmatrix}&=[I|0]\begin{bmatrix}
+X^i_W\\Y^i_W\\Z^i_W\\1
+\end{bmatrix}
+\end{align*}
+
+\subsection{Scale Ambiguity}
+
+Rescaling the entire scene (camera views and object) will not have an effect on the projection of the scene. Thus the scale is ambiguous. In monocular vision it is \textbf{not possible} to recover the absolute scale of the scene.
+
+\vspace{3ex}
+
+Thus only $5$ degrees of freedom are measurable.
+
+\begin{itemize}
+\item 3 parameters to describe the rotation.
+\item 2 parameters for the translation up to scale.
+\item 4$n$ knowns from $n$ correspondences.
+\item 5+3$n$ unknowns, $5$ for motion up to scale, $3n=$ number of the coordinates of the $n$ 3D points.
+\end{itemize}
+
+A solution exists only if
+
+\mportant{$4n\geq 5+3n\Rightarrow n\geq 5$}
+
+\subsection{Solution through Epipolar Geometry}
+
+\myspic{0.5}{EssentialEpipolar}
+
+Since $p_1,p_2$ and $T$ are coplanar the epipolar constraint can be established. It basically states that the crossproduct of $p_1'$ ($p_1$ described in the frame of the second camera) and $T$ will deliver the vector normal to the plane. The dot product of that vector with $p_2$ has to be zero since they are perpendicular. Using $R$ to describe $p_1' = Rp_1$, the constraint is:
+
+\important{$p_2^TEp_1 = 0\qquad E=[T]_\times R$}
+
+\subsection{The 8-Point Algorithm}
+
+\mportant{$\bar{p}_2^TE\bar{p}_1=0$}
+
+Each pair of correspondences $\bar{p}_1=(\bar{u},\bar{v},1)^T$, $\bar{p}_2=(\bar{u}_2,\bar{v}_2,1)^T$ provides a linear equation. For $n$ points:
+
+\mportant{$\begin{bmatrix}
+\bar{u}_2^1\bar{u}_1^1&\bar{u}_2^1\bar{v}_1^1&\bar{u}_2^1&\bar{v}_2^1\bar{u}_1^1&\bar{v}_2^1\bar{v}_1^1&\bar{v}_2^1&\bar{u}_1^1&\bar{v}_1^1&1\\
+\bar{u}_2^2\bar{u}_1^2&\bar{u}_2^2\bar{v}_1^2&\bar{u}_2^2&\bar{v}_2^2\bar{u}_1^2&\bar{v}_2^2\bar{v}_1^2&\bar{v}_2^2&\bar{u}_1^2&\bar{v}_1^2&1\\
+\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+\bar{u}_2^n\bar{u}_1^n&\bar{u}_2^n\bar{v}_1^n&\bar{u}_2^n&\bar{v}_2^n\bar{u}_1^n&\bar{v}_2^n\bar{v}_1^n&\bar{v}_2^n&\bar{u}_1^n&\bar{v}_1^n&1
+\end{bmatrix}\begin{bmatrix}
+e_{11}\\e_{12}\\e_{13}\\e_{21}\\e_{22}\\e_{23}\\e_{31}\\e_{32}\\e_{33}
+\end{bmatrix}=0$}
+
+\important{$Q\cdot \bar{E} = 0$}
+
+Minimal solution:
+
+\begin{itemize}
+\item $Q_{n\times 9}$ should have rank 8 to have a unique (up to scale) non-trivial solution.
+\item Each p2p correspondence provides one independent equation.
+\item Thus 8 points are required at least.
+\end{itemize}
+
+Over-determined solution:
+
+\begin{itemize}
+\item $n>8$
+\item A solution is to minimize $||Q\bar{E}||^2$ subject to the constraint $||\bar{E}||^2=1$. The solution is the eigenvector corresponding to the smallest eigenvalue of $Q^TQ$ since it is the solution of the minimization $||Qx||^2=x^TQ^TQx$.
+
+\begin{TPMatlab}
+[U,S,V] = svd(Q);
+Ev = V(:,9);
+E = reshape(Ev,3,3)';
+\end{TPMatlab}
+\item \textbf{Degenerate Configurations} The solution is degenerate if the 3D points are coplanar.
+\end{itemize}
+
+\subsubsection{Implementation of Q}
+
+\begin{TPMatlab}
+%First version according to lecture slides:
+p1_T = p1.';
+p2_T = p2.';
+
+Q = [p1_T(:,1).*p2_T(:,1),...
+    p1_T(:,2).*p2_T(:,1),...
+    p1_T(:,3).*p2_T(:,1),...
+    p1_T(:,1).*p2_T(:,2),...
+    p1_T(:,2).*p2_T(:,2),...
+    p1_T(:,3).*p2_T(:,2),...
+    p1_T(:,1).*p2_T(:,3),...
+    p1_T(:,2).*p2_T(:,3),...
+    p1_T(:,3).*p2_T(:,3)];
+    
+[~,~,V] = svd(Q);
+Eh = V(:,end);
+
+E = reshape(Eh,3,3)';
+
+[U,S,V] = svd(E);
+S(3,3) = 0;
+F = U*S*V';
+\end{TPMatlab}
+
+\begin{TPMatlab}
+%Second Version according to exercises
+N = size(p1,2);
+Q = zeros(N,9);
+
+% building Q
+for i = 1:N
+    Q(i,:) = kron(p1(:,i),p2(:,i))';
+end
+
+% solve Q*vec(F)=0
+[~,~,VQ] = svd(Q);
+vecF = VQ(:,end);
+F = reshape(vecF,3,3);
+
+% ensure that det(F) = 0
+[U,S,V] = svd(F);
+S(3,3) = 0;
+F = U * S * V';
+\end{TPMatlab}
+
+\subsection{The Fundamental Matrix}
+
+\textbf{For the uncalibrated case the intrinsics are unknow.}
+
+By substituting the definition of normalized coordinates 
+
+\mportant{$\begin{bmatrix}
+\bar{u}\\\bar{v}\\1
+\end{bmatrix}=K_1^{-1}\begin{bmatrix}
+u\\v\\1
+\end{bmatrix}$}
+
+into the epipolar constraint we get the epipolar constraint for uncalibrated cameras:
+
+\mportant{$\begin{bmatrix}
+u_2^i\\v_2^i\\1
+\end{bmatrix}\underbrace{K_2^{-T}EK_1^{-1}}_{\text{Fundamental Matrix : }F}\begin{bmatrix}
+u_1^i\\v_1^i\\1
+\end{bmatrix}=0$}
+
+\myspic{0.5}{4RTfromE}
+
+There exist 4 different ways for finding $R$ and $T$ from $E$.
+
+\begin{itemize}
+\item [+] We work in pixel coordinates.
+\item [-] This algorithm assumes 0 lens distortion. If that is not given it has to be corrected for.
+\item [-] Numerically unstable.
+\end{itemize}
+
+\subsection{Normalized 8-Point Algorithm}
+
+Poor numerical conditioning in the 8-Point algorithm motivates normalization. The idea is to transform the image coordinates such that they are in the range $~[-1,1]\times[-1,1]$.
+
+\myspic{0.5}{Normalized8Points}
+
+To achieve such a transformation the points are transformed such that the coordinate origin is set in the centroid of the image and the average point is located at $[1,1,1]^T$ (in homogeneous coordinates).
+
+\mportant{$\hat{p}^i=\frac{\sqrt{2}{\sigma}}{(p^i-\mu)}$}
+
+This can be formulated in a matrix:
+
+\mportant{$\hat{p}^i=\begin{bmatrix}
+\frac{\sqrt{2}}{\sigma}&0&-\frac{\sqrt{2}}{\sigma}\mu_x\\
+0&\frac{\sqrt{2}}{\sigma}&-\frac{\sqrt{2}}{\sigma}\mu_y\\
+0&0&1
+\end{bmatrix}p^i$}
+
+\begin{enumerate}
+\item Normalize point correspondences: $\hat{p}_1 = B_1p_1$, $\hat{p}_2 = B_2 p_2$
+\item Estimate normalized $\hat{F}$
+\item Compute unnormalized $F$ from $\hat{F}$: 
+\mportant{$F=B_2^T\hat{F}B_1$}
+\end{enumerate}
+
+\begin{itemize}
+\item[-] $R,T,K_1,K_2$ can in general not be extracted from $F$.
+\item[+] However, if the coordinates of the principal points of each camera are known and the two cameras have the same focal length $f$ in pixels, then $R,T,f$ can be determined uniquely.
+\end{itemize}
+
+\subsection{Error measures}
+
+\importname{Algebraic Error}{$\sum\limits_{i=1}^N(\bar{p}_{2^i}^TE\bar{p}^i_1)^2$}
+
+\importname{Directional Error}{$\sum\limits_{i}(cos(\theta_i))^2$ where $\cos(\theta)=\frac{p_2^T\cdot E p_1}{||p_2||||Ep_1||}$}
+
+\importname{Epipolar Line Distance}{$\sum\limits_{i=1}^Nd^2(p_1^i,l_1^i)+d^2(p_2^i,l_2^i)$}
+
+\myspic{0.5}{EpipolarLineDistance}
+
+\importname{Reprojection Error}{$\sum\limits_{i=1}^N||p_1^i-\pi_1(P^i)||^2+||p_2^i-\pi_2(P^i,R,T)||^2$}
+
+\myspic{0.5}{ReprojectionError}
+
+\begin{itemize}
+\item [+] Most popular since it is very accurate.
+\item [-] Computationally expensive because it requires point triangulation.
+\end{itemize}
+
+\subsection{RANSAC (RAndom SAmple Consensus)}
+
+Standard method for model fitting in the presence of outliers (very noisy data).
+
+\begin{itemize}
+\item Choose 2 Points, fit a line.
+\item Define threshold and count the number of points that support the current hypothesis.
+\item Iterate and find the maximum number of inliers.
+\end{itemize}
+
+\begin{itemize}
+\item Computationally very expensive: $N(N-1)/2$.
+\item Given a percentage of outliers it is enough to only check a subset of all possibilities. The number of iterations needed under that assumption is found as follows:
+\begin{itemize}
+\item $w:=$ number of inliers$/N$ where $N$ is the number of data points
+\item $w^2$ is the probability that both selected points are inliers.
+\item $1-w^2$ is the probability that both selected points are outliers.
+\item $k$ is the number of iterations performed so far.
+\item $(1-w^2)^k$ is the probability that RANSAC has never selected 2 inliers.
+\item $p = 1-(1-w^2)^k$ is the probability of success. Thus the needed number of iterations based on the needed probability of success is calculated as follows:
+\important{$k=\frac{\log(1-p)}{\log(1-w^2)}$}
+\end{itemize}
+\item The percentage of outliers can also be adaptively updated.
+\item RANSAC applied to general model fitting:
+\begin{enumerate}
+\item Initial: let $A$ be a set of $N$ points.
+\item \textbf{repeat}
+\begin{enumerate}
+\item Randomly select a sample of $s$ points from $A$.
+\item Fit a model from the $s$ points
+\item Compute the distances of all other points from this model.
+\item Construct the inlier set.
+\item Store the inliers.
+\end{enumerate}
+\item \textbf{until} maximum number of iterations is reached.
+\item The set with the maximum number of inliers is chosen as a solution to the problem.
+
+\important{$k=\frac{\log(1-p)}{log(1-w^2)}$}
+\end{enumerate}
+\end{itemize}
+
+\subsubsection{Application to SFM}
+
+\begin{enumerate}
+\item What is the model?
+\begin{itemize}
+\item The Essential Matrix (for calibrated cameras) or the Fundamental Matrix (for uncalibrated cameras).
+\item Alternatively $R$ and $T$
+\end{itemize}
+\item What is the minimum number of points?
+\begin{itemize}
+\item We know that 5 points is the theoretical minimum number of points.
+\item When using the 8-point algorithm 8 is the chosen minimum.
+\end{itemize}
+\item How to compute the distance of a point from the model?
+\begin{itemize}
+\item Algebraic error ($\bar{p}_2^TE\bar{p}_1=0$ or $p_2^TFp_1 = 0$)
+\item Directional error
+\item Epipolar line distance
+\item Reprojection error
+\end{itemize}
+
+\item The number of iterations needed $k$ increases exponentially with the number of outliers. 
+
+\important{$k=\frac{\log(1-p)}{\log(1-(1-\epsilon)^8)}$}
+
+where $\epsilon$ is the fraction of outliers.
+\end{enumerate}
+
+\subsubsection{Ackerman's Steering Principle}
+
+\mportname{Planar motion}{$R=\begin{bmatrix}
+\cos\theta&-\sin\theta&0\\
+\sin\theta&\cos\theta&0\\
+0&0&1
+\end{bmatrix}\quad T = \begin{bmatrix}
+\rho\cos\phi\\\rho\sin\phi\\0
+\end{bmatrix}$}
+
+Calculating the essential matrix delivers:
+
+\important{$E=[T]_\times R = \begin{bmatrix}
+0&0&\rho\sin\phi\\
+0&0&-\rho\cos\phi\\
+-\rho\sin(\phi-\theta)&\rho\cos(\phi-\theta)&0
+\end{bmatrix}$}
+
+\begin{itemize}
+\item $\rho$ is a scale factor and can be divided out of the epipolar constraint unless it is zero.
+\item When applying Ackerman's steering principle $\rho,\phi$ and $\theta$ are determined as follows:
+
+\myspic{0.5}{Ackermann}
+
+\textbf{In this case only one point correspondence is needed! This is only valid if the camera lies on the rear axis of the vehicle. Other wise more (2) points are needed.}
+
+\important{$E=\begin{bmatrix}
+0&0&\rho\sin\frac{\theta}{2}\\
+0&0&\rho\cos\frac{\theta}{2}\\
+\rho\sin\frac{\theta}{2}&-\rho\cos\frac{\theta}{2}
+\end{bmatrix}$}
+
+Then using the epipolar constraint for a single correspondence:
+
+\mportant{$p_2T^TEp_1 = 0 \Rightarrow \sin\frac{\theta}{2}\cdot(u_2+u_1)+\cos\frac{\theta}{2}\cdot(v_2-v_1)=0$}
+
+which leads to
+
+\important{$\theta = -2\tan^{-1}\left(\frac{v_2-v_1}{u_2+u_1}\right)$}
+
+\end{itemize}
+
+\subsection{Pose-Graph Optimization}
+
+Non-linear refinement of the motion:
+
+\important{$C_k=\underset{C_k}{\text{arg min }}\sum\limits_{i}\sum\limits_{j}||C_i-C_jT_{ij}||^2$}
+
+\myspic{0.7}{Pictures/PoseGraphOptimization}
+
+\subsection{Bundle Adjustment}
+
+Non-linear, simultaneous refinement of structure $P^i$ and motion $C=R,T$.
+
+\important{$(P^i,C_1,C_2) = \underset{P^i, C_1,C_2}{\text{arg min}}\sum\limits_{i=1}^N||p_1^i - \pi_1(P^i,C_1)||^2+||p_2^i-\pi_2(P^i,C_2)||^2$}
+
+where $C_i$ denote the camera poses and $\pi$ denotes the reprojection point. Use \textbf{Levenberg-Marquardt} for minimization, initialize close to the minimum. (Minimizing the sum of squared reprojection errors over each view $k$).
+
+\myspic{0.7}{Pictures/BundleAdjustment}
+
+\subsection{Tuckey and Huber}
+
+Goal: Penalize the influence of wrong matches.
+
+\myspic{0.5}{Pictures/TuckeyAndHuber}
+
+\importname{Huber norm}{$\rho(x)=\begin{cases}x^2&\text{ if }|x|\leq k\\k(2|x|-k)&\text{ if }|x|\geq k\end{cases}$}
+
+\importname{Tuckey norm}{$\rho(x)=\begin{cases}\alpha^2&\text{ if } |x|\geq \alpha\\\alpha^2\left(1-\left(1-\left(\frac{x}{\alpha}\right)^2\right)^3\right)&\text{ if }|x|\leq \alpha\end{cases}$}
+
+\subsection{BA vs. PGO}
+
+\begin{itemize}
+\item BA is \textbf{more precise} than PGO since it uses additional landmark constraints.
+\item BA is more costly. A possible workaround lies in a smaller window size or motion-only BA.
+\end{itemize}
+
+\section{Dense 3D Reconstruction}
+
+\begin{define}
+In constrast to \textbf{sparse reconstruction} where a structure is estimated from a sparse set of features, \textbf{dense reconstruction} estimates the structure from a dense region of pixels.
+\end{define}
+
+\begin{enumerate}
+\item Local methods: Estimate depth for every pixel independently.
+\item Global methods: Refine the depth surface as a whole by enforcing smoothness constraint.
+\end{enumerate}
+
+\subsection{Photometric Error (SSD)}
+
+Project a ray through the first image and minimize the reprojection error (from projecting the resulting 3D point back into all other pictures) along a varying depth (\glqq going along the ray\grqq).
+
+\begin{itemize}
+\item Minimum patch size for SSD: 1 pixel.
+\item Patch/Window-size
+\begin{itemize}
+\item Smaller window
+\begin{itemize}
+\item[+] More detail
+\item[-] More noise
+\end{itemize}
+\item Larger window
+\begin{itemize}
+\item[+] Smoother disparity map
+\item[-] Less detail
+\end{itemize}
+\end{itemize}
+\item Not all pixels can be matched reliably (Viewpoint and illumination changes, occlusions)
+\item Take advantage of many small-baseline views where high quality matching is possible.
+\end{itemize}
+
+\myspic{1}{AggragatedPhotometricError}
+
+\begin{itemize}
+\item Flat regions (a), Edges parallel to the epipolar line (c)
+\item Distinctive features/blobs show a clear minimum.
+\item Non-distinctive features will show multiple minima.
+\end{itemize}
+
+\subsection{Disparity Space Image (DSI)}
+
+\begin{define}
+The \textbf{disparity space image} is a volumetric 3D grid, that saves the photometric error w.r.t. the reference image for discrete depth hypotheses.
+\end{define}
+
+\important{$C(u,v,d)=\sum\limits_{k=R+1}^{R+n-1}\rho(I_R(u,v)-I_k(u',v',d))$}
+
+\begin{TDefinitionTable*}
+$n$&number of images considered\\
+$I_k(u',v',d)$&patch of intensity values in k-th image\\
+$\rho(\cdot)$&photometric error\\
+\end{TDefinitionTable*}
+
+\mportant{$I_k(u',v',d)=I_k(\pi(T_{k,R}(\pi^{-1}(u,v)\cdot d)))$}
+
+The solution to the depth estimation problem thus lies in the finding of a function $d(u,v)$ that minimizes the aggregated  photometric error (local methods) and is piecewise smooth (global methods).
+
+\subsection{Global Methods}
+
+The objective is to find a surface $d(u,v)$ that minimizes a global energy
+
+\important{$E(d)=\underbrace{\sum\limits_{(u,v)}C(u,v,d(u,v)}_{E_d(d): \text{ Data term}}+\underbrace{\lambda\sum\limits_{(u,v)}\left(\frac{\partial d(u,v)}{\partial u}\right)+\left(\frac{\partial d(u,v)}{\partial v}\right)}_{\lambda E_S(d): \text{ Regularization term}}$}
+
+where $\lambda$ controls the tradeoff data/regularization.
+
+\subsubsection{Scene depth discontinuities}
+
+\textbf{Assumption:} Depth discontinuities coincide with intensity discontinuities (i.e. image gradients)
+
+\textbf{Solution:} Control/weigh regularization term according to image gradient:
+
+\mportant{$E_s(d)=\sum\limits_{(u,v)}\left(\frac{\partial d(u,v)}{\partial u}\right)^2\rho_I\left(\frac{\partial I(u,v)}{\partial u}\right)^2+\left(\frac{\partial d(u,v)}{\partial v}\right)^2\rho_I\left(\frac{\partial I(u,v)}{\partial v}\right)^2$}
+
+where $\rho_I$ is some monotically decreasing function of image gradients. High for small image gradients and low for high image gradients, such that the data term dominates in regions where the image has discontinuities.
+
+\subsubsection{Baseline}
+
+The smaller the baseline the larger the depth error, the larger the baseline the harder the search problem, due to wide view point changes.
+
+\textbf{Solution:} Obtain depth map from small baselines, when baseline becomes large (e.g. > 10\% of the average scene depth) \textbf{create a new reference frame} (keyframe) and start a new depth map computation. The multiple depth maps can then be fused into one.
+
+\subsection{GPU}
+
+\begin{define}
+A \textbf{GPU} performs calculations in parallel on thousands of cores where a \textbf{CPU} has only a few cores that are optimized for serial processing.
+\end{define}
+
+\textbf{GPU capabilities}
+\begin{itemize}
+\item Fast fixel processing (Ray tracing, draw textures, shaded triangles)
+\item Fast matrix/vector operations (Transform vertices)
+\item Programmable (Shading, bump mapping)
+\item Floating-point support (Accurate computations)
+\item Deep Learning
+\end{itemize}
+
+\textbf{GPU capabilities suitable for 3D Dense Reconstruction:}
+\begin{itemize}
+\item Image processing
+\begin{itemize}
+\item Filtering and Feature extraction (convolutions)
+\item Warping (epipolar rectification, homography)
+\end{itemize}
+\item Multiple-View Geometry
+\begin{itemize}
+\item Search for dense correspondences
+\begin{itemize}
+\item Pixel-wise operations (SAD, SSD, NCC)
+\item Matrix and vector operations (epipolar geometry)
+\end{itemize}
+\item Aggregated Photometric Error for multi-view stereo
+\end{itemize}
+\item Global Optimization
+\begin{itemize}
+\item Variational methods (regularization)
+\begin{itemize}
+\item Parallel, in place operations for gradient / divergence computation.
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\section{Tracking}
+
+\subsection{Point Tracking}
+
+\subsubsection{Block Matching}
+
+\begin{itemize}
+\item[+] Works well if the motion is large
+\item[-] Can become computationally demanding if the motion is large
+\item[E] Differential Methods
+
+\textbf{Assumptions}
+\begin{enumerate}
+\item \textbf{Photo consistency}
+The intensity of the pixels around the point to track in image $I_0$ should be the same of its corresponding pixels in image $I_1$
+
+\item \textbf{Temporal persistency}
+
+The motion between the two frames must be small (1-2 pixels at the most).
+
+\item \textbf{Spatial coherency}
+
+Neighbouring pixels that belong to the same surface have similar motion.
+\end{enumerate}
+
+\textbf{Approach}
+
+\begin{enumerate}
+\item We want to find the motion vector ($u,v)$ that mimizes the SSD.
+
+\mportant{$E = SSD = \sum (\Delta I-I_x u-I_yv)^2$}
+
+\item Minimize the $E$
+
+\begin{align*}
+\frac{\partial E}{\partial u}=0&\Rightarrow-2\sum I_x(\Delta I-I_xu-I_yv) = 0\\
+\frac{\partial E}{\partial v}=0&\Rightarrow-2\sum I_y(\Delta I -I_xu-I_yv)=0
+\end{align*}
+
+\item This system can be written in matrix form
+
+\mportant{$\begin{bmatrix}
+\sum I_xI_x&\sum I_xI_y\\\sum I_xI_y&I_yI_y
+\end{bmatrix}\begin{bmatrix}
+u\\v
+\end{bmatrix}=\begin{bmatrix}
+\sum I_x\Delta I\\\sum I_y\Delta I
+\end{bmatrix}\Rightarrow\begin{bmatrix}
+u\\v
+\end{bmatrix}=\underbrace{\begin{bmatrix}
+\sum I_xI_x&\sum I_xI_y\\\sum I_xI_y&I_yI_y
+\end{bmatrix}^{-1}}_{M}\begin{bmatrix}
+\sum I_x\Delta I\\\sum I_y\Delta I
+\end{bmatrix}$}
+
+\item For $M$ to be invertible $\det(M)$ should be non-zero, which is given for not-flat regions of the image. For this reason good features should be selected!
+\end{enumerate}
+\end{itemize}
+
+\begin{define}
+\textbf{Optical flow} is a vector field describing the motion of pixels from one frame to the next.
+\end{define}
+
+\begin{define}
+The \textbf{Aperture Problem} refers to the fact that a small aperture, when for example using block-based methods, cannot always determine the motion of an edge, since multiple solutions exist. A possible solution in the enlargement of the aperture.
+\end{define}
+
+\subsubsection{Block-based vs. Differential Methods}
+
+\begin{itemize}
+\item Block-based methods
+\begin{itemize}
+\item[+] Robust to large motions.
+\item[-] Can be computationally expensive (D $\times$ D validations need to be made for a single point to track)
+\end{itemize}
+\item Differential methods
+\begin{itemize}
+\item[-] Works only for small motions (e.g. high frame rate). For larger motion, multi-scale implementations are used but are more expensive.
+\item[+] Much more efficient than block-based methods
+\end{itemize}
+\end{itemize}
+
+\subsection{Common 2D Transformations}
+
+\small
+\begin{tabular}{l|l|l}
+Transformation&Projection&2D Warping\\\midrule
+Translation&$\begin{aligned}
+x'&=x+a_1\\
+y'&=y+a_2
+\end{aligned}$&$W(x,p)=\begin{bmatrix}
+1&0&a_1\\0&1&a_2
+\end{bmatrix}\begin{bmatrix}
+x\\y\\1
+\end{bmatrix}$\\\midrule
+Euclidean&$\begin{aligned}
+x'&=x\cos(a_3)-y\sin(a_3)+a_1\\
+y'&=x\sin(a_3)+y\cos(a_3)+a_2\\
+\end{aligned}$&$W(x,p)=\begin{bmatrix}
+\cos(a_3)& -\sin(a_3) &a_1\\\sin(a_3)&\cos(a_3)&a_2
+\end{bmatrix}\begin{bmatrix}
+x\\y\\1
+\end{bmatrix}$\\\midrule
+Affine&$\begin{aligned}
+x'&=a_1x+a_3y+a_5\\
+y'&=a_2x+a_4y+a_6\\
+\end{aligned}$&$W(x,p)=\begin{bmatrix}
+a_1&a_3&a_5\\a_2&a_4&a_6
+\end{bmatrix}\begin{bmatrix}
+x\\y\\1
+\end{bmatrix}$\\\midrule
+Projective&$\begin{aligned}
+x'&=\frac{a_1x+a_2y+a_3}{a_7x+a_8y+1}\\
+y'&=\frac{a_4x+a_5y+a_6}{a_7x+a_8y+1}
+\end{aligned}$&$W(x,p)=\begin{bmatrix}
+a_1&a_2&a_3\\a_4&a_5&a_6\\a_7&a_8&1
+\end{bmatrix}\begin{bmatrix}
+x\\y\\1
+\end{bmatrix}$
+\end{tabular}
+\normalsize
+
+For the Lucas-Kanade tracker we need the gradients of some of the above:
+
+\begin{align*}
+\nabla W_p &= \begin{bmatrix}
+\frac{\partial W_1}{\partial a_1}&\frac{\partial W_1}{\partial a_2}\\
+\frac{\partial W_2}{\partial a_1}&\frac{\partial W_2}{\partial a_2}
+\end{bmatrix}=\begin{bmatrix}
+1&0\\0&1
+\end{bmatrix}\text{ (Translation)}\\
+\nabla W_p &= \begin{bmatrix}
+1&0&-x\sin(a_3)&-y\cos(a_3)\\
+0&1&x\cos(a_3)&-y\sin(a_3)
+\end{bmatrix}\text{ (Euclidean)}\\
+\nabla W_p &= \begin{bmatrix}
+x&0&y&0&1&0\\
+0&x&0&y&0&1
+\end{bmatrix}
+\end{align*}
+
+\subsubsection{Template Tracking}
+
+\begin{define}
+Following a template image in a video sequence by estimating the warp to enable matching is called \textbf{template tracking}.
+\end{define}
+
+Thus we'd like to find the set of warp parameters $\vec{p}$ such that
+
+\mportant{$I(W(\vec{x},\vec{p}))=T(\vec{x})$}
+
+This is solved by determining $\vec{p}$ that minimizes the SSD.
+
+\important{$E = SSD = \sum\limits_{\vec{x}\in T}\left[I(W(\vec{x},\vec{p}))-T(x)\right]^2$}
+
+\textbf{Assumptions}
+\begin{itemize}
+\item No errors in the template image boundaries.
+\item No occlusion
+\item Brightness constancy: The pixel intensity should not change much from one frame to the next.
+\item Temporal consistency: The motion between two frames should be small.
+\item Spatial coherency: Pixels belonging to the same surface should have a similar motion.
+\end{itemize}
+
+\subsection{Lucas-Kanade Tracker}
+
+\mportant{$E=\sum\limits_{\vec{x}\in\vec{T}}\left[I(W(\vec{x},\vec{p}))-T(\vec{x})\right]^2$}
+
+\textbf{Idea:}
+\begin{itemize}
+\item Assume that an initial estimate of $\vec{p}$ is known. From that we'd like to find the increment $\Delta\vec{p}$ that minimizes the objective above.
+\item Thus a first order Taylor approximation is made:
+
+\mportant{$I(W(\vec{x},\vec{p}+\Delta\vec{p}))\approx I(W(\vec{x},\vec{p}))+\nabla I\frac{\partial W}{\partial \vec{p}}\Delta\vec{p}$}
+
+\item The minimum is then found by differentiating w.r.t. $\Delta\vec{p}$ and equating to zero:
+
+\begin{align*}
+0&=\frac{\partial E}{\partial\Delta\vec{p}}\\
+0&=2\sum\limits_{\vec{x}\in\vec{T}}\left[\nabla I\frac{\partial W}{\partial\vec{p}}\right]^T\left[I(W(\vec{x},\vec{p}))+\nabla I\frac{\partial W}{\partial \vec{p}}\Delta \vec{p}-T(\vec{x})\right]
+\end{align*}
+
+\important{$\Delta \vec{p}=H^{-1}\sum\limits_{\vec{x}\in\vec{T}}\left[\nabla I\textcolor{red}{\boldsymbol{\cdot}}\frac{\partial W}{\partial\vec{p}}\right]^T\left[T(\vec{x})-I(W(\vec{x},\vec{p}))\right]\qquad H = \sum\limits_{\vec{x}\in\vec{T}}\left[\nabla I\textcolor{red}{\boldsymbol{\cdot}}\frac{\partial W}{\partial\vec{p}}\right]^T\left[\nabla I\textcolor{red}{\boldsymbol{\cdot}}\frac{\partial W}{\partial\vec{p}}\right]$}
+
+where $\textcolor{red}{\boldsymbol{\cdot}}$ denotes a pixel-wise product! $H$ is called the second moment matrix (Hessian) of the warped image.
+\end{itemize}
+
+\textbf{Algorithm:}
+\begin{enumerate}
+\item Warp $I(\vec{x})$ with $W(\vec{x},\vec{p})\rightarrow I(W(\vec{x},\vec{p}))$.
+\item Compute the error: $T(x)-I(W(\vec{x},\vec{p}))$.
+\item Compute warped gradients: $\nabla I=\left[I_x,I_y\right]$ evaluated at $W(\vec{x},\vec{p})$.
+\item Evaluate the Jacobian of the warping $\frac{\partial W}{\partial \vec{p}}$.
+\item Compute the steepest descent $\nabla I\frac{\partial W}{\partial\vec{p}}$.
+\item Compute inverse Hessian $H^{-1}=\left[\sum\limits_{\vec{x}\in\vec{T}}\left[\nabla I\frac{\partial W}{\partial \vec{p}}\right]^T\left[\nabla I\frac{\partial W}{\partial\vec{p}}\right]\right]^{-1}$.
+\item Multiply steepest descent with error: $\sum\limits_{\vec{x}\in\vec{T}}\left[\nabla I\frac{\partial W}{\partial\vec{p}}\right]^T\left[T(\vec{x})-I(W(\vec{x},\vec{p}))\right]$
+\item Compute $\Delta \vec{p}$.
+\item Update parameters $\vec{p}\leftarrow \vec{p}+\Delta\vec{p}$.
+\item Repeat until $\Delta\vec{p}<\vec{\epsilon}$.
+\end{enumerate}
+
+\myspic{1}{LucasKanade}
+
+To get an estimate of the warp parameters the image is downsampled to form an image pyramid, for which at lower levels $\Delta p$ can be found more easily.
+
+\myspic{1}{LucasKanadePyramid}
+
+The concept can be generalized to 3D templates. In this case the transformation to be estimated would be a rigid body movement of the considered template model, which for matching would be projected onto 2D and varied around the estimated position to increase the chance of matching (Particle Filter).
+
+\subsection{Tracking by detection of local image features}
+
+\begin{enumerate}
+\item Keypoint detection and matching (invariant to scale, rotation or perspective)
+\item Geometric verification (RANSAC)
+\end{enumerate}
+
+\subsection{Tracking Issues}
+
+\begin{itemize}
+\item How to segment the object to track from the background?
+\item How to initialize the warping?
+\item How to handle occlusions?
+\item How to handle illumination changes and non modelled effects?
+\end{itemize}
+
+\section{Recognition}
+
+The complexity of finding image in a database of $N$ images when comparing $M$ features is $NM^2$.
+
+\vspace{3ex}
+
+To reduce the complexity an inverted file index is used. Thus for every \glqq word\grqq  the images that contain that word are registered.
+
+\begin{define}
+An \textbf{inverted file index} lists all occurrences of a word for each word.
+\end{define}
+
+\vspace{3ex}
+\textbf{How to define a visual \glqq word\grqq?}
+\begin{enumerate}
+\item Collect a large enough dataset that is representative of all possible features.
+\item Extract features and descriptors from each image and map them into the same descriptor space. (For SIFT map to a 128-dimensional space).
+\item Cluster the descriptor space into $K$ clusters.
+\item The centroid of each cluster is a visual word.
+\end{enumerate}
+
+\subsection{K-means clustering}
+
+\begin{itemize}
+\item Initialize $k$ cluster centers.
+\item Minimize $D(X,M) = \sum\limits_{i=1}^k\sum\limits_{x\in S_i}(x-m_i)^2$
+\begin{itemize}
+\item Assign each data point $x_j$ to the nearest center $m_i$.
+\item REcompute each cluster center as the mean of all points assigned to it.
+\end{itemize}
+\end{itemize}
+
+\subsection{Applying k-means to Image Retrieval}
+
+\begin{enumerate}
+\item Inverted File Index lists all visual words in the vocabulary (extracted at training time)
+\item Voting array: has as many cells as the images in the DB. Each word in the query image votes for all images registred in the IFI.
+\end{enumerate}
+
+\subsection{Hierarchical Clustering}
+
+\begin{itemize}
+\item Build a hierarchical means-tree, defining clusters and sub-clusters.
+\item Search in super-clusters first, then refine the search.
+\item This reduces the number of needed comparisons greatly.
+\end{itemize}
+
+\subsection{Robust Object/Scene Recognition}
+
+\begin{itemize}
+\item Visual Vocabulary discards the spatial relationships between features.
+\item Thus retain the $h$ most similar images and use a 5- or 8-point algorithm to geometrically verify the image, searching for the smallest reprojection error.
+\end{itemize}
+
+\subsection{Performance Analysis}
+
+\sbss{\myspic{1}{Pictures/MoreWords}}{\myspic{1}{Pictures/HigherBranchFactor}}
+
+\begin{itemize}
+\item The higher the word count the better the performance.
+\item The higher the branch factor, the better the performance (but slower).
+\end{itemize}
+
+\section{Visual Inertial Fusion}
+
+\begin{define}
+An \textbf{Inertial Measurement Unit (IMU)} measures angular velocities (gyroscope) and linear accelerations (accelerometer).
+\end{define}
+
+\textbf{MEMS (Micro Electro-Mechanical Systems}
+
+\mypic{Pictures/MEMS}
+
+\begin{itemize}
+\item The MEMS Accelerometer works with a mass in a capacitive divider.
+\item The MEMS Gyroscope is using a principle similar to halteres of flies (which are two small oscillating organs which change their relative phase when the flies' body rotates). In practice this is implemented using piezoelectric crystals.
+\item IMU integration leads to large errors since there is always drift.
+\begin{itemize}
+\item The error in velocity (integrated from accelerometer) is proportional to $t$.
+\item The error in position is proportional to $t^2$.
+\item In addition the position also depends on orientation!
+\end{itemize}
+\end{itemize}
+
+\begin{tabular}{p{0.45\linewidth}p{0.45\linewidth}}
+Cameras&IMU\\
+\textcolor{green}{Precise in slow motion}&\textcolor{green}{Robust}\\
+\textcolor{green}{Rich information for other purposes}&\textcolor{green}{High output rate ($\sim\SI{1000}{\hertz})$}\\
+&\textcolor{green}{Accurate at high acceleration}\\
+\textcolor{red}{Limited output rate ($\sim\SI{100}{\hertz}$)}&\\
+\textcolor{red}{Scale ambiguity in monocular setup}&\textcolor{red}{Large relative uncertainty when at low acceleration/angular velocity}\\
+\textcolor{red}{Lack of robustness}&\textcolor{red}{Ambiguity in gravity/acceleration}\\
+\multicolumn{2}{p{\linewidth}}{Both do dead-reckoning, which suffers from drifting. \textbf{Solution: loop detection and loop closure.}}
+\end{tabular}
+
+\subsection{IMU model}
+
+\begin{align*}
+{}_B\tilde{\vec{\omega}}_{WB}(t)&={}_B\vec{\omega}_{WB}(t)+\vec{b}^g(t)+\vec{n}^g(t)\\
+{}_B\tilde{\vec{a}}_{WB}(t)&=\vec{R}_{BW}(t)({}_W\vec{a}_{WB}(t)-{}_w\vec{g})+\vec{b}^q(t)+n^a(t)
+\end{align*}
+
+where superscript $g$ stands for gyroscope and $a$ stands for accelerometer.
+
+\importname{IMU Integration}{$\vec{p}_{W_{t_1}}=\vec{p}_{W_{t_1}}+(t_2-t_1)\vec{v}_{W_{t_1}}+\iint_{t_1}^{t_2}\left(\vec{R}_{W_t}(t)\left(\tilde{\vec{a}}(t)-\vec{b}^a(t)\right)+{}_w\vec{g}\right)dt^2$}
+
+\subsection{Camera IMU System}
+
+\myspic{0.7}{CameraImuSystem}
+
+\myspic{0.7}{Pictures/CameraImuSystem2}
+
+\subsection{Loosely Coupled Approach}
+
+\myspic{0.7}{Pictures/LooselyCoupled}
+
+\begin{itemize}
+\item The loosely coupled approach fails to model cross-correlations between inertial states of the different measurement devices.
+\end{itemize}
+
+\importname{System states}{$\vec{X}=\left[{}_w\vec{p}(t);\ \vec{q}_{WB}(t);\ {}_w\vec{v}(t);\ \vec{b}^a(t);\ \vec{b}^g(t)\right]$}
+
+\subsection{Tightly Coupled Approach}
+
+\myspic{0.7}{Pictures/TightlyCoupled}
+
+\begin{itemize}
+\item Much less drift than the loosely coupled approach.
+\end{itemize}
+
+\importname{System states}{$\vec{X}=\left[{}_w\vec{p}(t);\ \vec{q}_{WB}(t);\ {}_w\vec{v}(t);\ \vec{b}^a(t);\ \vec{b}^g(t);\ {}_w\vec{L}_1;\ {}_w\vec{L}_2;\ \ldots;\ {}_w\vec{L}_k\right]$}
+\begin{TDefinitionTable*}
+${}_w\vec{p}(t)$&position of the IMU in world coordinates\\
+$\vec{q}_{WB}(t)$&attitude of the IMU\\
+${}_w\vec{v}(t)$&velocity of the IMU in world coordinates\\
+$\vec{b}^a(t)$&bias of the accelerometer\\
+$\vec{b}^g(t)$&bias of the gyroscope\\
+${}_w\vec{L}_i$&Landmarks\\
+\end{TDefinitionTable*}
+
+\subsection{Closed Form Solution}
+
+\begin{enumerate}
+\item Absolute pose $x$ is known up to scale: $x=s\tilde{x}$
+\item Equate that with the information from the IMU:
+
+\mportant{$s\tilde{x}=x_0+v_0(t_1-t_0)+\iint_{t_0}^{t_1}a(t)dt^2$}
+
+\item For 6DOF (Martinelli 14), both $s$ and $v_0$ can be determined in closed form from a single feature observation and 3 views. This can be generalized for $N$ features.
+\end{enumerate}
+
+\subsection{Filtering}
+
+\myspic{0.7}{Pictures/DifferentParadigms}
+
+\textbf{Problems:}
+\begin{itemize}
+\item Wrong linearization point: Linearization depends on the current estimates of states which might be erroneous.
+\item Complexity of the EKF grows quadratically in the number of estimated landmarks.
+\end{itemize}
+
+An alternative is MSCKF which keeps a window of recent states and updates them using EKF. Visual obersvations are incorporated without including point positions into the states.
+
+\subsubsection{Smoothing}
+
+VIO can be solved as a graph optimization over a set of robot states $X=\{x_1,\ldots,x_N\}$ and 3D Landmarks $L =\{l_1,\ldots,l_N\}$.
+
+\mportname{State Transition Function}{$x_k=f(x_{k-1},u)$}
+
+\mportname{Reprojection of the Landmark}{$z_{i_k}=\pi(x_k,l_i)$}
+
+Then the optimization problem to be solved is:
+
+\important{$\{X,L\}=\text{argmin}_{\{X,L\}}\left\{\sum\limits_{k=1}^N||f(x_{k-1},u)-x_k||_{\Lambda_k}^2+\sum\limits_{k=1}^N\sum\limits_{i=1}^M||\pi(x_k,l_i)-z_{i_k}||^2_{\Sigma_{i_k}}\right\}$}
+
+where $\Lambda_k$ is the covariance from the IMU integration and $\Sigma_{i_k}$ is the covariance from the noise 2D measurements.
+
+\subsubsection{Full smoothing}
+
+Solves the same optimization problem as smoothing, but \textbf{keeps all the frames}.
+
+To make the optimization more efficient:
+
+\begin{itemize}
+\item Only keyframes are used, making the graph sparser.
+\item IMU data is pre-integrated between keyframes.
+\item Factor Graphs: Only frames affected by a new observations are optimized.
+\end{itemize}
+
+\subsection{Unsolved Problems}
+
+\begin{itemize}
+\item Filters
+\begin{itemize}
+\item Linearization around different values of the same variable may lead to error.
+\end{itemize}
+\item Smoothing methods
+\begin{itemize}
+\item May get stuck in local minima.
+\end{itemize}
+\end{itemize}
+
+\subsection{Camera-IMU Calibration}
+
+The goal is to estimate the rigid body transformation $T_{BC}$ and the delay $t_d$ between a camera and a rigidly attached IMU. Assume that the intrinsics of the camera are known.
+
+\vspace{3ex}
+
+\textbf{Available data:}
+\begin{itemize}
+\item Image point of detected calibration pattern (checkerboard)
+\item IMU measurements: accelerometer $\{a_k\}$ and gyroscope $\{\omega_k\}$.
+\end{itemize}
+
+\textbf{Approach:} Minimization
+
+\begin{align*}
+&J(\theta):=\textcolor{red}{J_{feat}}+\textcolor{green}{J_{acc}}+\textcolor{blue}{J_{gyro}}+\textcolor{yellow}{J_{bias_{acc}}}+\textcolor{purple}{J_{bias_{gyro}}}\\
+&\textcolor{red}{\text{(Feature reprojection error)}}\\
+&\textcolor{green}{\sum\limits_k(a_{IMU}(t_k-\textcolor{black}{t_d})-a_{cam}(t_k))^2}\\
+&\textcolor{blue}{\sum\limits_k(w_{IMU}(t_k-\textcolor{black}{t_d})-w_{cam}(t_k))^2}\\
+&\textcolor{yellow}{\int||\frac{db_{acc}}{dt}(u)||^2du}\\
+&\textcolor{purple}{\int||\frac{db_{gyro}}{dt}(u)||^2du}
+\end{align*}
+
+Where the quantities we'd like to identify are: $T_{BC},t_d,g_w,T_{WB},b_{acc}8t),b_gyro(t)$.
+
+Also continuous time can be modelled using spline interpolation.
+
+\section{Event Based Vision}
+
+\textbf{Challenges in computer vision:}
+\begin{itemize}
+\item Latency
+\item Motion Blur
+\item Dynamic Range
+\end{itemize}
+
+\textbf{Event cameras do not suffer from these issues!}
+\begin{itemize}
+\item[+] Low latency ($\sim\SI{1}{\micro\second})$
+\item[+] High dynamic range (HRD) ($\SI{140}{\dB}$ instead of $\SI{60}{\dB}$)
+\item[+] High update rate ($\SI{1}{\mega\hertz}$)
+\item[+] Low power ($\SI{10}{\milli\watt}$ instead of $\SI{1}{\watt}$)
+\item[-] Paradigm shift requires fundamentally new vision algorithms:
+\begin{itemize}
+\item Asynchronous pixels
+\item No intensity information
+\end{itemize}
+\end{itemize}
+
+\importname{Event}{$\left\langle t;\langle x,y\rangle,\text{sign}\left(\frac{dI(x,y)}{dt}\right)\right\rangle$}
+
+\begin{TDefinitionTable*}
+$t$&timestamp\\
+$\langle x,y\rangle$&Pixel coordinates\\
+$\text{sign}\left(\frac{dI(x,y)}{dt}\right)$&Pixel polarity, increase or decrease in brightness\\
+\end{TDefinitionTable*}
+
+Note that an event is sampled when a certain level is crossed, in other words a logarithmic brightness changes has happened.
+
+\importname{Logarithmic Brightness Increment}{$|\Delta\log I|=|\log I(t+\Delta t)-\log I(t)|=C$}
+
+\begin{TDefinitionTable*}
+$C\in[0.15,0.2]$&Contrast sensitivity\\
+$\Delta\log I=C$&ON event\\
+$\Delta\log I=-C$&OFF event\\
+\end{TDefinitionTable*}
+
+\subsection{Comparison to existing high-speed imaging technology}
+
+\myspic{0.7}{HighSpeedImaging}
+
+\subsection{Calibration}
+
+\begin{itemize}
+\item[+] Pinhole camera model still works
+\item[-] Passive calibration patterns cannot be used
+\begin{itemize}
+\item Camera motion or blinking patterns required.
+\end{itemize}
+\end{itemize}
+
+\subsection{Even Processing}
+
+\begin{itemize}
+\item Event-by-event processing
+\begin{itemize}
+\item[+] Low latency (in the order of microseconds)
+\item[-] High speed motion provokes high amount of data.
+\end{itemize}
+\item Event-packet processing
+\begin{itemize}
+\item[+] $N$ can be tuned to allow real-time performance on a CPU.
+\item[-] No longer microsecond resolution.
+\end{itemize}
+\end{itemize}
+
+\subsection{Event Generation Model}
+
+\begin{itemize}
+\item Assume $I(x,y,t) = \log(I(x,y,t))$
+\item Consider a given pixel $p(x,y)$ with gradient $\nabla I(x,y)$ undergoing the motion $\vec{u}=(u,v)$ in pixels, induced by a moving 3D point $\vec{P}$.
+\item An event is generated if the scalar product between the gradient vector $\nabla I(x,y)$ and the apparent motion vector $\vec{u}(u,v)$ is equal to $C$.
+\end{itemize}
+
+\importname{Event Generation Condition}{$-\nabla I\cdot\vec{u}=C$}
+
+The above can be derived based on the assumption that the brightness change of a pixel corresponding to a 3D point that performs a small motion remains unchanged. Then the intensities of the two pixels representing that same 3D point at times $t$ and $t+\Delta t$ can be equated:
+
+\begin{align*}
+I(x,y,t) &= I(x+u,y+v,t+\Delta t)\\
+I(x,y,t)&=I(x,y,t+\Delta t)+\frac{\partial I}{\partial x}u+\frac{\partial I}{\partial y}v\\
+\Delta I &= C = -\nabla I\cdot\vec{u}
+\end{align*}
+
+\subsection{DAVIS Sensor}
+
+\important{Dynamic and Active-pixel VIsion Sensor}
+
+\begin{itemize}
+\item Combines an event sensor (DVS) and a standard camera in the same pixel array.
+\item Output: frames ($\SI{30}{\hertz}$) and events (asynchronous)
+\end{itemize}
+
+\subsection{Applications}
+
+\subsubsection{Image Reconstruction}
+
+\begin{enumerate}
+\item Challenge: Recover absolute brightness based on events and camera motion.
+\item Relate the event-creating edges to their positions in the real world.
+\item Integrate the resulting gradient map to recover the absolute brightness of the scene. (Poisson Equation)
+\end{enumerate}
+
+\subsubsection{6-DoF Pose Tracking from a Photometric Depth Map}
+
+\begin{enumerate}
+\item Probabilistic approach (Bayesian filter) $p(s|e)=p(e|s)p(s)$
+\item State vector: $s=(R,T,C,\sigma_C,\rho)$
+\begin{itemize}
+\item pose $(R,T)$
+\item contrast mean value $C$
+\item uncertainty $\sigma_C$
+\item inlier ratio $\rho$
+\end{itemize}
+\item Motion model: random walk.
+\item Robust sensor model (likelihood)
+\end{enumerate}
+
+\subsubsection{Event-based Corner Detection}
+
+\myspic{0.5}{EventBasedCornerDetection}
+
+\begin{enumerate}
+\item Operates on surface of active events.
+\item The event is considered a corner if
+\begin{itemize}
+\item 3-6 contiguous pixels on \textcolor{red}{red} ring are newer than all other pixels on the same ring.
+\item 4-6 contiguous pixels on the \textcolor{blue}{blue} ring are newer than all other pixels on the same ring
+\end{itemize}
+\end{enumerate}
+
 \section{Matlab}
 
-%\subsection{Apply Gauss Filter to Image}
-%
-%\begin{TPMatlab}
-%hsize = 20;
-%sigma = 5;
-%h = fspecial('gaussian',hsize,sigma);
-%mesh(h); %To show the filter in 3D
-%imagesc(h); %To show the filter in 2D
-%im = imread('panda.jpg');
-%outim = imfilter(im,h);
-%imshow(outim);
-%\end{TPMatlab}
-%
-%\subsection{Apply Sobel Filter to Image}
-%
-%\begin{TPMatlab}
-%im = imread('lion.jpg');
-%h = fspecial('sobel');
-%outim = imfilter(double(im),h);
-%imagesc(outim);
-%colormap gray;
-%\end{TPMatlab}
+\subsection{Apply Gauss Filter to Image}
+
+\begin{TPMatlab}
+hsize = 20;
+sigma = 5;
+h = fspecial('gaussian',hsize,sigma);
+mesh(h); %To show the filter in 3D
+imagesc(h); %To show the filter in 2D
+im = imread('panda.jpg');
+outim = imfilter(im,h);
+imshow(outim);
+\end{TPMatlab}
+
+\section*{Understanding Checks}
+
+\NewDocumentEnvironment{QandA}{m} %Used to define variables in an equation
+{
+\textbf{#1}
+\begin{itemize}
+}
+{
+\end{itemize}
+\vspace{3ex}
+}
+
+\subsection*{Basics}
+
+\begin{QandA}{Definition of Visual Odometry}
+\item The process of \textbf{incrementally} estimating the \textbf{pose} of the vehicle by examining the changes that motion induces on the images of its \textbf{onboard cameras} in \textbf{real time}.
+\end{QandA}
+
+\begin{QandA}{Differences between VO, VSLAM, SFM}
+\item Structure from motion describes the \textbf{3D reconstruction} and \textbf{6DOF pose estimation} from \textbf{unordered image sets}. By this it is a \textbf{superset of VSLAM} which concentrates on localization and mapping based on ordered images sets. It basically performs visual odometry enhanced with \textbf{loop detection} and \textbf{graph optimization} which serves to build an accurate \textbf{map}.
+\end{QandA}
+
+\begin{QandA}{Needed Assumptions for VO}
+\item Sufficient illumination
+\item Dominance of static scene
+\item Enough texture
+\item Sufficient scene overlap 
+\end{QandA}
+
+\begin{QandA}{Working Principle / Building Blocks of VO}
+\item Working Principle
+\begin{enumerate}
+\item Compute the relative motion from the last to the current image.
+\item Concatenate pose changes over time to recover the trajectory.
+\item Optimize over a set of poses to refine the trajectory locally.
+\end{enumerate}
+\item Building Blocks
+\begin{enumerate}
+\item Recorded image sequence
+\item Feature detection
+\item Feature matching across frames
+\item Motion estimation from 2D-2D, 3D-3D or 2D-3D correspondences
+\item Local optimization
+\end{enumerate}
+\end{QandA}
+
+\begin{QandA}{Difference Dense, Semi-Dense, Sparse Methods}
+\item Dense methods use every pixel in the frame and typically do not rely on features.
+\item Semi-Dense methods only consider part of the pixels. In the case of LSD-SLAM the pixels are selected based on a variance threshold. Alternatively also a threshold on the gradient could be used.
+\item Sparse methods rely on the direct comparison of certain chosen sparse areas on the frame, for example areas corresponding to features, as done in SVO.
+\end{QandA}
+
+\subsection*{Image Formation}
+
+\begin{QandA}{Blur circle}
+\item The blur circle describes the projection of a point light source when the lens is not focused.
+\end{QandA}
+
+\begin{QandA}{Derivation of the thin lens equation including the Pinhole Approximation}
+\item Sketch object-, lens- and image-plane including the corresponding distances and the focal point.
+\item Derive the formula using similar triangles.
+\item The pinhole Approximation assumes that $z\gg f$ and $z\gg L$. Thus $f\approx e$. 
+\end{QandA}
+
+\begin{QandA}{Definition of Vanishing Points and Lines}
+\item Parallel lines are at the same distance along their course. If however they are not parallel to the image plane, and thus their depth remains the same over their course, the depth and therefore the perceived distance between the lines decreases proportionally with the depth until the two lines intersect in the vanishing point. Two parallel planes intersect in their vanishing line. This can be easily shown choosing pairs of parallel lines in those planes.
+\end{QandA}
+
+\begin{QandA}{Definition of Ames Room}
+\item An Ames room is a Room which allows introspection only through a \textbf{single defined peephole} (only one eye!), from which it seems to be perfect cuboid (no depth perception due to \textbf{monocular vision}). Unexpectedly though it is built such that \textbf{one corner extends further back}. If a person now walks along the back side of that room they appear to remain at constant distance while changing size, even though she actually moves away or towards the viewer. 
+\end{QandA}
+
+\begin{QandA}{Derivation of the Relation between FOV and Focal Length}
+\item Sketch image plane in the context of the pinhole approximation and use the tangent of the field-of-view-angle to establish a relation between the focal length and the width of the image plane. \textcolor{red}{?}.
+\end{QandA}
+
+\begin{QandA}{Pipeline: Perspective Projection with Homogeneous Transform and Lens Distortion Removal}
+\item Perspective Projection
+\begin{enumerate}
+\item Use a homogeneous transformation to calculate the the camera-frame coordinates of a desired point in world coordinates.
+\item Use the K-matrix () to find the corresponding image plane coordinates and transform them to pixel coordinates in one go.
+\item Remember that $k_u$ and $k_v$ establish the connection between the number of pixels and the focal length in meters.
+\end{enumerate}
+\item Lens Distortion Removal
+\begin{enumerate}
+\item Asses the lens distortion and calculate the warping that describes where every pixel of the unwarped picture goes when affected by the warping in this case.
+\item Allocate an unwarped image and for every pixel in it calculate where the corresponding warped pixel must lie. Then interpolate that pixel in the source image using next neighbour or bilinear interpolation.
+\end{enumerate}
+\end{QandA}
+
+\subsection*{Image Formation 2}
+
+\begin{QandA}{Definition PnP Problem, Derivation of the Behaviour of the Solutions}
+\item Problem Description: Find the pose of the camera from $n$ 2D-3D-correspondences.
+\item For a single point correspondence neither position nor orientation of the camera are determined.
+\item For two points the camera still has infinitely many solutions, since size and orientation of the line are unknown. (Thales' Circle)
+\item For three points carnot's theorem can be used to establish a set of equations connecting the bearing angles between points to their relative distances and their distances from the camera. The resulting system of equations is of eighth order and reduces to fourth order when negative solutions are neglected. Then a forth point is needed to disambiguate the remaining solutions. 
+\end{QandA}
+
+\begin{QandA}{Explanation and Derivation: DLT}
+\item The idea of DLT is to use a set of 2D-3D-correspondences to determine extrinsic and intrinsic parameters of a camera.
+\item Approach
+\begin{enumerate}
+\item Define the projection matrix as the multiplication of the $K$ matrix and the homogeneous transform which in combination describe the projection of a 3D point to 2D image coordinates.
+\item Rearrange the resulting equation solving for image coordinates $u$ and $v$.
+\item Put all terms to the right side and write in matrix form.
+\item The resulting system has 12 unknowns and can thus be solved up to scale with 11 given correspondences, thus at least 6 points are needed.
+\end{enumerate}
+\end{QandA}
+
+\begin{QandA}{Definition: Central and Non Central Omnidirectional Cameras}
+\item A central omnidirectional camera has a single effective viewpoint, thus the rays recorded in the camera do effectively meet in a single point.
+\end{QandA}
+
+\begin{QandA}{Which Mirrors ensure Central Projection}
+\item Mirrors resulting from the revolution of a conic can be used for central omnidirectional cameras. The advantage of such a camera is that the image can actually be unwarped to give a perspective view. Or alternatively project the view onto a unit sphere making an interface for standardized algorithms.
+\end{QandA}
+
+\begin{QandA}{Defintion: Photometric Calibration}
+\item \textbf{Radiometric response function:} What is the brightness recorded depending on the irradiance of the scene?
+\textbf{Vignetting:} How much darker do the image corners appear?
+\textbf{Point spread function:} Describes how the imaging system responds to a point source or a point object. Can be associated with the impulse response, returns the image when convoluted with the input.
+\end{QandA}
+
+\subsection*{Filtering}
+
+\begin{QandA}{Difference: Convolution and Cross-correlation}
+\item The convolution of two sequences is calculated by sliding the flipped filter over the target sequence and multiplying all coinciding elements. In contrast the cross-correlation does not include flipping the filter first. For a symmetric filter the two are equivalent. \textcolor{red}{are they?}
+\end{QandA}
+
+\begin{QandA}{Difference: Box and Gauss filter}
+\item Both are smoothing filters. A box filter has sharp edges and will introduce high frequency contributions which can cause aliasing. In contrast a gauss filter slowly approaches zero, for which reason, if finely resolved a gauss filter will not lead to aliasing.
+\end{QandA}
+
+\begin{QandA}{Determination of kernel size based on filter size.}
+\item Choose the kernel size such that the kernel is sufficiently close to zero at its boundaries to avoid aliasing. A width of 3$\sigma$ is a good choice.
+\end{QandA}
+
+\begin{QandA}{Application of a Median Filter}
+\item Removal of salt and pepper noise.
+\end{QandA}
+
+\begin{QandA}{Handling of Boundary Issues}
+\item At the boundary a filter cannot be applied since depending on the size of the kernel a certain number of additional pixels are needed. To provide those one can add zero padding, wrap the image around, copy the edge or reflect across the edge.
+\end{QandA}
+
+\begin{QandA}{Working Principle of 1D Edge Detection}
+\item Smoothing of the image before taking first derivative, otherwise we have large noise induced peaks in the derivative. The 1D edge can then be found as the local maximum or minimum of the derivative. Alternatively the zero crossing of the second derivative can give the position of the edge.
+\end{QandA}
+
+\begin{QandA}{Explanation of Differential Property of the Convolution}
+\item When edge detection is combined with smoothing the differential property of the convolution comes in handy, since it allows to change the order of operations. Instead of differentiating the image itself, this operation can be applied to the filter and thus needs to be performed only once, and also on a smaller array, since the filters are usually smaller than the filtered images.
+\end{QandA}
+
+\begin{QandA}{Computation of the first derivative of an image in both directions}
+\item Convolution of a \textbf{Prewitt} or a \textbf{Sobel} filter in the respective directions results in the gradients of the image, two image-sized arrays.
+\end{QandA}
+
+\begin{QandA}{Explain use of LoG}
+\item Having identified the use of the second derivative as highlighting an edge with its passage through zero, we can say that the second derivative is useful to identify edges. Doing this in both directions and linearly combining the two yields a single 2D map which highlights edges with clear zero passings, if combined with a noise-removing filter, which in this case is a gaussian. Using the derivative property of the convolution needed for filtering we arrive at the laplacian of gaussian filter.
+\end{QandA}
+
+\begin{QandA}{Properties of smoothing and derivative filters}
+\item Smoothing filters have positive signs and sum up to 1 in order not to change the overall luminosity of the image. They remove high frequency content and are thus low pass filters.
+\item Derivative filters have opposite signs in order to highlight changes in the image. The sum up to 0 such that for flat regions there is no response of the filter. These filters are high pass filters and remove low frequency content.
+\end{QandA}
+
+\begin{QandA}{Canny Edge Detector}
+\item Compute gradient of the image.
+\item Thresholding of the gradient images.
+\item Non-maxima suppression, identifying the maximum along the gradient direction.
+\end{QandA}
+
+\begin{QandA}{Non-maxima suppression}
+\item Evaluate gradient direction of the current pixel and check whether it is a maximum in the corresponding direction (discretize possible directions). Preserve the value if it is a maximum in its direction otherwise suppress.
+\end{QandA}
+
+\subsection*{Point Feature Detection}
+
+\begin{QandA}{Definition and Implementation: Template Matching}
+\item Use the correlation to detect a template in the image. No flipping, otherwise template would not fit. If the template matches a location in the image there will be a maximum in the correlation.
+\end{QandA}
+
+\begin{QandA}{Limitations of Template Matching}
+\item Not size-invariant, not rotation-invariant, and template and object have to be vary similar. Background of the template might mess up a match.
+\end{QandA}
+
+\begin{QandA}{Illustrate Similarity Metrics (SSD, SAD, NCC}
+\item \textbf{NCC} Normalized Cross Correlation: Consider patches/images as vectors in $\mathbb{R}^n$ and calculate the cosine of the angle between the two using the scalar product of the normalized vectors.
+\item \textbf{SAD} Sum of Absolute Differences. Direct comparison of corresponding pixel values.
+\item \textbf{SSD} Sum of Squared Differences.
+\item \textbf{Subtract the mean of the images to account for overall illumination changes!}
+\end{QandA}
+
+\begin{QandA}{Intuitive Explanation for SSD and NCC}
+\item NCC: as above
+\item \textbf{SSD} can be interpreted as a measure for the length of the connecting vector between the two images understood as vectors in $\mathbb{R}^n$.
+\end{QandA}
+
+\begin{QandA}{Definition of good Features for Tracking}
+\item Distinctiveness
+\item Rotation, Scale, Illumination, Distortion Invariance
+\item Repeatability
+\end{QandA}
+
+\begin{QandA}{Pros and Cons of Corners and Blobs}
+\item Corners:
+\begin{itemize}
+\item[+] High localization accuracy
+\item[-] Less distinctive
+\end{itemize}
+\item Blobs
+\item[+] More distinctive
+\item[+] Better for place recognition (for example SIFT can handle large viewpoint, scale and illumination changes.
+\item[-] Less localization accuracy.
+\end{QandA}
+
+\begin{QandA}{Moravec Definition of Corner, Edge and Flat Region (HARRIS)}
+\item Define a window size.
+\item Consider the SSD of a single pixel shift in one of four directions.
+\item The minimum of the four SSDs is the measure of interest, which defines how much of a corner is within the window.
+\end{QandA}
+
+\begin{QandA}{Derivation of the second moment matrix (HARRIS)}
+\item Consider a patch and a shifted version of it. Calculate the SSD between the two and approximate it with a first order approximation using the image gradients.
+\item Write it as a quadratic form to receive the second moment matrix. (Pixel wise products)
+\item The 2D quadratic form can be analysed by its eigenvalues which indicate if the currently considered window is a flat region, a corner or an edge.
+\end{QandA}
+
+\begin{QandA}{Properties of the $M$ matrix for corners/edges/flat/90-degree-corner/non-axis-aligned 90-degree-corner regions (HARRIS)}
+\item Corner: Eigenvalues are both nonzero.
+\item Edge: Only one eigenvalue is significantly larger than zero.
+\item For any corner diagonalize the second moment matrix ($R^{-1}ER$) to find the orientation of the directions of fastest and slowest change of SSD. 
+\end{QandA}
+
+\begin{QandA}{Properties of Eigenvalues of the $M$ matrix (HARRIS)}
+\item A corner is identified by thresholding the minimum eigenvalue of the second moment matrix. 
+\end{QandA}
+
+\begin{QandA}{Harris VS Shi-Tomasi}
+\item Shi-Tomasi uses the cornerness function as defined by the minimum of the eigenvalues. 
+
+\important{$R = \min(\lambda_1,\lambda_2)$}
+\item Harris uses an approximation by the difference of the determinant of the matrix and the squared trace times $k$(0.04-0.15).
+
+\important{$R = \det(M)-k\text{trace}^2(M)$}
+\end{QandA}
+
+\begin{QandA}{Invariance to Illumation Changes and Scale changes (HARRIS)}
+\item Invariant to rotation (reverted when finding the eigenvalues)
+\item Not invariant to large scale changes.
+\end{QandA}
+
+\begin{QandA}{Repeatability of Harris Detector after increasing scale by 2.}
+\item Only 18\%.
+\end{QandA}
+
+\subsection*{Point Feature Detector Part 2}
+
+\begin{QandA}
+{Working principle of automatic scale detection.}
+\item Rescaling patches individually is expensive.
+\item Find a function over the patch size that has a maximum at a scale at which the feature of interest is represented best, which in addition is independent of the scale of the image considered. After the scale has been found the patch size can be normalized. In addition the function should have single and sharp peaks.
+\item Convolution of image and a kernel is a possible solution. Kernel of choice: LoG, since we'd like to find edges.
+\end{QandA}
+
+\begin{QandA}
+{Needed Properties of an automatic scale detection function.}
+\item Image scale invariance.
+\item Sharp peaks.
+\item Single maxima.
+\end{QandA} 
+
+\begin{QandA}
+{Efficient implementation of automatic scale detection?}
+\item Not calculation of LoGs but DoGs
+\end{QandA}
+
+\begin{QandA}
+{Definition: Feature Descriptor}
+\item A feature descriptor is information about a feature that aims to describe the feature in consideration as uniquely and as concisely as possible.
+\item Patch descriptors: For rotation and scale invariance: Rescale and de-rotate (normalisation by dominant direction of gradient) (\textbf{warping} necessary)
+\item Better solution: HoGs (Histograms of Oriented Gradients).
+\item For matching use comparison function and find lowest difference.
+\end{QandA}  
+
+\begin{QandA}
+{Keypoint Detection SIFT vs. Harris}
+\item Harris: Eigenvalues of Second Moment matrix, Corners!
+\item SIFT: Blobs! Identified as maxima and minima of the DoGs.
+\end{QandA}
+
+\begin{QandA}
+{Explain orientation invariance for SIFT}
+\item Assign each keypoint a canonical orientation. Strongly smoothed HoG peak to make stable for lighting and contrast changes.
+\end{QandA}
+
+\begin{QandA}
+{Working Principle: SIFT}
+\item \textbf{Detector $\neq$ Descriptor!}
+\item Make image pyramid, progressively smaller resolution for larger scales.
+\item Apply 3 versions of blurring to each scale, increasing the variance of the applied Gauss filter by increments of $2^{1/s}$ where is is the number of intervals per scale space.
+\item Calcualte the DoG pyramid.
+\item Identify the blobs as maxima and minima of the DoGs.
+\item Establish features descriptors for each blob:
+\begin{enumerate}
+\item 4x4 HOGs (4x4 patches), 8 directions, Location (2D), Scale, Orientation
+\item Filter patch
+\item Divide patch into subpatches
+\item Compute HOGs
+\item Concatenate HOGs
+\item Normalize the descriptor
+\end{enumerate}
+\end{QandA}   
+
+\begin{QandA}
+{Robustness of SIFT}
+\item Scale change of 2: No problem, just shifts feature to the next octave of the pyramid.
+\item Viewpoint change of 50 degrees: Can handle yes, example mars rover.
+\end{QandA} 
+
+\begin{QandA}
+{Illustrate the 1st to 2nd closest ratio of SIFT detection: what’s the intuitive
+reasoning behind it? Where does the 0.8 factor come from?}
+\item Intuition: The closest match for a candidate blob with the database should be significantly closer than the next best guess, because if not there is no certainty about the matching - a small stochastic change could tip the balance. So if we found a mismatch there are potentially many other mismatches around. The threshold of 0.8 includes many matches while discarding a large proportion of the mismatches. Optimized over a large data set.
+\end{QandA}
+
+\subsection*{Multi-View Geometry 1}
+
+\begin{QandA}
+{Difference: SFM vs. 3D reconstruction}
+\item Structure from motion assumes no knowledge of the camera intrinsics/extrinsics.
+\end{QandA}
+	
+\begin{QandA}
+{Definition:  Disparity (simplified and general)}
+\item In stereo vision object that are not infinitely far away do not appear in the same position on both screens. That difference is called disparity. For a simplified case where the cameras are aligned it can be easily measures, else we have to perform stereo rectification first.
+\item Mathematical Expression
+
+\importname{Simplified}{$u_l-u_r = \frac{bf}{Z_P}$}
+
+\item Depth Uncertainty: Decreases with an increasing base line and increases with increasing depth.
+
+\item How to improve on uncertainty?
+
+Increase the baseline.
+\end{QandA}
+
+\begin{QandA}
+{Effects of large/small baseline}
+\item Large: Minimum measurable distance increases and for close object the search problem gets harder.
+\item Small: Large depth error.
+\end{QandA}
+
+\begin{QandA}
+{Closest measurable depth?}
+\item Depends in the screen width. The \glqq flattest rays\grqq of the two cameras that can be recorded limit the minimum measurable distance, also depending on the baseline.
+\end{QandA}
+
+\begin{QandA}
+{How to compute intersection of 2 lines?}
+\item \textbf{Linear:} Write the projection equations for both cameras and then find the 3D point by solving the resulting system of equations using svd.
+\item \textbf{Nonlinear:} Find that point that will minimize reprojection errors. The solution of the corresponding minimization problem is the nonlinear approach. (Minimization of the sum of squared reprojection errors)
+\end{QandA}
+
+\begin{QandA}
+{Geometric interpretation of linear and nonlinear approach? What error is minimized?}
+\item in the nonlinear case the reprojection error is minimized. In the linear case \textcolor{red}{the algebraic error is minimized?}
+\end{QandA}
+
+\begin{QandA}
+{Definition of the Epipole, Epipolar Line, Epipolar Plane}
+\item The \textbf{epipoles} are the projections of the line connecting the two optical centers.
+\item The \textbf{epipolar line} is the projection of all point on the ray corresponding to $p$ in the other camera.
+\item The \textbf{epipolar plane} is the plane defined by the connecting line of the two optical centers and the epipolar line/a combination of the two rays to $P$.
+\end{QandA}
+
+\begin{QandA}
+{Epipolar lines for}
+\item Converging Cameras \textcolor{red}{Default case?}
+\item Forward motion: Epipole has same coordinates in all frames. Points move along lines radiating from $e$. \textbf{Focus of expansion.}
+\item Side-moving camera: Perfect case: Epipolar lines are parallel to pixel rows. (if cameras are rotated accordingly) which simplifies the search problem a lot! Epipoles at infinity!
+\end{QandA}
+
+\begin{QandA}
+{Definition: Stereo Rectification}
+\item Mathematical Derivation of the rectifying homographies
+\begin{enumerate}
+\item Write perspective camera equation for both images.
+\item Rewrite them in non-homogeneous coordinates and invert the homogeneous transform, now calculating the transformation that yields world coordinates.
+\item Formulate a new projection for both cameras featuring the same rotation and intrinsics but different translations. Solve old and new view for world coordinates to establish a system of equations for the new intrinsics and extrinsics.
+\item Define the combined intrinsics as
+
+\important{$\bar{K}=(K_L+K_R)/2\qquad \bar{R} = [\bar{r}_1,\bar{r}_2,\bar{r}_3]$}
+
+where 
+
+\begin{align*}
+\bar{r}_1&=\frac{C_2-C_1}{||C_2-C_1||}\\
+\bar{r}_2&=r_3\times\bar{r}_1\text{ $r_3$ is the 3rd column of the left rotation matrix $R_L$}\\
+\bar{r}_3&=\bar{r}_1\times\bar{r}_2
+\end{align*}
+\end{enumerate}
+\end{QandA}
+
+\begin{QandA}
+{Computation of the disparity map?}
+\item Establish pixel correspondences and subtract their u-coordinates. Or actually in practice when shifting patches for comparison the optimal shift delivers the disparity of the current pixel.
+\end{QandA}
+
+\begin{QandA}
+{Explain establishment of stereo correspondences with subpixel accuracy.}
+\item When comparing possibly comparing patches we can find the match by searching the minimum of the applied similarity measure. To achieve subpixel accuracy that function can be interpolated before searching the minimum.
+\end{QandA}
+
+\begin{QandA}
+{Explain rejection of outliers in stereo correspondences.}
+\item Rejection of ambiguous matches if more than two possible matches are detected (similar score to optimal). More than 2 since 2 close candidates can still be justified as the two encompassing the minimum.
+\item Reject match when at the boundary of the disparity range since that might indicate a minimum outside the range.
+\end{QandA}
+
+\begin{QandA}
+{Alternatives to stereo vision for gaining depth information.}
+\item Monocular vision with deep learning combined with shape recognition/use of contextual information.
+\item Multi-image approaches.
+\item Non-holonomic constraints on vehicle-driven SFM. 
+\end{QandA}
+
+\subsection*{Multiple View Geometry 2}
+
+\begin{QandA}
+{Minimum Number of correspondences for calibrated SFM}
+\item Number of knowns: $4n$ established correspondences
+\item $5 + 3n$ unknowns: Pose up to scale and $n$ 3D points.
+\item Minimum number of points needed: 5 or more.
+\end{QandA}
+
+\begin{QandA}
+{Derivation: Epipolar Constraint}
+\item If two cameras view the same point the two recorded points must lie on the epipolar plane by definition. Thus the epipolar constraint can be established by saying that $p_1$ and $p_2$ must be coplanar!
+\end{QandA}
+
+\begin{QandA}
+{Definition: Essential Matrix}
+\item The essential matrix is defined as the cross-matrix of T multiplied with R and results directly from the epipolar constraint.
+\end{QandA}
+
+\begin{QandA}
+{Derivation: 8-point algorithm}
+\item Formulate the epipolar constraint for 8 points to receive a unique (up-to-scale) solution delivering the essential matrix. Degenerate if the 3D points are coplanar. It minimizes the projection of $p_1$ onto the normal direction $n$.
+\end{QandA}
+
+\begin{QandA}
+{Number of Decompositions of the essential matrix}
+\item 4 decompositions. And there is only one solution where the points are front of both cameras.
+\end{QandA}
+
+\begin{QandA}
+{Relation between essential and fundamental matrix.}
+\item The essential matrix formulates the epipolar constraint for already calibrated cameras. When a calibration needs to be done in addition the system of equations can be reformulated such that the matrix in question becomes the calibration-including fundamental matrix.
+\end{QandA}
+
+\begin{QandA}
+{Importance of normalization of the point coordinates for the 8-point algorithm.}
+\item Large range of pixel values makes for different scaling of the different equations which leads to poor numerical conditioning of the resulting system of equations.
+\item Transformation of the image coordinates such that they are between 1 and -1.
+\item OR transformation with shift by the centroid of the distribution and scaling to a standard deviation of $\sqrt{2}$.
+\end{QandA}
+
+\begin{QandA}
+{Definition: Normalized 8-point algorithm}
+\item Normalize point correspondences
+\item Compute normalized $\hat{F}$ 
+\item Transform back: $F = B_2^T\hat{F} B_1$
+\item \textbf{Possible if both camera image centers are known and both have the same focal length.}
+\end{QandA}
+
+\begin{QandA}
+{Quality metrics for the essential matrix estimation}
+\item Evaluate the epipolar constraint.
+\item Directional error evaluating the squared cosines of the angles between $p_2$ and the normal $n$. Find cosine from dot product $p_2\cdot Ep_1$.
+\item Squared epipolar line to point distance
+\item Squared reprojection errors, expensive computation but accurate.
+\end{QandA}
+
+\begin{QandA}
+{Why do we need RANSAC?}
+\item Because there are outliers because of image noise, blur, moving objects and occlusions.
+\end{QandA}
+
+\begin{QandA}
+{Theoretical maximum number of combinations to explore}
+\item Binomial Coefficient, $N$ choose $s$.
+\end{QandA}
+
+\begin{QandA}
+{Number of iterations for a given success probability?}
+\item \important{$k = \frac{\log(1-p)}{\log(1-w^s)}$}
+\item Calculate probability that RANSAC never selects $s$ inliers in $k$ tries.
+\end{QandA}
+
+\begin{QandA}
+{Trend of RANSAC vs. iterations vs. fraction of outliers, vs. number of points?}
+\item Fraction of outliers: exponential increase of needed number of tries.
+\item 
+\end{QandA}
+
+\begin{QandA}
+{How to apply RANSAC to}
+\item 8-point algorithm: Randomly select 8 points, calculate the pose change, apply to points and count inliers.
+\item DLT: Randomly select 6 points, calculate projection matrix, apply to all points and calculate projection error.
+\item P3P: Select 4 points, set up and solve carnots theorem, disambiguate, calculate projection error. 
+\end{QandA}
+
+\begin{QandA}
+{How to reduce the number of RANSAC iterations for the SFM problem?}
+\item Yes we can reduce the number of points to 5 by the inclusion of motion constraints. Planar motion or Ackermans steering principle.
+\end{QandA}
+
+\subsection*{Multiple View Geometry 3}
+
+\begin{QandA}
+{Definition: Bundle Adjustment}
+\item Mathematical Expression
+
+\important{$(P^i, C_k) = \text{arg min}_{p^i,C_k}\sum\limits_{k}\sum\limits_{i}||p_k^i-\pi_k(P^i,C_k)||^2$}
+\item Bundle adjustment optimizes the estimated camera poses and the triangulated landmarks, minimizing the sum of squared reprojection errors.
+\item Pose-Graph optimization only optimizes the poses, BA optimizes the structure as well. BA is more precise but also more costly.
+\end{QandA}
+
+\begin{QandA}
+{Definition: Hierarchical and Sequential SFM for monocular VO}
+\item \textbf{Hierachical:} Extract and match features between nearby frames, establish groups of three and compute SFM for those by doing it first for the first two images and then merging the third view using 3-point RANSAC. Merge clusters pairwise and refine both structure and motion.
+\item \textbf{Sequential:} Initialize structure and motion from 2 views (bootstrapping). Sequentially add new views by determining pose, then extending the structure, then refine pose and structure.
+\end{QandA}
+
+\begin{QandA}
+{What are Keyframes?}
+\item Why needed? Since the triangulation through two frames that are to close will be inaccurate it is advisable to select two frames with a large enough baseline.
+
+\item How to select? Based no the ratio between baseline and average depth.
+\end{QandA}
+
+\begin{QandA}
+{Definition: Loop closure detection}
+\item Realizing when a place is seen for the second time.
+\item Detecting loop closures allows introducing additional constraints removing drifts in the map. It allows helps to avoid map duplication.
+\end{QandA}
+
+\begin{QandA}
+{Most popular open source VO and VSLAM?}
+\item PTAM, ORB-SLAM, LSD-SLAM, DSO, SVO
+\end{QandA}
+
+\begin{QandA}
+{Differences between features-based and direct methods?}
+\item Feature based methods rely on distinct image points which are tracked throughout frames. They minimize the reprojection error. 
+\begin{itemize}
+\item[+] Large frame-to-frame motions
+\item[+] Accuracy: Efficient optimization of structure an motion possible
+\item[-] Slow due to costly feature detection
+\item[-] Robustness needed
+\end{itemize}
+\item Direct methods do not bother identifying features but track the motion by matching the whole frame and minimizing the photometric error.
+\begin{itemize}
+\item[+] All information in the image used.
+\item[+] Increasing camera frame-rate reduces computational cost per frame.
+\item[-] Limited frame-to-frame motion.
+\item[-] Joint optimization of dense structure and motion to expensive.
+\end{itemize}
+\end{QandA}
+
+\subsection*{Dense 3D Reconstruction}
+
+\begin{QandA}
+{Description: Multi-View stereo working principle}
+\item Start with a series of calibrated images with known extrinsics.
+\item First estimate the depth of every pixel. The idea is to minimize the photometric error in all images as a function of depth in the first image. Do this for all image combinations and aggregate the error. Then find the miniumum.
+\item Consider limiting to small baseline to avoid occlusions.
+\item Second apply global methods on the recovered 3D structure to make it smoother.
+\end{QandA}
+
+\begin{QandA}
+{Difference of Aggregated Photometric Error for corners, flat regions, edges?}
+\item Corners: Clear minimum.
+\item Flat: No recognizable minimum.
+\item Edges: Extended minimum.
+\end{QandA}
+
+\begin{QandA}
+{Definition: Disparity Space Image}
+\item How to build it?
+\end{QandA}
+
+\begin{QandA}
+{How to extract depth from DSI}
+\item
+\end{QandA}
+
+\begin{QandA}
+{How to enforce smoothness (regularization) and how to incorporate depth discontinuities (mathematical expression)}
+\item
+\end{QandA}
+
+\begin{QandA}
+{What happens if we increase lambda? What if lambda = 0, what if lambda is too big?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{What is the optimal baseline for multi-view stereo?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{What are advantages of GPU's?}
+\item
+\end{QandA}
+
+\subsection*{Tracking}
+
+\begin{QandA}
+{Illustrate Tracking with Block matching}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Underlying assumptions behind differential methods}
+\item Derive mathematical expression
+\item Meaning of the $M$ matrix
+\end{QandA}
+
+\begin{QandA}
+{Invertibility of the $M$ matrix}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Aperture Problem}
+\item Definition
+\item Solution
+\end{QandA}
+
+\begin{QandA}
+{Definition: Optical Flow}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Comparison: Block-Based vs. Differential Methods for tracking.}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Working principle of KLT}
+\item
+\end{QandA}
+
+\begin{QandA}
+{What is the Hessian matrix and for which warping function does it coincide to that used for point tracking?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Lukas-Kanade failure cases, how to overcome?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{How to get the initial guess?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Illustrate coarse-to-fine implementation of KLT}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Illustrate alternative trackin procedures using point features?}
+\item
+\end{QandA}
+
+\subsection*{Recognition}
+
+\begin{QandA}
+{Definition: Inverted File Index}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Definition: Visual Word}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Definition K-means clustering}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Purpose of Hierarchical clustering}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Explanation: Image retrieval using Bag of Words.}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Open challenges on place recognition, what proposed solutions?}
+\item
+\end{QandA}
+
+\subsection*{Visual Inertial Fusion}
+
+\begin{QandA}
+{Why use an IMU for VO?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Working principle of a MEMS IMU}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Drift of Industrial IMU}
+\item
+\end{QandA}
+
+\begin{QandA}
+{What causes BIAS in IMU}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Definition IMU measurement model}
+\item
+\end{QandA}
+
+\begin{QandA}
+{How to model the bias?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{How to integrate acceleration?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Definition of loosely coupled and tightly coupled visual inertial fusion?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{How can we use non-linear optimization-based approaches to solve for visual inertial fusion?}
+\item
+\end{QandA}
+
+\subsection*{Event based Vision}
+
+\begin{QandA}
+{Working principle: DVS}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Pros and Cons vs Standard Camera}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Are standard calibration techniques applicable?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{How to compute optical flow with a DVS?}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Intuitive explanation of intensity reconstruction}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Definition: Generative Model of a DVS}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Definition: Davis Sensor}
+\item
+\end{QandA}
+
+\begin{QandA}
+{Equation: Event generation model and Proof}
+\item
+\end{QandA}
 
 \end{multicols*}
 
