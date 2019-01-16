@@ -17,7 +17,9 @@
 \begin{document}
 \begin{multicols*}{4}
 \maketitle
+\small
 \tableofcontents
+\normalsize
 \end{multicols*}
 
 \begin{multicols*}{2}
@@ -112,6 +114,7 @@ Dense Tracking and Mapping in Real-Time
 \end{Paper}
 
 \subsection{Features}
+\label{sec:PapersFeatures}
 
 \begin{Paper}{Harris}{Harris_1988.pdf}
 A combined corner and edge detector
@@ -135,26 +138,66 @@ Object Recognition from Local Scale-Invariant Features
 
 \begin{Paper}{SURF (2006)}{SURF_2006_ECCV.pdf}
 Speeded-Up Robuts Features
+
+\begin{itemize}
+\item Similar to SIFT, but faster with shorter descriptors
+\item Approximated computation for detection and descriptor
+\end{itemize}
 \end{Paper}
 
 \begin{Paper}{FAST detector (2005)}{FAST_2005_ICCV.pdf}
 Fusing Points and Lines for High Performance Tracking
+
+\begin{itemize}
+\item Studies intensity of pixels on circle around candidate pixel $C$
+\item $C$ is a FAST corner if a set of $N$ contiguous pixels on the circle are either all brighter or darker than the intensity of $C$ + $threshold$.
+\item Very fast detector, about 100 Megapixels/s
+\end{itemize}
 \end{Paper}
 
 \begin{Paper}{BRIEF descriptor (2010)}{BRIEF_2010_ECCV.pdf}
 Binary Robust Independent Elementary Features
+
+\begin{itemize}
+\item Goal: High speed
+\item Detection based on FAST
+\item The descriptor pattern is generated randomly (or by machine learning) only once and then used for all patches.
+\item[+] Binary descriptor allows very fast Hamming distance matching.
+\item[-] Not scale/rotation invariant.
+\end{itemize}
 \end{Paper}
 
 \begin{Paper}{ORB descriptor (2011)}{ORB_2011_ICCV.pdf}
 Oriented FAST and Rotated BRIEF
+
+\begin{itemize}
+\item Keypoint detector based on FAST
+\item BRIEF descriptors are steered according to keypoint orientation to provide rotation invariance
+\item Good binary features are learned by minimizing the correlation on a set of training patches
+\end{itemize}
 \end{Paper}
 
 \begin{Paper}{BRISK descriptor (2011)}{BRISK_2011_ICCV.pdf}
 Binary Robust Invariant Scalable Keypoints
+
+\begin{itemize}
+\item Detect corners in scale-space using FAST
+\item Rotation and scale invariant
+\item Compare intensity in patter-defined regions
+\item Approximately 10 times faster than SURF for detection and description
+\item Slower than BRIEF but scale and rotation invariant
+\end{itemize}
 \end{Paper}
 
 \begin{Paper}{FREAK descriptor (2012)}{FREAK_2012_CVPR.pdf}
 Fast Retina Keypoint
+
+\begin{itemize}
+\item Rotation and Scale invariant
+\item Fast compact and robust descriptor
+\item Sampling patterns based on human retina
+\item Faster to compute, less memory and more robust than SIFT, SURF or BRISK
+\end{itemize}
 \end{Paper}
 
 \subsection{Multi View Geometry}
@@ -173,6 +216,157 @@ Direct Sparse Odometry
 
 \begin{Paper}{ORB-SLAM (2015 TRO)}{ORB-SLAM_2015_TRO.pdf}
 ORB-SLAM: a Versatile and Accurate Monocular SLAM System
+\end{Paper}
+
+\subsection{Dense 3D Reconstruction}
+
+\begin{Paper}{REMODE (2014 ICRA)}{REMODE_2014_ICRA.pdf}
+Probabilistic, Monocular Dense Reconstruction in Real Time
+\end{Paper}
+
+\subsection{Template Tracking}
+
+\begin{Paper}{Lucas-Kanade Tracker (1981)}{LucasKanade_1981}
+An Iterative Image Registration Technique with an Application to Stereo Vision
+\end{Paper}
+
+\begin{Paper}{Lucas-Kanade Tracker (2004 IJCV)}{LucasKanade_2004_IJCV}
+Lucas-Kanade 20 Years On: A Unifying Framework
+\end{Paper}
+
+\subsection{Visual Inertial Fusion}
+
+\begin{Paper}{Ultimate SLAM (2018 RAL)}{UltimateSLAM_2018_RAL.pdf}
+Ultimate SLAM? Combining Events, Images, and IMU for Robust Visual SLAM in HDR and High-Speed Scenarios
+\end{Paper}
+
+\subsubsection{Closed Form}
+
+\begin{Paper}{Closed-Form Solutions for Attitude, Speed, Absolute Scale and Bias Determination (2012 TOR)}{Closed-Form Solutions for Attitude, Speed, Absolute Scale and Bias Determination_2012_TOR.pdf}
+\end{Paper}
+
+\begin{Paper}{Closed-Form Solution of Visual-Inertial SFM( 2014 IJCV)}{Closed-Form Solution of Visual-Inertial SFM_2014_IJCV.pdf}
+\end{Paper}
+
+\begin{Paper}{Simultaneous State Initialization and Gyroscope Bias Calibration in VI Aided Navigation (2017 RAL)}{Simultaneous State Initialization and Gyroscope Bias Calibration in VI Aided Navigation_2017_RAL.pdf}
+\end{Paper}
+
+\subsubsection{Filters}
+
+\begin{Paper}{A Multi-State Constraint Kalman Filter for Vision-aided Inertial Navigation (2007 ICRA)}{A Multi-State Constraint Kalman Filter for Vision-aided Inertial Navigation_2007_ICRA.pdf}
+\end{Paper}
+
+\begin{Paper}{Analysis and Improvement of the Consistency of EKF based SLAM( 2008 ICRA)}{Analysis and Improvement of the Consistency of EKF based SLAM_2008_ICRA.pdf}
+\end{Paper}
+
+\begin{Paper}{Visual-Inertial Navigation, Mapping and Localization: A Scalable Real-Time Causal Approach (2011 IJRR)}{Visual-Inertial Navigation, Mapping and Localization, A Scalable Real-Time Causal Approach_2011_IJRR.pdf}
+\end{Paper}
+
+\begin{Paper}{Observability-Constrained Vision-Aided Inertial Navigation (2012 ISER)}{Observability-Constrained Vision-Aided Inertial Navigation_2012_ISER.pdf}
+\end{Paper}
+
+\begin{Paper}{Robust Visual Inertial Odometry Using a Direct EKF-Based Approach (2015 IROS)}{Robust Visual Inertial Odometry Using a Direct EKF-Based Approach_2015_IROS.pdf}
+\end{Paper}
+
+\begin{Paper}{A Square Root Inverse Filter for Efficient Vision-Aided Inertial Navigation on Mobile Devices (2015 RSS)}{A Square Root Inverse Filter for Efficient Vision-Aided Inertial Navigation on Mobile Devices_2015_RSS.pdf}
+\end{Paper}
+
+\begin{Paper}{Consistency Analysis and Improvement of Vision-Aided Inertial Navigation (2014 TOR)}{Consistency Analysis and Improvement of Vision-Aided Inertial Navigation_2014_TOR.pdf}
+\end{Paper}
+
+\begin{Paper}{ROVIO (2013 RSS)}{ROVIO_2013_RSS.pdf}
+Keyframe-Based Visual-Inertial SLAM Using Nonlinear Optimization
+\end{Paper}
+
+\subsubsection{Fixed-Lag Smoothers}
+
+\begin{Paper}{Sliding Window Filter with Application to Planetary Landing (2010 JFT)}{Sliding Window Filter with Application to Planetary Landing_2010_JFT.pdf}
+\end{Paper}
+
+\begin{Paper}{Motion Tracking with Fixed-Lag Smoothing (2011 ICRA)}{Motion Tracking with Fixed-Lag Smoothing_2011_ICRA.pdf}
+\end{Paper}
+
+\begin{Paper}{Keyframe-Based Visual-Inertial Odometry Using Nonlinear Optimization (2015 IJRR)}{Keyframe-Based Visual-Inertial Odometry Using Nonlinear Optimization_2015_IJRR.pdf}
+\end{Paper}
+
+\subsubsection{Full-Smoothing Methods}
+
+\begin{Paper}{Camera Trajectory Estimation using Inertial Sensor Measurements and SFM Resulst (2001 CVPR)}{Camera Trajectory Estimation using Inertial Sensor Measurements and SFM Resulst_2001_CVPR.pdf}
+\end{Paper}
+
+\begin{Paper}{Motion Estimation from Image and Inertial Measurements (2004)}{Motion Estimation from Image and Inertial Measurements_2004.pdf}
+\end{Paper}
+
+\begin{Paper}{Airborne Smoothing and Mapping using Vision and Inertial Sensors (2009 ICRA)}{Airborne Smoothing and Mapping using Vision and Inertial Sensors_2009_ICRA.pdf}
+\end{Paper}
+
+\begin{Paper}{Information Fusion in Navigation Systems Via Factor Graph Based Incremental Smoothing (2013 RAS)}{Information Fusion in Navigation Systems Via Factor Graph Based Incremental Smoothing_2013_RAS.pdf}
+\end{Paper}
+
+\begin{Paper}{IMU Preintegration on Manifold for Efficient Visual-Inertial Maximum-a-Posteriori Estimation (2015 RSS)}{IMU Preintegration on Manifold for Efficient Visual-Inertial Maximum-a-Posteriori Estimation_2015_RSS.pdf}
+\end{Paper}
+
+\begin{Paper}{A Spline-Based Trajectory Representation for Sensor Fusion and Rolling Shutter Cameras (2015 IJCV)}{A Spline-Based Trajectory Representation for Sensor Fusion and Rolling Shutter Cameras_2015_IJCV.pdf}
+\end{Paper}
+
+\begin{Paper}{Autonomous, Vision-Based Flight and Live Dense 3D Mapping with Quadrotor Micro Aerial Vehicle (2016 TRO)}{Autonomous, Vision-Based Flight and Live Dense 3D Mapping with Quadrotor Micro Aerial Vehicle_2016_TRO}
+\end{Paper}
+
+\begin{Paper}{SVO, Semidirect Visual Odometry for Monocular and Multicamera Systems (2017 TRO)}{SVO, Semidirect Visual Odometry for Monocular and Multicamera Systems_2017_TRO.pdf}
+\end{Paper}
+
+\subsection{Even Based Vision}
+
+\begin{Paper}{Active Exposure Control for Robust Visual Odometry in HDR Environments (2017 ICRA)}{Active Exposure Control for Robust Visual Odometry in HDR Environments_2017_ICRA.pdf}
+\end{Paper}
+
+\begin{Paper}{Low-latency localization by Active LED Markers tracking using a DVS (2013 IROS)}{Low-latency localization by Active LED Markers tracking using a DVS_2013_IROS.pdf}
+\end{Paper}
+
+\begin{Paper}{Low-Latency Event-Based Visual Odometry (2014 ICRA)}{Low-Latency Event-Based Visual Odometry_2014_ICRA.pdf}
+\end{Paper}
+
+\begin{Paper}{Event-based, 6-DOF Pose Tracking for High-Speed Maneuvers (2014 IROS)}{Event-based, 6-DOF Pose Tracking for High-Speed Maneuvers_2014_IROS.pdf}
+\end{Paper}
+
+\begin{Paper}{Event-based, 6-DOF Camera Tracking from Photometric Depth Maps (2018 TPAMI)}{Event-based, 6-DOF Camera Tracking from Photometric Depth Maps_2018_TPAMI.pdf}
+\end{Paper}
+
+\begin{Paper}{ESIM (2018 CORL)}{ESIM_2018_CORL.pdf}
+Open Event Camera Simulator
+\end{Paper}
+
+\begin{Paper}{Real-time Visual-Inertial Odometry for Event Cameras using Keyframe-based Nonlinear Optimization (2017 BMVC)}{Real-time Visual-Inertial Odometry for Event Cameras using Keyframe-based Nonlinear Optimization_2017_BMVC}
+\end{Paper}
+
+\begin{Paper}{A 240 x 180 130 dB 3 us Latency Global Shutter Spatiotemporal Vision Sensor (2014 JSSC)}{A 240 x 180 130 dB 3 us Latency Global Shutter Spatiotemporal Vision Sensor_2014_JSSC.pdf}
+\end{Paper}
+
+\begin{Paper}{Asynchronous, Photometric Feature Tracking using Events and Frames (2018 ECCV)}{Asynchronous, Photometric Feature Tracking using Events and Frames_2018_ECCV.pdf}
+\end{Paper}
+
+\begin{Paper}{The Event-Camera Dataset and Simulator (2017 IJRR)}{The Event-Camera Dataset and Simulator_2017_IJRR.pdf}
+Event-based data for pose estimation, visual odometry, and SLAM
+\end{Paper}
+
+\begin{Paper}{Accurate Angular Velocity Estimation With an Event Camera (2017 RAL)}{Accurate Angular Velocity Estimation With an Event Camera_2017_RAL.pdf}
+\end{Paper}
+
+\begin{Paper}{EVO (2017 RAL)}{EVO_2017_RAL}
+A Geometric Approach to Event-Based 6-DOF Parallel Tracking and Mapping in Real Time
+\end{Paper}
+
+\begin{Paper}{EMVS (2016 BMVC)}{EMVS_2016_BMVC.PDF}
+Event-based Multi-View Stereo
+\end{Paper}
+
+\begin{Paper}{Fast Event-Based Corner Detection (2017 BMVC)}{Fast Event-Based Corner Detection_2017_BMVC.pdf}
+\end{Paper}
+
+\begin{Paper}{Simultaneous Mosaicing and Tracking with an Event Camera (2014 BMVC)}{Simultaneous Mosaicing and Tracking with an Event Camera_2014_BMVC.pdf}
+\end{Paper}
+
+\begin{Paper}{Interacting Maps for Fast Visual Interpretation (2011 IJCNN)}{Interacting Maps for Fast Visual Interpretation_2011_IJCNN.pdf}
 \end{Paper}
 
 \section{Basics VO}
@@ -294,7 +488,7 @@ All parallel lines in reality intersect in the vanishing point in the projected 
 \textbf{Depth of Field (DOF)} is the distance between the nearest and farthest objects in a scene that appear acceptably sharp in the image.
 \end{define}
 
-\myspic{0.5}{FieldOfViewFocalLength}
+\sbs{0.5}{0.5}{\myspic{1}{FieldOfViewFocalLength}}{Note that the coordinates of the point on the screen $(x,y,1)$ are homogeneous 2D coordinates, thus $1$ is not the coordinate in $z$ direction.}
 
 \begin{TDefinitionTable*}
 $W$ & width of the normalized screen&$\siu{m}$\\
@@ -703,7 +897,7 @@ h_{11}&h_{12}&h_{13}\\
 h_{21}&h_{22}&h_{23}\\
 h_{31}&h_{32}&h_{33}\\
 \end{bmatrix}=\begin{bmatrix}\alpha_u&0&u_0\\0&\alpha_v&v_0\\0&0&1\end{bmatrix}\begin{bmatrix}
-r_{11}&r_{12}&t_1\\r_{21}&r_{22}&t_2\\r_{31}&r_{32}&t_3
+r_{11}&r_{12}&r_{13}&t_1\\r_{21}&r_{22}&r_{23}&t_2\\r_{31}&r_{32}&r_{33}&t_3
 \end{bmatrix}
 \end{equation*}
 
@@ -830,7 +1024,7 @@ A camera is a \textbf{central catadioptric camera} if the projection is such tha
 
 A convolution in 2D requires flipping the filter in both dimensions, which is equivalent to a $\SI{180}{\degree}$ rotation. Then the convolution is defined as:
 
-\mportant{$G[x,y]=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kF[x,y]H[x-u,y-v]\qquad G = F\ast H$}
+\mportant{$G[x,y]=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kF[x-u,y-v]H[u,v]\qquad G = F\ast H$}
 
 \begin{define}
 The \textbf{cross-correlation} is almost equivalent to a convolution, but does not include a flipping of the filter.
@@ -838,7 +1032,7 @@ The \textbf{cross-correlation} is almost equivalent to a convolution, but does n
 \textbf{Properties: linearity}
 \end{define}
 
-\mportant{$G[x,y]=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kF[x,y]H[x+u,y+v]$}
+\mportant{$G[x,y]=\sum\limits_{u=-k}^k\sum\limits_{v=-k}^kF[x+u,y+v]H[u,v]$}
 
 \subsection{Box filters}
 
@@ -1299,8 +1493,6 @@ In this case the used mask is the 3D equivalent of the mask used above.
 \item \textbf{Orientation:} (i.e. angle of the patch): 1 scalar value
 \end{itemize}
 
-\textcolor{red}{Finish summary}
-
 \begin{TPMatlab}
 %use of imdilate
 %Finding local maxima
@@ -1310,7 +1502,7 @@ DoG_dilated = imdilate(DoG, true(3,3,3));
 DoG_ind_max = DoG_dilated == DoG_dilated;
 %Excluding nonzero values
 DoG_ind_max = DoG_dilated == DoG_dilated & DoG;
-%Dilate multiplies the given pattern with each position in an array and sets the corresponding position to the maximum of the multiplication
+%Dilate multiplies the given pattern with each position in an array (pixelwise) and sets the corresponding position to the maximum of the multiplication
 \end{TPMatlab}
 
 \subsection{Feature matching}
@@ -1339,19 +1531,21 @@ The closest descriptor can give very good scores to ambiguous matches. The solut
 \end{itemize}
 
 \def\slidesizehere{0.8}
-\subsection{SURF}
-\myspic{\slidesizehere}{SURF}
-\subsection{FAST}
-\myspic{\slidesizehere}{FAST}
-\subsection{BRIEF}
-\myspic{\slidesizehere}{BRIEF}
-\subsection{ORB}
-\myspic{\slidesizehere}{ORB}
-\subsection{BRISK}
-\myspic{\slidesizehere}{BRISK}
-\subsection{FREAK}
-\myspic{\slidesizehere}{FREAK}
+%\subsection{SURF}
+%\myspic{\slidesizehere}{SURF}
+%\subsection{FAST}
+%\myspic{\slidesizehere}{FAST}
+%\subsection{BRIEF}
+%\myspic{\slidesizehere}{BRIEF}
+%\subsection{ORB}
+%\myspic{\slidesizehere}{ORB}
+%\subsection{BRISK}
+%\myspic{\slidesizehere}{BRISK}
+%\subsection{FREAK}
+%\myspic{\slidesizehere}{FREAK}
 \subsection{Overview}
+Find the corresponding papers in section \ref{sec:PapersFeatures}.
+
 \myspic{\slidesizehere}{RecapTable}
 \section{Multi View Geometry}
 
@@ -1983,6 +2177,8 @@ which leads to
 
 \end{itemize}
 
+\section{Refinement}
+
 \subsection{Pose-Graph Optimization}
 
 Non-linear refinement of the motion:
@@ -2000,16 +2196,6 @@ Non-linear, simultaneous refinement of structure $P^i$ and motion $C=R,T$.
 where $C_i$ denote the camera poses and $\pi$ denotes the reprojection point. Use \textbf{Levenberg-Marquardt} for minimization, initialize close to the minimum. (Minimizing the sum of squared reprojection errors over each view $k$).
 
 \myspic{0.7}{Pictures/BundleAdjustment}
-
-\subsection{Tuckey and Huber}
-
-Goal: Penalize the influence of wrong matches.
-
-\myspic{0.5}{Pictures/TuckeyAndHuber}
-
-\importname{Huber norm}{$\rho(x)=\begin{cases}x^2&\text{ if }|x|\leq k\\k(2|x|-k)&\text{ if }|x|\geq k\end{cases}$}
-
-\importname{Tuckey norm}{$\rho(x)=\begin{cases}\alpha^2&\text{ if } |x|\geq \alpha\\\alpha^2\left(1-\left(1-\left(\frac{x}{\alpha}\right)^2\right)^3\right)&\text{ if }|x|\leq \alpha\end{cases}$}
 
 \subsection{BA vs. PGO}
 
@@ -2071,18 +2257,28 @@ The \textbf{disparity space image} is a volumetric 3D grid, that saves the photo
 \begin{TDefinitionTable*}
 $n$&number of images considered\\
 $I_k(u',v',d)$&patch of intensity values in k-th image\\
-$\rho(\cdot)$&photometric error\\
+$\rho(\cdot)$&photometric error ($L_1,L_2$, Tuckey, Huber)\\
 \end{TDefinitionTable*}
 
 \mportant{$I_k(u',v',d)=I_k(\pi(T_{k,R}(\pi^{-1}(u,v)\cdot d)))$}
 
 The solution to the depth estimation problem thus lies in the finding of a function $d(u,v)$ that minimizes the aggregated  photometric error (local methods) and is piecewise smooth (global methods).
 
+\subsubsection{Tuckey and Huber}
+
+Goal: Penalize the influence of wrong matches.
+
+\myspic{0.5}{Pictures/TuckeyAndHuber}
+
+\importname{Huber norm}{$\rho(x)=\begin{cases}x^2&\text{ if }|x|\leq k\\k(2|x|-k)&\text{ if }|x|\geq k\end{cases}$}
+
+\importname{Tuckey norm}{$\rho(x)=\begin{cases}\alpha^2&\text{ if } |x|\geq \alpha\\\alpha^2\left(1-\left(1-\left(\frac{x}{\alpha}\right)^2\right)^3\right)&\text{ if }|x|\leq \alpha\end{cases}$}
+
 \subsection{Global Methods}
 
 The objective is to find a surface $d(u,v)$ that minimizes a global energy
 
-\important{$E(d)=\underbrace{\sum\limits_{(u,v)}C(u,v,d(u,v)}_{E_d(d): \text{ Data term}}+\underbrace{\lambda\sum\limits_{(u,v)}\left(\frac{\partial d(u,v)}{\partial u}\right)+\left(\frac{\partial d(u,v)}{\partial v}\right)}_{\lambda E_S(d): \text{ Regularization term}}$}
+\important{$E(d)=\underbrace{\sum\limits_{(u,v)}C(u,v,d(u,v))}_{E_d(d): \text{ Data term}}+\underbrace{\lambda\sum\limits_{(u,v)}\left(\frac{\partial d(u,v)}{\partial u}\right)+\left(\frac{\partial d(u,v)}{\partial v}\right)}_{\lambda E_S(d): \text{ Regularization term}}$}
 
 where $\lambda$ controls the tradeoff data/regularization.
 
@@ -2100,7 +2296,7 @@ where $\rho_I$ is some monotically decreasing function of image gradients. High 
 
 The smaller the baseline the larger the depth error, the larger the baseline the harder the search problem, due to wide view point changes.
 
-\textbf{Solution:} Obtain depth map from small baselines, when baseline becomes large (e.g. > 10\% of the average scene depth) \textbf{create a new reference frame} (keyframe) and start a new depth map computation. The multiple depth maps can then be fused into one.
+\textbf{Solution:} Obtain depth map from small baselines, when baseline becomes large (e.g. $>$ 10\% of the average scene depth) \textbf{create a new reference frame} (keyframe) and start a new depth map computation. The multiple depth maps can then be fused into one.
 
 \subsection{GPU}
 
@@ -2280,7 +2476,7 @@ For the Lucas-Kanade tracker we need the gradients of some of the above:
 \nabla W_p &= \begin{bmatrix}
 x&0&y&0&1&0\\
 0&x&0&y&0&1
-\end{bmatrix}
+\end{bmatrix}\text{ (Affine)}
 \end{align*}
 
 \subsubsection{Template Tracking}
@@ -2348,6 +2544,15 @@ where $\textcolor{red}{\boldsymbol{\cdot}}$ denotes a pixel-wise product! $H$ is
 To get an estimate of the warp parameters the image is downsampled to form an image pyramid, for which at lower levels $\Delta p$ can be found more easily.
 
 \myspic{1}{LucasKanadePyramid}
+
+\subsubsection{Failure Cases}
+
+\begin{itemize}
+\item Initial estimate too far from the minimum, thus the approximation no longer holds. The image pyramid is the solution. \textbf{Coarse-To-Fine}
+\item The template changes over time, thus we update it with every newly tracked image.
+\end{itemize}
+
+\subsubsection{Generalization}
 
 The concept can be generalized to 3D templates. In this case the transformation to be estimated would be a rigid body movement of the considered template model, which for matching would be projected onto 2D and varied around the estimated position to increase the chance of matching (Particle Filter).
 
@@ -2484,7 +2689,7 @@ where superscript $g$ stands for gyroscope and $a$ stands for accelerometer.
 \myspic{0.7}{Pictures/LooselyCoupled}
 
 \begin{itemize}
-\item The loosely coupled approach fails to model cross-correlations between inertial states of the different measurement devices.
+\item The loosely coupled approach fails to model cross-correlations between internal states of the different measurement devices.
 \end{itemize}
 
 \importname{System states}{$\vec{X}=\left[{}_w\vec{p}(t);\ \vec{q}_{WB}(t);\ {}_w\vec{v}(t);\ \vec{b}^a(t);\ \vec{b}^g(t)\right]$}
@@ -2650,7 +2855,7 @@ $\Delta\log I=-C$&OFF event\\
 \end{itemize}
 \end{itemize}
 
-\subsection{Even Processing}
+\subsection{Event Processing}
 
 \begin{itemize}
 \item Event-by-event processing
@@ -2747,9 +2952,10 @@ imshow(outim);
 
 \section*{Understanding Checks}
 
-\NewDocumentEnvironment{QandA}{m} %Used to define variables in an equation
+\NewDocumentEnvironment{QandA}{mo}
 {
-\textbf{#1}
+\IfNoValueTF{#2}{ \textbf{#1} }{ \sethlcolor{#2}\textbf{\hl{#1}} } 
+
 \begin{itemize}
 }
 {
@@ -2757,13 +2963,23 @@ imshow(outim);
 \vspace{3ex}
 }
 
+\important{\textbf{\hlcyan{Definition}\hspace{3ex}\hlyellow{Derivation}\hspace{3ex}\hlpink{Comparison}\hspace{3ex}\hlgreen{Application}}}
+
 \subsection*{Basics}
 
-\begin{QandA}{Definition of Visual Odometry}
+\newcommand{\Definition}{Aquamarine1}%\hlcyan
+
+\newcommand{\Derivation}{Yellow1}%\hlyellow
+
+\newcommand{\Comparison}{Orchid1}%\hlpink
+
+\newcommand{\Application}{PaleGreen1}%\hlgreen
+
+\begin{QandA}{Visual Odometry}[\Definition]
 \item The process of \textbf{incrementally} estimating the \textbf{pose} of the vehicle by examining the changes that motion induces on the images of its \textbf{onboard cameras} in \textbf{real time}.
 \end{QandA}
 
-\begin{QandA}{Differences between VO, VSLAM, SFM}
+\begin{QandA}{VO, VSLAM, SFM}[\Comparison]
 \item Structure from motion describes the \textbf{3D reconstruction} and \textbf{6DOF pose estimation} from \textbf{unordered image sets}. By this it is a \textbf{superset of VSLAM} which concentrates on localization and mapping based on ordered images sets. It basically performs visual odometry enhanced with \textbf{loop detection} and \textbf{graph optimization} which serves to build an accurate \textbf{map}.
 \end{QandA}
 
@@ -2777,180 +2993,183 @@ imshow(outim);
 \begin{QandA}{Working Principle / Building Blocks of VO}
 \item Working Principle
 \begin{enumerate}
-\item Compute the relative motion from the last to the current image.
-\item Concatenate pose changes over time to recover the trajectory.
-\item Optimize over a set of poses to refine the trajectory locally.
+\item Compute the \textbf{relative motion} from the last to the current image.
+\item Concatenate pose changes over time to \textbf{recover the trajectory}.
+\item Optimize over a set of poses to \textbf{refine the trajectory} locally.
 \end{enumerate}
 \item Building Blocks
 \begin{enumerate}
-\item Recorded image sequence
-\item Feature detection
-\item Feature matching across frames
-\item Motion estimation from 2D-2D, 3D-3D or 2D-3D correspondences
-\item Local optimization
+\item Recorded \textbf{image sequence}
+\item Feature \textbf{detection}
+\item Feature \textbf{matching} across frames
+\item \textbf{Motion estimation} from 2D-2D, 3D-3D or 2D-3D correspondences
+\item Local \textbf{optimization}
 \end{enumerate}
 \end{QandA}
 
-\begin{QandA}{Difference Dense, Semi-Dense, Sparse Methods}
-\item Dense methods use every pixel in the frame and typically do not rely on features.
-\item Semi-Dense methods only consider part of the pixels. In the case of LSD-SLAM the pixels are selected based on a variance threshold. Alternatively also a threshold on the gradient could be used.
-\item Sparse methods rely on the direct comparison of certain chosen sparse areas on the frame, for example areas corresponding to features, as done in SVO.
+\begin{QandA}{Dense, Semi-Dense, Sparse Methods}[\Comparison]
+\item Dense methods use \textbf{every pixel} in the frame and typically do not rely on features.
+\item Semi-Dense methods only consider \textbf{part of the pixels}. In the case of LSD-SLAM the pixels are selected based on a \textbf{variance threshold}. Alternatively also a \textbf{threshold on the gradient} could be used.
+\item Sparse methods rely on the direct comparison of certain sparsely chosen areas on the frame, for example areas \textbf{corresponding to features}, as done in SVO.
 \end{QandA}
 
 \subsection*{Image Formation}
 
-\begin{QandA}{Blur circle}
-\item The blur circle describes the projection of a point light source when the lens is not focused.
+\begin{QandA}{Blur circle}[\Definition]
+\item The blur circle describes the \textbf{projection of a point light source} when the lens is \textbf{not focused}.
 \end{QandA}
 
-\begin{QandA}{Derivation of the thin lens equation including the Pinhole Approximation}
+\begin{QandA}{Thin lens equation including the Pinhole Approximation}[\Derivation]
 \item Sketch object-, lens- and image-plane including the corresponding distances and the focal point.
-\item Derive the formula using similar triangles.
-\item The pinhole Approximation assumes that $z\gg f$ and $z\gg L$. Thus $f\approx e$. 
+\item Derive the formula using \textbf{similar triangles}.
+\item The pinhole approximation assumes that the \textbf{object is far away from the camera}. Therefore $z\gg f$ and $z\gg L$. Thus $f\approx e$. 
 \end{QandA}
 
-\begin{QandA}{Definition of Vanishing Points and Lines}
-\item Parallel lines are at the same distance along their course. If however they are not parallel to the image plane, and thus their depth remains the same over their course, the depth and therefore the perceived distance between the lines decreases proportionally with the depth until the two lines intersect in the vanishing point. Two parallel planes intersect in their vanishing line. This can be easily shown choosing pairs of parallel lines in those planes.
+\begin{QandA}{Vanishing Points and Lines}[\Definition]
+\item Parallel lines are at the \textbf{same distance along their course}. If however they are not parallel to the image plane, and thus their depth changes over their course, the perceived \textbf{distance between the lines decreases proportionally with the depth} until the two lines intersect in the vanishing point. Two \textbf{parallel planes intersect in their vanishing line}. This can be easily shown choosing pairs of parallel lines in those planes.
+\item This can be shown using the \textbf{equations of two parallel lines} and applying the \textbf{perspective projection}.
 \end{QandA}
 
-\begin{QandA}{Definition of Ames Room}
-\item An Ames room is a Room which allows introspection only through a \textbf{single defined peephole} (only one eye!), from which it seems to be perfect cuboid (no depth perception due to \textbf{monocular vision}). Unexpectedly though it is built such that \textbf{one corner extends further back}. If a person now walks along the back side of that room they appear to remain at constant distance while changing size, even though she actually moves away or towards the viewer. 
+\begin{QandA}{Ames Room}[\Definition]
+\item An Ames room is a Room which allows introspection only through a \textbf{single defined peephole} (only one eye!), from which it seems to be perfect cuboid (no depth perception due to \textbf{monocular vision}). Unexpectedly though it is built such that \textbf{one corner extends further back}. If a person now walks along the back side of that room they appear to remain at constant distance while changing size, even though they actually move away or towards the viewer.
+\item The room has to have a \textbf{trapezoidal back wall}, \textbf{one corner further back} and a \textbf{sloped floor}. 
 \end{QandA}
 
-\begin{QandA}{Derivation of the Relation between FOV and Focal Length}
-\item Sketch image plane in the context of the pinhole approximation and use the tangent of the field-of-view-angle to establish a relation between the focal length and the width of the image plane. \textcolor{red}{?}.
+\begin{QandA}{Relation between FOV and Focal Length}[\Derivation]
+\item Sketch image plane in the context of the pinhole approximation and use the tangent of the field-of-view-angle to establish a relation between the focal length and the width of the image plane.
 \end{QandA}
 
-\begin{QandA}{Pipeline: Perspective Projection with Homogeneous Transform and Lens Distortion Removal}
+\begin{QandA}{Perspective Projection with Homogeneous Transform and Lens Distortion Removal}[\Derivation]
 \item Perspective Projection
 \begin{enumerate}
-\item Use a homogeneous transformation to calculate the the camera-frame coordinates of a desired point in world coordinates.
-\item Use the K-matrix () to find the corresponding image plane coordinates and transform them to pixel coordinates in one go.
+\item Use a homogeneous transformation to calculate the the \textbf{camera-frame coordinates} of a desired point in world coordinates.
+\item Use the \textbf{K-matrix} to find the corresponding \textbf{image plane coordinates} and transform them to \textbf{pixel coordinates} in one go.
 \item Remember that $k_u$ and $k_v$ establish the connection between the number of pixels and the focal length in meters.
 \end{enumerate}
 \item Lens Distortion Removal
 \begin{enumerate}
-\item Asses the lens distortion and calculate the warping that describes where every pixel of the unwarped picture goes when affected by the warping in this case.
-\item Allocate an unwarped image and for every pixel in it calculate where the corresponding warped pixel must lie. Then interpolate that pixel in the source image using next neighbour or bilinear interpolation.
+\item Asses the lens distortion and calculate the \textbf{warping} that describes where every pixel of the unwarped picture goes when affected by the warping in this case.
+\item Allocate an unwarped (\textbf{destination}) image and for every pixel in it calculate where the corresponding (\textbf{source}) warped pixel must lie. Then interpolate that pixel in the source image using \textbf{next neighbour} or \textbf{bilinear interpolation}.
 \end{enumerate}
 \end{QandA}
 
 \subsection*{Image Formation 2}
 
-\begin{QandA}{Definition PnP Problem, Derivation of the Behaviour of the Solutions}
-\item Problem Description: Find the pose of the camera from $n$ 2D-3D-correspondences.
-\item For a single point correspondence neither position nor orientation of the camera are determined.
-\item For two points the camera still has infinitely many solutions, since size and orientation of the line are unknown. (Thales' Circle)
-\item For three points carnot's theorem can be used to establish a set of equations connecting the bearing angles between points to their relative distances and their distances from the camera. The resulting system of equations is of eighth order and reduces to fourth order when negative solutions are neglected. Then a forth point is needed to disambiguate the remaining solutions. 
+\begin{QandA}{PnP Problem, Derivation of the Behaviour of the Solutions}[\Definition]
+\item Problem Description: \textbf{Find the pose} of the camera from $n$ \textbf{2D-3D-correspondences}.
+\item For a \textbf{single point} correspondence neither position nor orientation of the camera are determined.
+\item For \textbf{two points} the camera still has infinitely many solutions, since size and orientation of the line are unknown. (\textbf{Thales' Circle})
+\item For \textbf{three points} \textbf{Carnot's theorem} can be used to establish a set of equations connecting the bearing angles between points to their relative distances and their distances from the camera. The resulting system of equations is of eighth order and reduces to fourth order when negative solutions are neglected. Then a \textbf{forth point is needed to disambiguate} the remaining solutions. 
 \end{QandA}
 
-\begin{QandA}{Explanation and Derivation: DLT}
-\item The idea of DLT is to use a set of 2D-3D-correspondences to determine extrinsic and intrinsic parameters of a camera.
+\begin{QandA}{DLT}[\Derivation]
+\item The idea of DLT is to use a set of 2D-3D-correspondences to determine \textbf{extrinsic and intrinsic parameters} of a camera.
 \item Approach
 \begin{enumerate}
-\item Define the projection matrix as the multiplication of the $K$ matrix and the homogeneous transform which in combination describe the projection of a 3D point to 2D image coordinates.
-\item Rearrange the resulting equation solving for image coordinates $u$ and $v$.
-\item Put all terms to the right side and write in matrix form.
-\item The resulting system has 12 unknowns and can thus be solved up to scale with 11 given correspondences, thus at least 6 points are needed.
+\item Define the \textbf{projection matrix} as the multiplication of the $K$ matrix and the homogeneous transform which in combination describe the projection of a 3D point to 2D image coordinates.
+\item Rearrange the resulting equation \textbf{solving for image coordinates} $u$ and $v$.
+\item Put all terms to the right side and \textbf{write in matrix form}.
+\item The resulting system has \textbf{12 unknowns} and can thus be solved up to scale with 11 given correspondences, thus \textbf{at least 6 points} are needed.
 \end{enumerate}
+\item Degenerate configurations are \textbf{collinear}, \textbf{coplanar} points, \textbf{passing through the projection center} or if the camera and the points are on a \textbf{twisted cubic}.
 \end{QandA}
 
-\begin{QandA}{Definition: Central and Non Central Omnidirectional Cameras}
-\item A central omnidirectional camera has a single effective viewpoint, thus the rays recorded in the camera do effectively meet in a single point.
+\begin{QandA}{Central and Non Central Omnidirectional Cameras}[\Definition]
+\item A central omnidirectional camera has a \textbf{single effective viewpoint}, thus the rays recorded in the camera do effectively meet in a single point.
+\end{QandA}
+
+\begin{QandA}{Equivalence between perspective and omnidirectional model}[\Application]
+\item Both, the omnidirectional camera view and the perspective camera view can be projected onto a unit sphere, allowing the use of unified algorithms.
 \end{QandA}
 
 \begin{QandA}{Which Mirrors ensure Central Projection}
-\item Mirrors resulting from the revolution of a conic can be used for central omnidirectional cameras. The advantage of such a camera is that the image can actually be unwarped to give a perspective view. Or alternatively project the view onto a unit sphere making an interface for standardized algorithms.
+\item Mirrors resulting from the \textbf{revolution of a conic} can be used for central omnidirectional cameras. The advantage of such a camera is that the image can actually be unwarped to give a perspective view. Or alternatively project the view onto a unit sphere making an interface for standardized algorithms.
 \end{QandA}
 
-\begin{QandA}{Defintion: Photometric Calibration}
-\item \textbf{Radiometric response function:} What is the brightness recorded depending on the irradiance of the scene?
-\textbf{Vignetting:} How much darker do the image corners appear?
-\textbf{Point spread function:} Describes how the imaging system responds to a point source or a point object. Can be associated with the impulse response, returns the image when convoluted with the input.
+\begin{QandA}{Photometric Calibration}[\Definition]
+\item \textbf{Radiometric response function:} What is the \textbf{brightness recorded depending on the irradiance} of the scene?
+\item \textbf{Vignetting:} How much darker do the \textbf{image corners} appear?
+\item \textbf{Point spread function:} Describes how the imaging system \textbf{responds to a point source} or a point object. Can be associated with the \textbf{impulse response}, returns the image when convoluted with the input.
+\end{QandA}
+
+\begin{QandA}{Superposition of a virtual object on an image given camera pose}[\Application]
+\item Given the 3D coordinates of the object, find the corresponding camera frame 3D coordinates.
+\item Multiply with the K-matrix to find pixel coordinates and plot.
 \end{QandA}
 
 \subsection*{Filtering}
 
-\begin{QandA}{Difference: Convolution and Cross-correlation}
-\item The convolution of two sequences is calculated by sliding the flipped filter over the target sequence and multiplying all coinciding elements. In contrast the cross-correlation does not include flipping the filter first. For a symmetric filter the two are equivalent. \textcolor{red}{are they?}
+\begin{QandA}{Convolution and Cross-correlation}[\Comparison]
+\item The convolution of two sequences is calculated by sliding the flipped filter over the target sequence and multiplying all coinciding elements. In contrast the \textbf{cross-correlation does not include flipping the filter} first. For a symmetric filter the two are equivalent.
+\item Convolution: Linear, \textbf{Associative}, \textbf{Commutative}
+\item Correlation: Linear
 \end{QandA}
 
-\begin{QandA}{Difference: Box and Gauss filter}
-\item Both are smoothing filters. A box filter has sharp edges and will introduce high frequency contributions which can cause aliasing. In contrast a gauss filter slowly approaches zero, for which reason, if finely resolved a gauss filter will not lead to aliasing.
+\begin{QandA}{Box and Gauss filter}[\Comparison]
+\item Both are \textbf{smoothing filters}. A box filter has \textbf{sharp edges} and will introduce \textbf{high frequency contributions} which can cause aliasing. In contrast a gauss filter slowly approaches zero, for which reason, if finely resolved a gauss filter will not lead to \textbf{aliasing}.
 \end{QandA}
 
-\begin{QandA}{Determination of kernel size based on filter size.}
-\item Choose the kernel size such that the kernel is sufficiently close to zero at its boundaries to avoid aliasing. A width of 3$\sigma$ is a good choice.
+\begin{QandA}{Determination of kernel size based on filter size}
+\item Choose the kernel size such that the \textbf{kernel is sufficiently close to zero at its boundaries} to avoid aliasing. A width of 3$\sigma$ is a good choice.
 \end{QandA}
 
 \begin{QandA}{Application of a Median Filter}
-\item Removal of salt and pepper noise.
+\item Effective removal of salt and pepper noise.
 \end{QandA}
 
 \begin{QandA}{Handling of Boundary Issues}
-\item At the boundary a filter cannot be applied since depending on the size of the kernel a certain number of additional pixels are needed. To provide those one can add zero padding, wrap the image around, copy the edge or reflect across the edge.
+\item At the boundary a filter cannot be applied since depending on the size of the kernel a certain number of additional pixels are needed. To provide those one can add \textbf{zero padding}, \textbf{wrap the image around}, \textbf{copy the edge} or \textbf{reflect across the edge}.
 \end{QandA}
 
-\begin{QandA}{Working Principle of 1D Edge Detection}
-\item Smoothing of the image before taking first derivative, otherwise we have large noise induced peaks in the derivative. The 1D edge can then be found as the local maximum or minimum of the derivative. Alternatively the zero crossing of the second derivative can give the position of the edge.
+\begin{QandA}{1D Edge Detection}[\Derivation]
+\item \textbf{Smoothing} of the image before taking \textbf{first derivative}, otherwise we have large \textbf{noise induced peaks} in the derivative. The 1D edge can then be found as the \textbf{local maximum or minimum} of the derivative. Alternatively the \textbf{zero crossing of the second derivative} can give the position of the edge.
 \end{QandA}
 
-\begin{QandA}{Explanation of Differential Property of the Convolution}
-\item When edge detection is combined with smoothing the differential property of the convolution comes in handy, since it allows to change the order of operations. Instead of differentiating the image itself, this operation can be applied to the filter and thus needs to be performed only once, and also on a smaller array, since the filters are usually smaller than the filtered images.
+\begin{QandA}{Explanation of Differential Property of the Convolution}[\Application]
+\item When edge detection is combined with smoothing the differential property of the convolution comes in handy, since it allows to change the order of operations (\textbf{Commutativity}). Instead of differentiating the image itself, this operation can be applied to the filter and thus needs to be performed \textbf{only once}, and also on a smaller array, since the filters are usually smaller than the filtered images.
 \end{QandA}
 
-\begin{QandA}{Computation of the first derivative of an image in both directions}
+\begin{QandA}{Computation of the first derivative of an image in both directions}[\Application]
 \item Convolution of a \textbf{Prewitt} or a \textbf{Sobel} filter in the respective directions results in the gradients of the image, two image-sized arrays.
 \end{QandA}
 
-\begin{QandA}{Explain use of LoG}
-\item Having identified the use of the second derivative as highlighting an edge with its passage through zero, we can say that the second derivative is useful to identify edges. Doing this in both directions and linearly combining the two yields a single 2D map which highlights edges with clear zero passings, if combined with a noise-removing filter, which in this case is a gaussian. Using the derivative property of the convolution needed for filtering we arrive at the laplacian of gaussian filter.
+\begin{QandA}{Explain use of LoG}[\Application]
+\item Having identified the use of the second derivative as highlighting an edge with its \textbf{passage through zero}, we can say that the second derivative is useful to identify edges. Doing this in both directions and linearly combining the two yields a single 2D map which highlights corners with clear zero passings, if combined with a \textbf{noise-removing filter}, which in this case is a gaussian. Using the \textbf{derivative property of the convolution} needed for filtering we arrive at the laplacian of gaussian filter.
 \end{QandA}
 
-\begin{QandA}{Properties of smoothing and derivative filters}
-\item Smoothing filters have positive signs and sum up to 1 in order not to change the overall luminosity of the image. They remove high frequency content and are thus low pass filters.
-\item Derivative filters have opposite signs in order to highlight changes in the image. The sum up to 0 such that for flat regions there is no response of the filter. These filters are high pass filters and remove low frequency content.
+\begin{QandA}{Properties of smoothing and derivative filters}[\Comparison]
+\item \textbf{Smoothing} filters have \textbf{positive signs} and \textbf{sum up to 1} in order not to change the overall luminosity of the image. They remove high frequency content and are thus \textbf{low pass filters}.
+\item Derivative filters have \textbf{opposite signs} in order to highlight changes in the image. The \textbf{sum up to 0} such that for flat regions there is no response of the filter. These filters are \textbf{high pass filters} and remove low frequency content.
 \end{QandA}
 
-\begin{QandA}{Canny Edge Detector}
-\item Compute gradient of the image.
-\item Thresholding of the gradient images.
-\item Non-maxima suppression, identifying the maximum along the gradient direction.
-\end{QandA}
-
-\begin{QandA}{Non-maxima suppression}
-\item Evaluate gradient direction of the current pixel and check whether it is a maximum in the corresponding direction (discretize possible directions). Preserve the value if it is a maximum in its direction otherwise suppress.
+\begin{QandA}{Canny Edge Detector}[\Derivation]
+\item Compute \textbf{gradient} of the image.
+\item \textbf{Thresholding} of the gradient images.
+\item \textbf{Non-maxima suppression}, identifying the maximum \textbf{along the gradient direction}.
+\item \textbf{Non-maxima suppression:} Evaluate gradient direction of the current pixel and check whether it is a maximum in the corresponding direction (discretize possible directions). Preserve the value if it is a maximum in its direction otherwise suppress.
 \end{QandA}
 
 \subsection*{Point Feature Detection}
 
-\begin{QandA}{Definition and Implementation: Template Matching}
-\item Use the correlation to detect a template in the image. No flipping, otherwise template would not fit. If the template matches a location in the image there will be a maximum in the correlation.
+\begin{QandA}{Template Matching}[\Definition]
+\item Use the \textbf{correlation} to detect a template in the image. No flipping, otherwise template would not fit. If the template matches a location in the image there will be a maximum in the correlation.
+\item \textbf{Limitations:} \textbf{Not size-invariant}, \textbf{not rotation-invariant}, and template and object have to be very similar. \textbf{Background} of the template might mess up a match.
 \end{QandA}
 
-\begin{QandA}{Limitations of Template Matching}
-\item Not size-invariant, not rotation-invariant, and template and object have to be vary similar. Background of the template might mess up a match.
-\end{QandA}
-
-\begin{QandA}{Illustrate Similarity Metrics (SSD, SAD, NCC}
-\item \textbf{NCC} Normalized Cross Correlation: Consider patches/images as vectors in $\mathbb{R}^n$ and calculate the cosine of the angle between the two using the scalar product of the normalized vectors.
+\begin{QandA}{Similarity Metrics (SSD, SAD, NCC}[\Definition]
+\item \textbf{NCC} Normalized Cross Correlation: Consider patches/images as \textbf{vectors} in $\mathbb{R}^n$ and calculate the \textbf{cosine of the angle} between the two using the scalar product of the normalized vectors.
 \item \textbf{SAD} Sum of Absolute Differences. Direct comparison of corresponding pixel values.
-\item \textbf{SSD} Sum of Squared Differences.
+\item \textbf{SSD} Sum of Squared Differences, can be interpreted as a measure for the length of the connecting vector between the two images understood as vectors in $\mathbb{R}^n$.
 \item \textbf{Subtract the mean of the images to account for overall illumination changes!}
 \end{QandA}
 
-\begin{QandA}{Intuitive Explanation for SSD and NCC}
-\item NCC: as above
-\item \textbf{SSD} can be interpreted as a measure for the length of the connecting vector between the two images understood as vectors in $\mathbb{R}^n$.
-\end{QandA}
-
-\begin{QandA}{Definition of good Features for Tracking}
+\begin{QandA}{Good Features for Tracking}[\Definition]
 \item Distinctiveness
 \item Rotation, Scale, Illumination, Distortion Invariance
 \item Repeatability
 \end{QandA}
 
-\begin{QandA}{Pros and Cons of Corners and Blobs}
+\begin{QandA}{Corners and Blobs}[\Comparison]
 \item Corners:
 \begin{itemize}
 \item[+] High localization accuracy
@@ -2958,26 +3177,27 @@ imshow(outim);
 \end{itemize}
 \item Blobs
 \item[+] More distinctive
-\item[+] Better for place recognition (for example SIFT can handle large viewpoint, scale and illumination changes.
+\item[+] Better for \textbf{place recognition} (for example SIFT can handle large viewpoint, scale and illumination changes.
 \item[-] Less localization accuracy.
 \end{QandA}
 
-\begin{QandA}{Moravec Definition of Corner, Edge and Flat Region (HARRIS)}
+\begin{QandA}{Moravec Definition of Corner, Edge and Flat Region (HARRIS)}[\Derivation]
 \item Define a window size.
-\item Consider the SSD of a single pixel shift in one of four directions.
-\item The minimum of the four SSDs is the measure of interest, which defines how much of a corner is within the window.
+\item Consider the \textbf{SSD} of a single \textbf{pixel shift} in one of four directions.
+\item The \textbf{minimum of the four SSDs} is the measure of interest, which defines how much of a corner is within the window.
 \end{QandA}
 
-\begin{QandA}{Derivation of the second moment matrix (HARRIS)}
-\item Consider a patch and a shifted version of it. Calculate the SSD between the two and approximate it with a first order approximation using the image gradients.
-\item Write it as a quadratic form to receive the second moment matrix. (Pixel wise products)
+\begin{QandA}{Second moment matrix (HARRIS)}[\Derivation]
+\item Consider a patch and a shifted version of it. Calculate the \textbf{SSD between the two} and approximate it with a \textbf{first order approximation} using the image gradients.
+\item Write it as a \textbf{quadratic form} to receive the second moment matrix. (Pixel wise products)
 \item The 2D quadratic form can be analysed by its eigenvalues which indicate if the currently considered window is a flat region, a corner or an edge.
 \end{QandA}
 
-\begin{QandA}{Properties of the $M$ matrix for corners/edges/flat/90-degree-corner/non-axis-aligned 90-degree-corner regions (HARRIS)}
+\begin{QandA}{Properties of the $M$ matrix for corners/edges/flat/90-degree-corner/non-axis-aligned 90-degree-corner regions (HARRIS)}[\Derivation]
 \item Corner: Eigenvalues are both nonzero.
 \item Edge: Only one eigenvalue is significantly larger than zero.
-\item For any corner diagonalize the second moment matrix ($R^{-1}ER$) to find the orientation of the directions of fastest and slowest change of SSD. 
+\item For any corner diagonalize the second moment matrix ($R^{-1}ER$) to find the orientation of the directions of fastest and slowest change of SSD.
+\item The minimum of the  
 \end{QandA}
 
 \begin{QandA}{Properties of Eigenvalues of the $M$ matrix (HARRIS)}
@@ -3322,7 +3542,7 @@ where
 \begin{QandA}
 {Description: Multi-View stereo working principle}
 \item Start with a series of calibrated images with known extrinsics.
-\item First estimate the depth of every pixel. The idea is to minimize the photometric error in all images as a function of depth in the first image. Do this for all image combinations and aggregate the error. Then find the miniumum.
+\item First estimate the depth of every pixel. The idea is to minimize the photometric error in all images as a function of depth in the first image. Do this for all image combinations and aggregate the error (SSD between corresponding patches, pros/cons windowsize). Then find the miniumum.
 \item Consider limiting to small baseline to avoid occlusions.
 \item Second apply global methods on the recovered 3D structure to make it smoother.
 \end{QandA}
@@ -3336,217 +3556,291 @@ where
 
 \begin{QandA}
 {Definition: Disparity Space Image}
-\item How to build it?
+\item Calculate the photometric error for every pixel and all densities for the reference image $I_R$ and sum up over all other images.
 \end{QandA}
 
 \begin{QandA}
 {How to extract depth from DSI}
-\item
+\item Find the minimal photometric error for every pixel to find the most probable depth for the corresponding point in 3D.
 \end{QandA}
 
 \begin{QandA}
 {How to enforce smoothness (regularization) and how to incorporate depth discontinuities (mathematical expression)}
-\item
+\item To enforce smoothness the cost function for the minimization is extended by a term penalizing fast depth changes.
+\item This however does not incorporate depth discontinuities that exist in the 3D world. The solution is a weighting of the regularization with the gradient of the actual image. The stronger the gradient in the image the weaker the influence of the smoothing term.
 \end{QandA}
 
 \begin{QandA}
 {What happens if we increase lambda? What if lambda = 0, what if lambda is too big?}
-\item
+\item The smaller lambda the weaker the effect of the regularization. If lambda = 0, no regularization. If lambda is to big the depth information is lost as the image is flattened.
 \end{QandA}
 
 \begin{QandA}
 {What is the optimal baseline for multi-view stereo?}
-\item
+\item The larger the baseline the more difficult the search problem becomes, as corresponding pixels move further apart. Thus the depth map is obtained from small baselines until the baseline is larger than about 10\% of the average scene depth, then a new reference frame is chosen and the individual depth maps are merged later.
 \end{QandA}
 
 \begin{QandA}
 {What are advantages of GPU's?}
-\item
+\item Much faster at parallel computation. Vector-Matrix Calculations, Raytracing, any pixel-wise operations.
 \end{QandA}
 
 \subsection*{Tracking}
 
 \begin{QandA}
 {Illustrate Tracking with Block matching}
-\item
+\item Define a corner, define a patch around it and try to find that patch again in the next image. Works well even for large motions, but can become computationally demanding. 
 \end{QandA}
 
 \begin{QandA}
 {Underlying assumptions behind differential methods}
+\item Assumptions
+\begin{enumerate}
+\item Photo consistency: The patch around the point to be tracked should remain similar to its original.
+\item Temporal persistency: The motion between two images must be small.
+\item Spatial coherency: Neighbouring pixels belonging to the same surface have similar motion.
+\end{enumerate}
 \item Derive mathematical expression
-\item Meaning of the $M$ matrix
+\begin{enumerate}
+\item Want to find the motion vector that minimizes the SSD: $\sum(I_0(x,y)-I_1(x+u,y+v))^2$ which is approximated using the image gradient $E = \sum(\Delta I-I_x u-I_y v)^2$
+\item To minimize the error $E$ we set the derivative equal to zero.
+\begin{align*}
+\frac{\partial E}{\partial u}=0&\Rightarrow-2\sum I_x(\Delta I-I_xu-I_yv) = 0\\
+\frac{\partial E}{\partial v}=0&\Rightarrow-2\sum I_y(\Delta I -I_xu-I_yv)=0
+\end{align*}
+\item Write in matrix form to recover the $M$ matrix. We can now invert it to find $u,v$ from the local image gradient and the illumination change.
+\end{enumerate}
+\item Meaning of the $M$ matrix: Same interpretation as for harris.
 \end{QandA}
 
 \begin{QandA}
 {Invertibility of the $M$ matrix}
-\item
+\item Invertible for non-flat, non-edge regions.
 \end{QandA}
 
 \begin{QandA}
 {Aperture Problem}
-\item Definition
-\item Solution
+\item Definition: When only part of a structure is visible its motion can not be determined uniquely if it does not contain a corner. There exist infinitely many solutions exist.
+\item Solution: Increase the aperture size.
 \end{QandA}
 
 \begin{QandA}
 {Definition: Optical Flow}
-\item
+\item Describes how pixels move when the viewpoint changes or the viewed objects move. Tracking of the motion of every pixel between two frames.
 \end{QandA}
 
 \begin{QandA}
 {Comparison: Block-Based vs. Differential Methods for tracking.}
-\item
+\item Block based
+\begin{itemize}
+\item[+] Works for large motions
+\item[-] Becomes computationally demanding for large motions
+\end{itemize}
+\item Differential methods
+\begin{itemize}
+\item[+] Tracks every pixel
+\item[+] No search problem to be solved, thus much more efficient.
+\item[-] Does not work for large motions unless multi scale methods are used.
+\end{itemize}
 \end{QandA}
 
 \begin{QandA}
 {Working principle of KLT}
-\item
+\item Idea: Template Tracking
+\item Find the minimum by incrementing the initial guess $\vec{p}$ with $\Delta \vec{p}$ locally. Thus a first order approximation is made.
+\item Differentiate and set equal to zero.
+\item Iterate over $\vec{p}\leftarrow \vec{p}+\Delta\vec{p}$.
 \end{QandA}
 
 \begin{QandA}
 {What is the Hessian matrix and for which warping function does it coincide to that used for point tracking?}
-\item
+\item The Hessian matrix connects the steepest descent parameter updates to the actual parameter updates needed to achieve a step in the steepest direction. It coincides with the point tracking Hessian for a simple translation.
 \end{QandA}
 
 \begin{QandA}
 {Lukas-Kanade failure cases, how to overcome?}
-\item
+\item Large motion, or rather if the initial guess is bad, the linearization no longer holds, thus we make a coarse-to-fine-approach.
+\item Template changes over time, update it with the last image.
 \end{QandA}
 
 \begin{QandA}
 {How to get the initial guess?}
-\item
+\item Pyramidal implementation. Downsampling makes the apparent motion smaller and the search problem easier.
 \end{QandA}
 
 \begin{QandA}
 {Illustrate coarse-to-fine implementation of KLT}
-\item
+\item Downsampling of the image, solution of the problem on the smallest level, propagation of the initial guess up to the highest resolution.
 \end{QandA}
 
 \begin{QandA}
-{Illustrate alternative trackin procedures using point features?}
-\item
+{Illustrate alternative tracking procedures using point features?}
+\item Detecting features.
+\item Matching features.
+\item Geometric verification (RANSAC).
 \end{QandA}
 
 \subsection*{Recognition}
 
 \begin{QandA}
 {Definition: Inverted File Index}
-\item
+\item Locations to content is an index. Content to locations is an inverted index. 
 \end{QandA}
 
 \begin{QandA}
 {Definition: Visual Word}
-\item
+\item Collect a large enough dataset (book).
+\item Extract features and descriptors (letters) and map them into the same descriptor space.
+\item Cluster the descriptor space, make words from letters.
+\item The centroid of each cluster is a word.
 \end{QandA}
 
 \begin{QandA}
 {Definition K-means clustering}
-\item
+\item Divide a space into K clusters with assigned means / centroids.
+\item How: Minimize the Euclidean distance between points and the nearest cluster centers.
+\begin{enumerate}
+\item Assign each datapoint to the nearest center.
+\item Recompute each cluster center as the mean of all points assigned to it.
+\end{enumerate}
 \end{QandA}
 
 \begin{QandA}
 {Purpose of Hierarchical clustering}
-\item
+\item Reduce the number of word comparison by clustering similar words into a common subject / same initial letter?
 \end{QandA}
 
 \begin{QandA}
 {Explanation: Image retrieval using Bag of Words.}
-\item
+\item Establish inverted file index and cluster / cluster hierarchically.
+\item Find features in query image.
+\item Search the corresponding words in the inverted index and establish the voting array for all database images, counting the number of matching words per DB image.
+\item The matching image is the one with the highest voting.
 \end{QandA}
 
 \begin{QandA}
 {Open challenges on place recognition, what proposed solutions?}
-\item
+\item Images with same words but shuffled will return a 100\% match even though the images are different. Use geometric verification, for example RANSAC and 8-point algorithm. Use reprojection error and number of inliers as quality metric.
 \end{QandA}
 
 \subsection*{Visual Inertial Fusion}
 
 \begin{QandA}
 {Why use an IMU for VO?}
-\item
+\item Scale ambiguity for monocular vision, recover scale with IMU measurements.
+\item Increase Robustness in general. \textbf{Low texture, High dynamic range, High speed motion.}
 \end{QandA}
 
 \begin{QandA}
 {Working principle of a MEMS IMU}
-\item
+\item Accelerometer: Mass attached to two springs, acceleration-induced movement leads to a change of the electric signal generated by a capacity divider.
+\item Gyroscope: Measures the Coriolis force acting on the structure. Similar to \textbf{haltere of flies.}
+\end{QandA}
+
+\begin{QandA}{Why not just an IMU?}
+\item Because IMUs have the tendency to drift.
+\item Integration of the angular velocities thus error increases with $t$.
+\item Double integration of the acceleration thus error increases with $t^2$.
 \end{QandA}
 
 \begin{QandA}
 {Drift of Industrial IMU}
-\item
+\item Thousands of Kilometers per hour for cheap IMU. Much better for extremely expensive ones, but not perfect.
 \end{QandA}
 
 \begin{QandA}
-{What causes BIAS in IMU}
-\item
+{What causes bias in IMU}
+\item Temperature changes, mechanical pressure, new startup.
 \end{QandA}
 
 \begin{QandA}
 {Definition IMU measurement model}
-\item
+\item The rotational velocity results from a biased and noisy measurement of the gyroscope.
+\item The acceleration in world coordinates results from the de-rotated difference of the measured acceleration and the gravitational acceleration, combined with bias and noise.
 \end{QandA}
 
 \begin{QandA}
 {How to model the bias?}
-\item
+\item The derivative of the bias is white gaussian noise (random walk).
+\item \textcolor{red}{?}
 \end{QandA}
 
 \begin{QandA}
 {How to integrate acceleration?}
-\item
+\item Simply integrate, do not forget initial conditions and gravity.
 \end{QandA}
 
 \begin{QandA}
 {Definition of loosely coupled and tightly coupled visual inertial fusion?}
-\item
+\item The loosely coupled approach treats IMU and VO as separate black boxes and fuses the resulting position, orientation (and velocity for IMU) estimations.
+\item In contrary the closely coupled approach allows for correlations between the internal states of the different measurement devices. Thus it is more accurate but requires more implementation effort.
 \end{QandA}
 
 \begin{QandA}
 {How can we use non-linear optimization-based approaches to solve for visual inertial fusion?}
-\item
+\item Use closed form solution to initialize filters and smoothers.
+\item For sensor calibration by energy minimization techniques.
+\item Fixed-lag of full smoothing, optimization of states by minimizing the IMU residuals and the reprojection residuals.
 \end{QandA}
 
 \subsection*{Event based Vision}
 
 \begin{QandA}
 {Working principle: DVS}
-\item
+\item Inspired by the human vision.
+\item Detects intensity changes in pixels asynchronously.
+\item Detection by level-crossing-sampling.
+\item Reacts to logarithmic brightness changes.
+
+\important{$C = |\Delta\log(I)| = |\log(I(t)+\Delta t)-\log(I(t))|$}
 \end{QandA}
 
 \begin{QandA}
 {Pros and Cons vs Standard Camera}
-\item
+\item[+] Low latency ($\sim\SI{1}{\micro\second}$)
+\item[+] HDR ($\SI{140}{\dB}$ instead of $\SI{60}{\dB}$)
+\item[+] High update rate ($\SI{1}{\mega\hertz}$)
+\item[+] Low power ($\SI{10}{\milli\watt}$ instead of $\SI{1}{\watt}$)
+\item[-] Paradigm shift, new algorithms required
 \end{QandA}
 
 \begin{QandA}
 {Are standard calibration techniques applicable?}
-\item
+\item No, a still image of a checkerboard does not produce any events. Either the camera or the calibration image have to move. Blinking works as well.
 \end{QandA}
 
 \begin{QandA}
 {How to compute optical flow with a DVS?}
-\item
+\item Visualization using a single vertical black line in horizontal movement.
+\item Will trigger a series of events aligned vertically, travelling horizontally.
+\item The speed of the edge can be found as the the space difference of two events divided by their trigger-time difference. 
 \end{QandA}
 
 \begin{QandA}
 {Intuitive explanation of intensity reconstruction}
-\item
+\item The basic idea is to integrate the intensity changes a pixel records to recover the intensity signal.
+\item This knowledge combined with the camera motion allows the recovery of the absolute brightness.
+\item Practice the recovery of the camera motion allows building a gradient map, which is then integrated to yield a brightness map.
 \end{QandA}
 
 \begin{QandA}
 {Definition: Generative Model of a DVS}
-\item
+\item Assume $I(x,y,t)=\log(I(x,y,t))$
+\item Pixel $p(x,y)$ with gradient $\nabla I(x,y)$ undergoing a motion $\vec{u}=(u,v)$ in pixels, induced by a moving 3D point $\vec{P}$
+\item An event is generated if $-\nabla I\cdot\vec{u}=C$
 \end{QandA}
 
 \begin{QandA}
 {Definition: Davis Sensor}
-\item
+\item Combines conventional image sensor with an event sensor in the same pixel array.
+\item Output images at certain framerate and events asynchronously.
 \end{QandA}
 
 \begin{QandA}
 {Equation: Event generation model and Proof}
-\item
+\item Assume Brightness Constancy: Pixel value remains the same during motion.
+\item Make a first order approximation in space.
+\item Calculate the pixel difference over time.
 \end{QandA}
 
 \end{multicols*}
