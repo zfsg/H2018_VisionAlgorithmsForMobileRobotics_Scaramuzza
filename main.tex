@@ -3153,7 +3153,8 @@ imshow(outim);
 
 \begin{QandA}{Template Matching}[\Definition]
 \item Use the \textbf{correlation} to detect a template in the image. No flipping, otherwise template would not fit. If the template matches a location in the image there will be a maximum in the correlation.
-\item \textbf{Limitations:} \textbf{Not size-invariant}, \textbf{not rotation-invariant}, and template and object have to be very similar. \textbf{Background} of the template might mess up a match.
+\item \textbf{Limitations:} \textbf{Not size-invariant}, \textbf{not rotation-invariant}, and template and object have to be very similar. \textbf{Background} of the template might mess up a match. Template matching has no context awareness, a car cannot match another if they are not very similar.
+\item Alternatively use the NCC.
 \end{QandA}
 
 \begin{QandA}{Similarity Metrics (SSD, SAD, NCC}[\Definition]
@@ -3190,89 +3191,79 @@ imshow(outim);
 \begin{QandA}{Second moment matrix (HARRIS)}[\Derivation]
 \item Consider a patch and a shifted version of it. Calculate the \textbf{SSD between the two} and approximate it with a \textbf{first order approximation} using the image gradients.
 \item Write it as a \textbf{quadratic form} to receive the second moment matrix. (Pixel wise products)
-\item The 2D quadratic form can be analysed by its eigenvalues which indicate if the currently considered window is a flat region, a corner or an edge.
+\item The 2D quadratic form can be analysed by its eigenvalues which indicate if the currently considered window is a flat region, a corner or an edge. These eigenvalues can be visualized using ellipses.
 \end{QandA}
 
 \begin{QandA}{Properties of the $M$ matrix for corners/edges/flat/90-degree-corner/non-axis-aligned 90-degree-corner regions (HARRIS)}[\Derivation]
-\item Corner: Eigenvalues are both nonzero.
-\item Edge: Only one eigenvalue is significantly larger than zero.
+\item \textbf{Corner}: Eigenvalues are \textbf{both nonzero}.
+\item \textbf{Edge}: Only \textbf{one eigenvalue} is significantly \textbf{larger than zero}.
 \item For any corner diagonalize the second moment matrix ($R^{-1}ER$) to find the orientation of the directions of fastest and slowest change of SSD.
-\item The minimum of the  
+\item The minimum of the Eigenvalues of the M matrix define the \textbf{Cornerness-Function}.
 \end{QandA}
 
-\begin{QandA}{Properties of Eigenvalues of the $M$ matrix (HARRIS)}
-\item A corner is identified by thresholding the minimum eigenvalue of the second moment matrix. 
-\end{QandA}
-
-\begin{QandA}{Harris VS Shi-Tomasi}
-\item Shi-Tomasi uses the cornerness function as defined by the minimum of the eigenvalues. 
+\begin{QandA}{Harris VS Shi-Tomasi}[\Definition]
+\item Shi-Tomasi uses the Cornerness-Function as defined by the minimum of the eigenvalues. 
 
 \important{$R = \min(\lambda_1,\lambda_2)$}
 \item Harris uses an approximation by the difference of the determinant of the matrix and the squared trace times $k$(0.04-0.15).
 
-\important{$R = \det(M)-k\text{trace}^2(M)$}
+\important{$R = \det(M)-k\cdot\text{trace}^2(M)$}
 \end{QandA}
 
-\begin{QandA}{Invariance to Illumation Changes and Scale changes (HARRIS)}
+\begin{QandA}{Invariance to Illumation Changes and Scale changes (HARRIS)}[\Application]
 \item Invariant to rotation (reverted when finding the eigenvalues)
 \item Not invariant to large scale changes.
+\item As long as the illumination change does not diminish the contrast too much corners should still be detected.
 \end{QandA}
 
-\begin{QandA}{Repeatability of Harris Detector after increasing scale by 2.}
+\begin{QandA}{Repeatability of Harris Detector after increasing scale by 2.}[\Application]
 \item Only 18\%.
 \end{QandA}
 
 \subsection*{Point Feature Detector Part 2}
 
 \begin{QandA}
-{Working principle of automatic scale detection.}
+{Working principle of automatic scale detection.}[\Derivation]
 \item Rescaling patches individually is expensive.
-\item Find a function over the patch size that has a maximum at a scale at which the feature of interest is represented best, which in addition is independent of the scale of the image considered. After the scale has been found the patch size can be normalized. In addition the function should have single and sharp peaks.
-\item Convolution of image and a kernel is a possible solution. Kernel of choice: LoG, since we'd like to find edges.
+\item Find a function over the patch size that has a \textbf{maximum at a scale at which the feature of interest is represented best}, which in addition is \textbf{independent of the scale of the image} considered. After the scale has been found the patch size can be \textbf{normalized}. In addition the function should have \textbf{single and sharp peaks}.
+\item Convolution of image and a kernel is a possible solution. Kernel of choice: LoG, since we'd like to find corners.
 \end{QandA}
 
 \begin{QandA}
-{Needed Properties of an automatic scale detection function.}
-\item Image scale invariance.
-\item Sharp peaks.
-\item Single maxima.
-\end{QandA} 
-
-\begin{QandA}
-{Efficient implementation of automatic scale detection?}
-\item Not calculation of LoGs but DoGs
+{Efficient implementation of automatic scale detection?}[\Application]
+\item Not calculation of LoGs but \textbf{DoGs}
 \end{QandA}
 
 \begin{QandA}
-{Definition: Feature Descriptor}
-\item A feature descriptor is information about a feature that aims to describe the feature in consideration as uniquely and as concisely as possible.
-\item Patch descriptors: For rotation and scale invariance: Rescale and de-rotate (normalisation by dominant direction of gradient) (\textbf{warping} necessary)
-\item Better solution: HoGs (Histograms of Oriented Gradients).
+{Feature Descriptor}[\Definition]
+\item A feature descriptor is information that aims to \textbf{describe the feature} in consideration as \textbf{uniquely} and as \textbf{concisely} as possible.
+\item Patch descriptors: For rotation and scale invariance: \textbf{Rescale and de-rotate} (normalisation by dominant direction of gradient) (\textbf{warping} necessary)
+\item Better solution: \textbf{HoGs} (Histograms of Oriented Gradients).
 \item For matching use comparison function and find lowest difference.
 \end{QandA}  
 
 \begin{QandA}
-{Keypoint Detection SIFT vs. Harris}
-\item Harris: Eigenvalues of Second Moment matrix, Corners!
-\item SIFT: Blobs! Identified as maxima and minima of the DoGs.
+{Keypoint Detection SIFT vs. Harris}[\Comparison]
+\item Harris: \textbf{Corners}! Eigenvalues of Second Moment matrix.
+\item SIFT: \textbf{Blobs}! Identified as maxima of the DoGs in \textbf{space} and \textbf{scale}.
 \end{QandA}
 
 \begin{QandA}
-{Explain orientation invariance for SIFT}
-\item Assign each keypoint a canonical orientation. Strongly smoothed HoG peak to make stable for lighting and contrast changes.
+{Orientation Invariance for SIFT}[\Application]
+\item Assign each keypoint a \textbf{canonical orientation}. Strongly smoothed HoG peak to make stable for lighting and contrast changes. This does not originate in the use of HoGs for the subpatches!
 \end{QandA}
 
 \begin{QandA}
-{Working Principle: SIFT}
+{Working Principle: SIFT}[\Derivation]
 \item \textbf{Detector $\neq$ Descriptor!}
-\item Make image pyramid, progressively smaller resolution for larger scales.
-\item Apply 3 versions of blurring to each scale, increasing the variance of the applied Gauss filter by increments of $2^{1/s}$ where is is the number of intervals per scale space.
-\item Calcualte the DoG pyramid.
-\item Identify the blobs as maxima and minima of the DoGs.
+\item Make \textbf{image pyramid}, progressively smaller resolution for larger scales.
+\item Apply \textbf{3 versions of blurring} to each scale, increasing the variance of the applied Gauss filter by increments of $2^{1/s}$ where is is the number of intervals per scale space.
+\item Calcualte the \textbf{DoG pyramid}.
+\item Identify the blobs as \textbf{maxima} of the DoGs.
 \item Establish features descriptors for each blob:
 \begin{enumerate}
 \item 4x4 HOGs (4x4 patches), 8 directions, Location (2D), Scale, Orientation
-\item Filter patch
+\item Gauss-Filter patch
 \item Divide patch into subpatches
 \item Compute HOGs
 \item Concatenate HOGs
@@ -3289,19 +3280,45 @@ imshow(outim);
 \begin{QandA}
 {Illustrate the 1st to 2nd closest ratio of SIFT detection: what’s the intuitive
 reasoning behind it? Where does the 0.8 factor come from?}
-\item Intuition: The closest match for a candidate blob with the database should be significantly closer than the next best guess, because if not there is no certainty about the matching - a small stochastic change could tip the balance. So if we found a mismatch there are potentially many other mismatches around. The threshold of 0.8 includes many matches while discarding a large proportion of the mismatches. Optimized over a large data set.
+\item Intuition: The closest match for a candidate blob with the database \textbf{should be significantly closer than the next best guess}, because if not there is no certainty about the matching - a small stochastic change could tip the balance. So if we found a mismatch there are potentially many other mismatches around. The threshold of 0.8 includes many matches while discarding a large proportion of the mismatches. Optimized over a large data set.
+\end{QandA}
+
+\begin{QandA}{2 Ways for Tracking Features}[\Application]
+\item KLT
+\item Detection, Description and Matching.
+\end{QandA}
+
+\begin{QandA}{Popular Detectors and Descriptors}[\Comparison]
+\item \textbf{Detectors}
+\begin{itemize}
+\item \textbf{Harris:} Approximation to minimal eigenvalue of second moment matrix.
+\item \textbf{Shi-Tomasi:} Minimal eigenvalue of the second moment matrix.
+\item \textbf{FAST:} Intensity of pixels on \textbf{circle} around candidate pixel $C$. Is a corner if $N$ \textbf{contiguous pixels are either brighter or darker} than the intensity of $C$ + a threshold.
+\item \textbf{SIFT:} Maxima of DoGs in scale and space.
+\item \textbf{SURF:} Similar to SIFT, but faster due to approximations.
+\end{itemize}
+\item \textbf{Descriptors}
+\begin{itemize}
+\item \textbf{Patch:} Direct comparison via similarity measure.
+\item \textbf{SIFT:} Oriented and scaled subpatch HoGs.
+\item \textbf{SURF:} Shorter descriptors but similar to SIFT.
+\item \textbf{BRIEF:} Random or machine-learning description pattern, evaluated as binary descriptor which allows fast comparison.
+\item \textbf{ORB:} Oriented and Rotated BRIEF descriptors
+\item \textbf{BRISK:} Predefined pattern, binary descriptor much faster than SURF.
+\item \textbf{FREAK:} Pattern inspired by the human retina, fast, compact, robust.
+\end{itemize}
 \end{QandA}
 
 \subsection*{Multi-View Geometry 1}
 
 \begin{QandA}
-{Difference: SFM vs. 3D reconstruction}
+{SFM vs. 3D reconstruction}[\Comparison]
 \item Structure from motion assumes no knowledge of the camera intrinsics/extrinsics.
 \end{QandA}
 	
 \begin{QandA}
-{Definition:  Disparity (simplified and general)}
-\item In stereo vision object that are not infinitely far away do not appear in the same position on both screens. That difference is called disparity. For a simplified case where the cameras are aligned it can be easily measures, else we have to perform stereo rectification first.
+{Disparity (simplified and general)}[\Definition]
+\item In stereo vision objects that are not infinitely far away do \textbf{not appear in the same position on both screens}. That difference is called disparity. For a simplified case where the cameras are aligned it can be easily measures, else we have to perform stereo rectification first.
 \item Mathematical Expression
 
 \importname{Simplified}{$u_l-u_r = \frac{bf}{Z_P}$}
@@ -3311,51 +3328,55 @@ reasoning behind it? Where does the 0.8 factor come from?}
 \item How to improve on uncertainty?
 
 Increase the baseline.
+
+\item Mathematical description of the uncertainty: Check how a small change in the \textbf{measured disparity affects the estimated depth}, thus express $\Delta Z_p$ by assessing the \textbf{partial derivative of} $Z_P(D)$.
+
+\item \textbf{General case:} For the general case of unaligned and different cameras \textbf{stereo rectification} has to be performed before the disparity can be assessed. Alternatively \textbf{triangulation} can deliver an estimate of the position and thus the camera-depending depths.
 \end{QandA}
 
 \begin{QandA}
-{Effects of large/small baseline}
+{Effects of large/small baseline}[\Comparison]
 \item Large: Minimum measurable distance increases and for close object the search problem gets harder.
 \item Small: Large depth error.
 \end{QandA}
 
 \begin{QandA}
-{Closest measurable depth?}
-\item Depends in the screen width. The \glqq flattest rays\grqq of the two cameras that can be recorded limit the minimum measurable distance, also depending on the baseline.
+{Closest measurable depth?}[\Application]
+\item Depends in the \textbf{screen width}. The \glqq flattest rays\grqq of the two cameras that can be recorded limit the minimum measurable distance, also depending on the \textbf{baseline}.
 \end{QandA}
 
 \begin{QandA}
-{How to compute intersection of 2 lines?}
-\item \textbf{Linear:} Write the projection equations for both cameras and then find the 3D point by solving the resulting system of equations using svd.
-\item \textbf{Nonlinear:} Find that point that will minimize reprojection errors. The solution of the corresponding minimization problem is the nonlinear approach. (Minimization of the sum of squared reprojection errors)
+{How to compute intersection of 2 lines?}[\Application]
+\item \textbf{Linear:} Write the \textbf{projection equations for both cameras} and then find the 3D point by solving the resulting \textbf{system of equations} using svd.
+\item \textbf{Nonlinear:} Find that point that will \textbf{minimize reprojection errors}. The solution of the corresponding minimization problem is the nonlinear approach. (Minimization of the sum of squared reprojection errors)
 \end{QandA}
 
 \begin{QandA}
-{Geometric interpretation of linear and nonlinear approach? What error is minimized?}
-\item in the nonlinear case the reprojection error is minimized. In the linear case \textcolor{red}{the algebraic error is minimized?}
+{Geometric interpretation of linear and nonlinear approach? What error is minimized?}[\Application]
+\item in the nonlinear case the \textbf{reprojection error} is minimized. In the linear case the \textbf{algebraic erro}r is minimized.
 \end{QandA}
 
 \begin{QandA}
-{Definition of the Epipole, Epipolar Line, Epipolar Plane}
+{Epipole, Epipolar Line, Epipolar Plane}[\Definition]
 \item The \textbf{epipoles} are the projections of the line connecting the two optical centers.
 \item The \textbf{epipolar line} is the projection of all point on the ray corresponding to $p$ in the other camera.
 \item The \textbf{epipolar plane} is the plane defined by the connecting line of the two optical centers and the epipolar line/a combination of the two rays to $P$.
 \end{QandA}
 
 \begin{QandA}
-{Epipolar lines for}
-\item Converging Cameras \textcolor{red}{Default case?}
+{Epipolar lines for}[\Comparison]
+\item Converging Cameras
 \item Forward motion: Epipole has same coordinates in all frames. Points move along lines radiating from $e$. \textbf{Focus of expansion.}
 \item Side-moving camera: Perfect case: Epipolar lines are parallel to pixel rows. (if cameras are rotated accordingly) which simplifies the search problem a lot! Epipoles at infinity!
 \end{QandA}
 
 \begin{QandA}
-{Definition: Stereo Rectification}
+{Stereo Rectification}[\Derivation]
 \item Mathematical Derivation of the rectifying homographies
 \begin{enumerate}
-\item Write perspective camera equation for both images.
-\item Rewrite them in non-homogeneous coordinates and invert the homogeneous transform, now calculating the transformation that yields world coordinates.
-\item Formulate a new projection for both cameras featuring the same rotation and intrinsics but different translations. Solve old and new view for world coordinates to establish a system of equations for the new intrinsics and extrinsics.
+\item Write \textbf{perspective camera equation} for both images.
+\item Rewrite them in non-homogeneous coordinates (Not with $[R|t]$) and \textbf{invert the homogeneous transform}, now calculating the transformation that yields world coordinates.
+\item Formulate a \textbf{new projection} for both cameras featuring the \textbf{same rotation and intrinsics} (for both new views) but \textbf{different translations}. Solve old and new view for world coordinates to establish a system of equations for the new intrinsics and extrinsics.
 \item Define the combined intrinsics as
 
 \important{$\bar{K}=(K_L+K_R)/2\qquad \bar{R} = [\bar{r}_1,\bar{r}_2,\bar{r}_3]$}
@@ -3368,74 +3389,75 @@ where
 \bar{r}_3&=\bar{r}_1\times\bar{r}_2
 \end{align*}
 \end{enumerate}
+\item The new rotation matrix aligns one axis with the connection vector of the two cameras and makes the second axis perpendicular to that line and one direction of the orientation of the left camera.
 \end{QandA}
 
 \begin{QandA}
-{Computation of the disparity map?}
-\item Establish pixel correspondences and subtract their u-coordinates. Or actually in practice when shifting patches for comparison the optimal shift delivers the disparity of the current pixel.
+{Computation of the disparity map?}[\Derivation]
+\item Establish pixel correspondences and \textbf{subtract their u-coordinates}. Or actually in practice when shifting patches for comparison the optimal shift delivers the disparity of the current pixel.
 \end{QandA}
 
 \begin{QandA}
-{Explain establishment of stereo correspondences with subpixel accuracy.}
-\item When comparing possibly comparing patches we can find the match by searching the minimum of the applied similarity measure. To achieve subpixel accuracy that function can be interpolated before searching the minimum.
+{Establishment of stereo correspondences with subpixel accuracy}[\Application]
+\item When comparing possibly comparing patches we can find the match by searching the \textbf{minimum of the applied similarity measure}. To achieve subpixel accuracy that function can be \textbf{interpolated} before searching the minimum.
 \end{QandA}
 
 \begin{QandA}
-{Explain rejection of outliers in stereo correspondences.}
-\item Rejection of ambiguous matches if more than two possible matches are detected (similar score to optimal). More than 2 since 2 close candidates can still be justified as the two encompassing the minimum.
-\item Reject match when at the boundary of the disparity range since that might indicate a minimum outside the range.
+{Rejection of outliers in stereo correspondences}[\Application]
+\item Rejection of ambiguous matches if more than two possible matches are detected (similar score to optimal). More than 2 since 2 close candidates can still be justified as the two \textbf{encompassing the minimum in the similarity metric}.
+\item Reject match when at the \textbf{boundary of the disparity range} since that might indicate a minimum outside the range.
+\item Epipolar geometry
+\item Soft constraints: Uniqueness, same surface $\rightarrow$ same order, smooth disparity changes along same surface.
 \end{QandA}
 
 \begin{QandA}
-{Alternatives to stereo vision for gaining depth information.}
-\item Monocular vision with deep learning combined with shape recognition/use of contextual information.
-\item Multi-image approaches.
-\item Non-holonomic constraints on vehicle-driven SFM. 
+{Alternatives to stereo vision for gaining depth information}[\Comparison]
+\item Monocular vision with \textbf{deep learning} combined with shape recognition/use of contextual information.
+\item Visual-Inertial Fusion.
 \end{QandA}
 
 \subsection*{Multiple View Geometry 2}
 
 \begin{QandA}
-{Minimum Number of correspondences for calibrated SFM}
-\item Number of knowns: $4n$ established correspondences
-\item $5 + 3n$ unknowns: Pose up to scale and $n$ 3D points.
-\item Minimum number of points needed: 5 or more.
+{Minimum Number of correspondences for calibrated SFM}[\Application]
+\item Number of knowns: $4n$ \textbf{established correspondences}
+\item $5 + 3n$ unknowns: \textbf{Pose up to scale} and $n$ \textbf{3D points}.
+\item Minimum number of points needed: \textbf{5 or more}. Less with more restrictive assumptions (Steering Principle).
 \end{QandA}
 
 \begin{QandA}
-{Derivation: Epipolar Constraint}
-\item If two cameras view the same point the two recorded points must lie on the epipolar plane by definition. Thus the epipolar constraint can be established by saying that $p_1$ and $p_2$ must be coplanar!
+{Epipolar Constraint}[\Derivation]
+\item If two cameras view the same point the two recorded points must lie on the \textbf{epipolar plane} by definition. Thus the epipolar constraint can be established by saying that $p_1$ and $p_2$ must be \textbf{coplanar}!
 \end{QandA}
 
 \begin{QandA}
-{Definition: Essential Matrix}
-\item The essential matrix is defined as the cross-matrix of T multiplied with R and results directly from the epipolar constraint.
+{Essential Matrix}[\Definition]
+\item The essential matrix is defined as the \textbf{cross-matrix of T multiplied with R} and results directly from the \textbf{epipolar constraint}.
 \end{QandA}
 
 \begin{QandA}
-{Derivation: 8-point algorithm}
-\item Formulate the epipolar constraint for 8 points to receive a unique (up-to-scale) solution delivering the essential matrix. Degenerate if the 3D points are coplanar. It minimizes the projection of $p_1$ onto the normal direction $n$.
+{8-point algorithm}[\Derivation]
+\item Formulate the \textbf{epipolar constraint for 8 points} to receive a unique (up-to-scale) solution delivering the essential matrix. Degenerate if the 3D points are \textbf{coplanar}. It minimizes the projection of $p_1$ onto the normal direction $n$.
 \end{QandA}
 
 \begin{QandA}
-{Number of Decompositions of the essential matrix}
+{Number of Decompositions of the essential matrix}[\Application]
 \item 4 decompositions. And there is only one solution where the points are front of both cameras.
 \end{QandA}
 
 \begin{QandA}
-{Relation between essential and fundamental matrix.}
-\item The essential matrix formulates the epipolar constraint for already calibrated cameras. When a calibration needs to be done in addition the system of equations can be reformulated such that the matrix in question becomes the calibration-including fundamental matrix.
+{Relation between essential and fundamental matrix.}[\Comparison]
+\item The essential matrix formulates the epipolar constraint for already calibrated cameras. When a calibration needs to be done in addition the system of equations can be reformulated such that the matrix in question becomes the calibration-including \textbf{fundamental matrix}.
+\end{QandA}
+
+\begin{QandA}{Importance of normalization of the point coordinates for the 8-point algorithm}[\Derivation]
+\item \textbf{Large range of pixel values} makes for different scaling of the different equations which leads to \textbf{poor numerical conditioning} of the resulting system of equations.
+\item Transformation of the image coordinates such that they are \textbf{between 1 and -1}.
+\item Or transformation with \textbf{shift by the centroid} of the distribution and \textbf{scaling to a standard deviation of $\sqrt{2}$}.
 \end{QandA}
 
 \begin{QandA}
-{Importance of normalization of the point coordinates for the 8-point algorithm.}
-\item Large range of pixel values makes for different scaling of the different equations which leads to poor numerical conditioning of the resulting system of equations.
-\item Transformation of the image coordinates such that they are between 1 and -1.
-\item OR transformation with shift by the centroid of the distribution and scaling to a standard deviation of $\sqrt{2}$.
-\end{QandA}
-
-\begin{QandA}
-{Definition: Normalized 8-point algorithm}
+{Normalized 8-point algorithm}[\Definition]
 \item Normalize point correspondences
 \item Compute normalized $\hat{F}$ 
 \item Transform back: $F = B_2^T\hat{F} B_1$
@@ -3443,95 +3465,114 @@ where
 \end{QandA}
 
 \begin{QandA}
-{Quality metrics for the essential matrix estimation}
-\item Evaluate the epipolar constraint.
-\item Directional error evaluating the squared cosines of the angles between $p_2$ and the normal $n$. Find cosine from dot product $p_2\cdot Ep_1$.
+{Quality metrics for the essential matrix estimation}[\Application]
+\item Evaluate the \textbf{epipolar constraint}.
+\item Directional error evaluating the \textbf{squared cosines of the angles between $p_2$ and the normal $n$}. Find cosine from dot product $p_2\cdot Ep_1$.
 \item Squared epipolar line to point distance
-\item Squared reprojection errors, expensive computation but accurate.
+\item \textbf{Squared reprojection errors}, expensive computation but accurate.
 \end{QandA}
 
 \begin{QandA}
-{Why do we need RANSAC?}
+{Why do we need RANSAC?}[\Application]
 \item Because there are outliers because of image noise, blur, moving objects and occlusions.
 \end{QandA}
 
-\begin{QandA}
-{Theoretical maximum number of combinations to explore}
-\item Binomial Coefficient, $N$ choose $s$.
+\begin{QandA}{Theoretical maximum number of combinations to explore}[\Application]
+\item Cardinality of the set: $2^N$
 \end{QandA}
 
 \begin{QandA}
-{Number of iterations for a given success probability?}
+{Number of iterations for a given success probability?}[\Derivation]
 \item \important{$k = \frac{\log(1-p)}{\log(1-w^s)}$}
 \item Calculate probability that RANSAC never selects $s$ inliers in $k$ tries.
+\item This is not the probability for sucess. If the inliers are too noisy the result might still be unusable.
 \end{QandA}
 
 \begin{QandA}
-{Trend of RANSAC vs. iterations vs. fraction of outliers, vs. number of points?}
+{Trend of RANSAC iterations vs. fraction of outliers, vs. number of points?}[\Application]
 \item Fraction of outliers: exponential increase of needed number of tries.
-\item 
+\item Number of points: exponential increase of needed number of tries.
 \end{QandA}
 
 \begin{QandA}
-{How to apply RANSAC to}
+{How to apply RANSAC to}[\Comparison]
 \item 8-point algorithm: Randomly select 8 points, calculate the pose change, apply to points and count inliers.
 \item DLT: Randomly select 6 points, calculate projection matrix, apply to all points and calculate projection error.
 \item P3P: Select 4 points, set up and solve carnots theorem, disambiguate, calculate projection error. 
 \end{QandA}
 
 \begin{QandA}
-{How to reduce the number of RANSAC iterations for the SFM problem?}
-\item Yes we can reduce the number of points to 5 by the inclusion of motion constraints. Planar motion or Ackermans steering principle.
+{How to reduce the number of RANSAC iterations for the SFM problem?}[\Application]
+\item Yes we can reduce the number of points below 5 by the inclusion of motion constraints. \textbf{Planar motion} or \textbf{Ackermans steering principle}.
 \end{QandA}
 
 \subsection*{Multiple View Geometry 3}
 
 \begin{QandA}
-{Definition: Bundle Adjustment}
+{Bundle Adjustment}[\Definition]
 \item Mathematical Expression
 
 \important{$(P^i, C_k) = \text{arg min}_{p^i,C_k}\sum\limits_{k}\sum\limits_{i}||p_k^i-\pi_k(P^i,C_k)||^2$}
-\item Bundle adjustment optimizes the estimated camera poses and the triangulated landmarks, minimizing the sum of squared reprojection errors.
-\item Pose-Graph optimization only optimizes the poses, BA optimizes the structure as well. BA is more precise but also more costly.
+\item Bundle adjustment optimizes the estimated camera poses and the triangulated landmarks, \textbf{minimizing the sum of squared reprojection errors}.
+\item Pose-Graph optimization \textbf{only optimizes the poses}, BA optimizes the structure as well. BA is more precise but also more costly.
 \end{QandA}
 
 \begin{QandA}
-{Definition: Hierarchical and Sequential SFM for monocular VO}
-\item \textbf{Hierachical:} Extract and match features between nearby frames, establish groups of three and compute SFM for those by doing it first for the first two images and then merging the third view using 3-point RANSAC. Merge clusters pairwise and refine both structure and motion.
-\item \textbf{Sequential:} Initialize structure and motion from 2 views (bootstrapping). Sequentially add new views by determining pose, then extending the structure, then refine pose and structure.
+{Hierarchical and Sequential SFM for monocular VO}[\Definition]
+\item \textbf{Hierachical:} Extract and match features between nearby frames, \textbf{establish groups} of three and compute SFM for those by doing it first for the first two images and then \textbf{merging the third view} using 3-point RANSAC. \textbf{Merge clusters} pairwise and \textbf{refine} both structure and motion.
+\item \textbf{Sequential:} Initialize structure and motion from 2 views (\textbf{bootstrapping}). \textbf{Sequentially add new} views by determining pose, then extending the structure, then \textbf{refine} pose and structure.
 \end{QandA}
 
 \begin{QandA}
-{What are Keyframes?}
+{What are Keyframes?}[\Definition]
 \item Why needed? Since the triangulation through two frames that are to close will be inaccurate it is advisable to select two frames with a large enough baseline.
 
 \item How to select? Based no the ratio between baseline and average depth.
 \end{QandA}
 
-\begin{QandA}
-{Definition: Loop closure detection}
+\begin{QandA}{Loop closure detection}[\Definition]
 \item Realizing when a place is seen for the second time.
-\item Detecting loop closures allows introducing additional constraints removing drifts in the map. It allows helps to avoid map duplication.
+\item Detecting loop closures allows introducing \textbf{additional constraints} \textbf{removing drifts} in the map. It allows helps to \textbf{avoid map duplication}.
+\end{QandA}
+
+\begin{QandA}{Most popular open source VO and VSLAM?}[\Comparison]
+\item[(VSLAM)] PTAM
+\begin{itemize}
+\item Splits tracking and mapping
+\item Allows more efficient computation of usually too expensive optimizations in real time.
+\end{itemize}
+\item[(VSLAM)] ORB-SLAM
+\begin{itemize}
+\item Three Threads: Tracking, Local Mapping and Loop Closing, Real Time
+\end{itemize}
+\item[(VSLAM)] LSD-SLAM
+\begin{itemize}
+\item Direct Method, Semi-Dense, Real Time
+\end{itemize}
+\item[(VO)] DSO
+\begin{itemize}
+\item Direct Method, Sparse, Real Time
+\end{itemize}
+\item[(VO)] SVO
+\begin{itemize}
+\item Semi-Direct, Real Time, Two Threads, Sparse
+\end{itemize}
 \end{QandA}
 
 \begin{QandA}
-{Most popular open source VO and VSLAM?}
-\item PTAM, ORB-SLAM, LSD-SLAM, DSO, SVO
-\end{QandA}
-
-\begin{QandA}
-{Differences between features-based and direct methods?}
-\item Feature based methods rely on distinct image points which are tracked throughout frames. They minimize the reprojection error. 
+{Features-based vs direct methods}[\Comparison]
+\item Feature based methods rely on \textbf{distinct image points} which are tracked throughout frames. They minimize the reprojection error. 
 \begin{itemize}
 \item[+] Large frame-to-frame motions
 \item[+] Accuracy: Efficient optimization of structure an motion possible
 \item[-] Slow due to costly feature detection
 \item[-] Robustness needed
 \end{itemize}
-\item Direct methods do not bother identifying features but track the motion by matching the whole frame and minimizing the photometric error.
+\item Direct methods do not bother identifying features but track the motion by matching the whole frame and minimizing the \textbf{photometric error}.
 \begin{itemize}
 \item[+] All information in the image used.
 \item[+] Increasing camera frame-rate reduces computational cost per frame.
+\item[+] Subpixel accuracy.
 \item[-] Limited frame-to-frame motion.
 \item[-] Joint optimization of dense structure and motion to expensive.
 \end{itemize}
@@ -3540,70 +3581,64 @@ where
 \subsection*{Dense 3D Reconstruction}
 
 \begin{QandA}
-{Description: Multi-View stereo working principle}
+{Multi-View stereo working principle}[\Derivation]
 \item Start with a series of calibrated images with known extrinsics.
-\item First estimate the depth of every pixel. The idea is to minimize the photometric error in all images as a function of depth in the first image. Do this for all image combinations and aggregate the error (SSD between corresponding patches, pros/cons windowsize). Then find the miniumum.
-\item Consider limiting to small baseline to avoid occlusions.
-\item Second apply global methods on the recovered 3D structure to make it smoother.
+\item First \textbf{estimate the depth of every pixel}. The idea is to minimize the photometric error in all images as a function of depth in the first image. Do this for all image combinations and \textbf{aggregate the error} (SSD between corresponding patches, pros/cons windowsize). Then find the \textbf{miniumum}.
+\item Consider limiting to \textbf{small baseline} to avoid occlusions.
+\item Second apply \textbf{global methods} on the recovered 3D structure to \textbf{make it smoother}.
 \end{QandA}
 
-\begin{QandA}
-{Difference of Aggregated Photometric Error for corners, flat regions, edges?}
+\begin{QandA}{Aggregated Photometric Error for corners, flat regions, edges?}[\Comparison]
 \item Corners: Clear minimum.
 \item Flat: No recognizable minimum.
 \item Edges: Extended minimum.
 \end{QandA}
 
-\begin{QandA}
-{Definition: Disparity Space Image}
-\item Calculate the photometric error for every pixel and all densities for the reference image $I_R$ and sum up over all other images.
+\begin{QandA}{Disparity Space Image}[\Definition]
+\item Calculate the \textbf{photometric error for every pixel and all depths} for the reference image $I_R$ and sum up over all other images.
 \end{QandA}
 
-\begin{QandA}
-{How to extract depth from DSI}
-\item Find the minimal photometric error for every pixel to find the most probable depth for the corresponding point in 3D.
+\begin{QandA}{How to extract depth from DSI}[\Application]
+\item Find the \textbf{minimal photometric error for every pixel} to find the \textbf{most probable depth} for the corresponding point in 3D.
 \end{QandA}
 
-\begin{QandA}
-{How to enforce smoothness (regularization) and how to incorporate depth discontinuities (mathematical expression)}
-\item To enforce smoothness the cost function for the minimization is extended by a term penalizing fast depth changes.
-\item This however does not incorporate depth discontinuities that exist in the 3D world. The solution is a weighting of the regularization with the gradient of the actual image. The stronger the gradient in the image the weaker the influence of the smoothing term.
+\begin{QandA}{How to enforce smoothness (regularization) and how to incorporate depth discontinuities}[\Derivation]
+\item To enforce smoothness the cost function for the minimization is extended by a \textbf{term penalizing fast depth changes}.
+\item This however does not incorporate \textbf{depth discontinuities} that exist in the 3D world. The solution is a \textbf{weighting of the regularization} with the \textbf{gradient of the actual image}. The stronger the gradient in the image the weaker the influence of the smoothing term.
 \end{QandA}
 
-\begin{QandA}
-{What happens if we increase lambda? What if lambda = 0, what if lambda is too big?}
+\begin{QandA}{What happens if we increase lambda? What if lambda = 0, what if lambda is too big?}[\Application]
 \item The smaller lambda the weaker the effect of the regularization. If lambda = 0, no regularization. If lambda is to big the depth information is lost as the image is flattened.
 \end{QandA}
 
 \begin{QandA}
-{What is the optimal baseline for multi-view stereo?}
+{What is the optimal baseline for multi-view stereo?}[\Application]
 \item The larger the baseline the more difficult the search problem becomes, as corresponding pixels move further apart. Thus the depth map is obtained from small baselines until the baseline is larger than about 10\% of the average scene depth, then a new reference frame is chosen and the individual depth maps are merged later.
 \end{QandA}
 
 \begin{QandA}
 {What are advantages of GPU's?}
-\item Much faster at parallel computation. Vector-Matrix Calculations, Raytracing, any pixel-wise operations.
+\item Much faster at \textbf{parallel computation}. Vector-Matrix Calculations, Raytracing, any pixel-wise operations.
 \end{QandA}
 
 \subsection*{Tracking}
 
-\begin{QandA}
-{Illustrate Tracking with Block matching}
-\item Define a corner, define a patch around it and try to find that patch again in the next image. Works well even for large motions, but can become computationally demanding. 
+\begin{QandA}{Illustrate Tracking with Block matching}[\Definition]
+\item Define a corner, define a patch around it and \textbf{try to find that patch again} in the next image. Works well even for large motions, but can become computationally demanding. 
 \end{QandA}
 
 \begin{QandA}
-{Underlying assumptions behind differential methods}
+{Differential Methods}[\Derivation]
 \item Assumptions
 \begin{enumerate}
-\item Photo consistency: The patch around the point to be tracked should remain similar to its original.
-\item Temporal persistency: The motion between two images must be small.
-\item Spatial coherency: Neighbouring pixels belonging to the same surface have similar motion.
+\item \textbf{Photo consistency}: The patch around the point to be tracked should remain similar to its original.
+\item \textbf{Temporal persistence}: The motion between two images must be small.
+\item \textbf{Spatial coherency}: Neighbouring pixels belonging to the same surface have similar motion.
 \end{enumerate}
 \item Derive mathematical expression
 \begin{enumerate}
-\item Want to find the motion vector that minimizes the SSD: $\sum(I_0(x,y)-I_1(x+u,y+v))^2$ which is approximated using the image gradient $E = \sum(\Delta I-I_x u-I_y v)^2$
-\item To minimize the error $E$ we set the derivative equal to zero.
+\item Want to f\textbf{ind the motion vector that minimizes the SSD}: $\sum(I_0(x,y)-I_1(x+u,y+v))^2$ which is \textbf{approximated using the image gradient} $E = \sum(\Delta I-I_x u-I_y v)^2$
+\item To minimize the error $E$ we set the \textbf{derivative equal to zero}.
 \begin{align*}
 \frac{\partial E}{\partial u}=0&\Rightarrow-2\sum I_x(\Delta I-I_xu-I_yv) = 0\\
 \frac{\partial E}{\partial v}=0&\Rightarrow-2\sum I_y(\Delta I -I_xu-I_yv)=0
@@ -3613,24 +3648,20 @@ where
 \item Meaning of the $M$ matrix: Same interpretation as for harris.
 \end{QandA}
 
-\begin{QandA}
-{Invertibility of the $M$ matrix}
+\begin{QandA}{Invertibility of the $M$ matrix}[\Derivation]
 \item Invertible for non-flat, non-edge regions.
 \end{QandA}
 
-\begin{QandA}
-{Aperture Problem}
-\item Definition: When only part of a structure is visible its motion can not be determined uniquely if it does not contain a corner. There exist infinitely many solutions exist.
+\begin{QandA}{Aperture Problem}[\Definition]
+\item Definition: When only part of a structure is visible its \textbf{motion can not be determined uniquely} if it does not contain a corner. There exist infinitely many solutions exist.
 \item Solution: Increase the aperture size.
 \end{QandA}
 
-\begin{QandA}
-{Definition: Optical Flow}
-\item Describes how pixels move when the viewpoint changes or the viewed objects move. Tracking of the motion of every pixel between two frames.
+\begin{QandA}{Optical Flow}[\Definition]
+\item Describes \textbf{how pixels move} when the \textbf{viewpoint changes} or the \textbf{viewed objects move}. Tracking of the motion of every pixel between two frames.
 \end{QandA}
 
-\begin{QandA}
-{Comparison: Block-Based vs. Differential Methods for tracking.}
+\begin{QandA}{Block-Based vs. Differential Methods for tracking}[\Comparison]
 \item Block based
 \begin{itemize}
 \item[+] Works for large motions
@@ -3644,37 +3675,28 @@ where
 \end{itemize}
 \end{QandA}
 
-\begin{QandA}
-{Working principle of KLT}
-\item Idea: Template Tracking
-\item Find the minimum by incrementing the initial guess $\vec{p}$ with $\Delta \vec{p}$ locally. Thus a first order approximation is made.
+\begin{QandA}{Working principle of KLT}[\Derivation]
+\item Idea: Template Tracking with general twist instead of translation.
+\item Find the minimum by \textbf{incrementing the initial guess} $\vec{p}$ with $\Delta \vec{p}$ locally. Thus a first order approximation is made.
 \item Differentiate and set equal to zero.
 \item Iterate over $\vec{p}\leftarrow \vec{p}+\Delta\vec{p}$.
 \end{QandA}
 
-\begin{QandA}
-{What is the Hessian matrix and for which warping function does it coincide to that used for point tracking?}
-\item The Hessian matrix connects the steepest descent parameter updates to the actual parameter updates needed to achieve a step in the steepest direction. It coincides with the point tracking Hessian for a simple translation.
+\begin{QandA}{Hessian Matrix}[\Derivation]
+\item The Hessian matrix connects the \textbf{steepest descent parameter updates} to the \textbf{actual parameter updates} needed to achieve a step in the steepest direction. It coincides with the point tracking Hessian for a simple translation.
+\end{QandA}
+
+\begin{QandA}{Lukas-Kanade failure cases}[\Application]
+\item \textbf{Large motion}, or rather if the initial guess is bad, the linearization no longer holds, thus we make a coarse-to-fine-approach.
+\item \textbf{Template changes over time}, update it with the last image.
+\end{QandA}
+
+\begin{QandA}{How to get the initial guess?}[\Application]
+\item \textbf{Pyramidal implementation}. Down-sampling makes the apparent motion smaller and the search problem easier. Propagation of the initial guess from coarse to fine.
 \end{QandA}
 
 \begin{QandA}
-{Lukas-Kanade failure cases, how to overcome?}
-\item Large motion, or rather if the initial guess is bad, the linearization no longer holds, thus we make a coarse-to-fine-approach.
-\item Template changes over time, update it with the last image.
-\end{QandA}
-
-\begin{QandA}
-{How to get the initial guess?}
-\item Pyramidal implementation. Downsampling makes the apparent motion smaller and the search problem easier.
-\end{QandA}
-
-\begin{QandA}
-{Illustrate coarse-to-fine implementation of KLT}
-\item Downsampling of the image, solution of the problem on the smallest level, propagation of the initial guess up to the highest resolution.
-\end{QandA}
-
-\begin{QandA}
-{Illustrate alternative tracking procedures using point features?}
+{Alternative tracking procedures using point features}[\Application]
 \item Detecting features.
 \item Matching features.
 \item Geometric verification (RANSAC).
@@ -3682,53 +3704,46 @@ where
 
 \subsection*{Recognition}
 
-\begin{QandA}
-{Definition: Inverted File Index}
-\item Locations to content is an index. Content to locations is an inverted index. 
+\begin{QandA}{Inverted File Index}[Definition]
+\item Locations to content is an index. \textbf{Content to locations} is an inverted index. 
 \end{QandA}
 
-\begin{QandA}
-{Definition: Visual Word}
+\begin{QandA}{Visual Word}[\Definition]
 \item Collect a large enough dataset (book).
-\item Extract features and descriptors (letters) and map them into the same descriptor space.
-\item Cluster the descriptor space, make words from letters.
-\item The centroid of each cluster is a word.
+\item Extract features and descriptors (letters) and map them into the same \textbf{descriptor space}.
+\item \textbf{Cluster the descriptor space}, make words from letters.
+\item The \textbf{centroid of each cluster} is a word.
 \end{QandA}
 
-\begin{QandA}
-{Definition K-means clustering}
-\item Divide a space into K clusters with assigned means / centroids.
-\item How: Minimize the Euclidean distance between points and the nearest cluster centers.
+\begin{QandA}{K-means clustering}[\Definition]
+\item \textbf{Divide a space into K clusters} with assigned means / centroids.
+\item How: \textbf{Minimize the Euclidean distance} between points and the nearest cluster centers.
 \begin{enumerate}
-\item Assign each datapoint to the nearest center.
-\item Recompute each cluster center as the mean of all points assigned to it.
+\item \textbf{Reassign each datapoint} to the nearest center.
+\item \textbf{Recompute each cluster center} as the mean of all points assigned to it.
 \end{enumerate}
 \end{QandA}
 
-\begin{QandA}
-{Purpose of Hierarchical clustering}
-\item Reduce the number of word comparison by clustering similar words into a common subject / same initial letter?
+\begin{QandA}{Purpose of Hierarchical clustering}[\Application]
+\item \textbf{Reduce the number of word comparison} by \textbf{clustering similar words} into a common subject / same initial letter.
 \end{QandA}
 
-\begin{QandA}
-{Explanation: Image retrieval using Bag of Words.}
-\item Establish inverted file index and cluster / cluster hierarchically.
-\item Find features in query image.
-\item Search the corresponding words in the inverted index and establish the voting array for all database images, counting the number of matching words per DB image.
-\item The matching image is the one with the highest voting.
+\begin{QandA}{Image retrieval using Bag of Words}[\Derivation]
+\item Establish \textbf{inverted file index} and cluster / \textbf{cluster} hierarchically.
+\item Find \textbf{features in query} image.
+\item Search the \textbf{corresponding words} in the inverted index and \textbf{establish the voting array} for all database images, counting the number of matching words per DB image.
+\item The matching image is the one with the \textbf{highest voting}.
 \end{QandA}
 
-\begin{QandA}
-{Open challenges on place recognition, what proposed solutions?}
-\item Images with same words but shuffled will return a 100\% match even though the images are different. Use geometric verification, for example RANSAC and 8-point algorithm. Use reprojection error and number of inliers as quality metric.
+\begin{QandA}{Open challenges on place recognition, what proposed solutions}[\Application]
+\item Images with \textbf{same words but shuffled} will return a 100\% match even though the images are different. Use \textbf{geometric verification}, for example RANSAC and 8-point algorithm. Use reprojection error and number of inliers as quality metric.
 \end{QandA}
 
 \subsection*{Visual Inertial Fusion}
 
-\begin{QandA}
-{Why use an IMU for VO?}
-\item Scale ambiguity for monocular vision, recover scale with IMU measurements.
-\item Increase Robustness in general. \textbf{Low texture, High dynamic range, High speed motion.}
+\begin{QandA}{Usefulness of IMU for VO}[\Application]
+\item \textbf{Scale ambiguity} for monocular vision, recover scale with IMU measurements.
+\item \textbf{Increase robustness} in general. \textbf{Low texture, High dynamic range, High speed motion.}
 \end{QandA}
 
 \begin{QandA}
