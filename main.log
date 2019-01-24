@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.5)  16 JAN 2019 19:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6350 64-bit) (preloaded format=pdflatex 2017.9.5)  24 JAN 2019 13:22
 entering extended mode
 **./main.tex
 (main.tex
@@ -2810,7 +2810,7 @@ File: uesint.fd
 )
 \c__siunitx_mathtt_int=\count336
  (main.toc
-Underfull \hbox (badness 6859) in paragraph at lines 123--123
+Underfull \hbox (badness 6859) in paragraph at lines 124--124
  [][] [][]\OT1/cmr/m/n/9 Comparison to ex-ist-ing high- 
  []
 
@@ -2837,102 +2837,102 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/it' in size <10> not available
 
 [2] [3]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 376.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 393.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 412.
+(hyperref)                removing `math shift' on input line 429.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 412.
+(hyperref)                removing `subscript' on input line 429.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 412.
+(hyperref)                removing `math shift' on input line 429.
 
-[4] <Pictures/ThinLensEquation.png, id=806, 383.63326pt x 190.311pt>
+[4] <Pictures/ThinLensEquation.png, id=816, 383.63326pt x 190.311pt>
 File: Pictures/ThinLensEquation.png Graphic file (type png)
 
 <use Pictures/ThinLensEquation.png>
-Package pdftex.def Info: Pictures/ThinLensEquation.png used on input line 439.
+Package pdftex.def Info: Pictures/ThinLensEquation.png used on input line 456.
 (pdftex.def)             Requested size: 200.2258pt x 99.32817pt.
 
-<Pictures/BlurCircle.png, id=808, 491.436pt x 200.54926pt>
+<Pictures/BlurCircle.png, id=818, 491.436pt x 200.54926pt>
 File: Pictures/BlurCircle.png Graphic file (type png)
 
 <use Pictures/BlurCircle.png>
-Package pdftex.def Info: Pictures/BlurCircle.png used on input line 449.
+Package pdftex.def Info: Pictures/BlurCircle.png used on input line 466.
 (pdftex.def)             Requested size: 200.2258pt x 81.71161pt.
 
-<Pictures/PinholeApproximation.png, id=809, 360.1455pt x 181.27725pt>
+<Pictures/PinholeApproximation.png, id=819, 360.1455pt x 181.27725pt>
 File: Pictures/PinholeApproximation.png Graphic file (type png)
 
 <use Pictures/PinholeApproximation.png>
 Package pdftex.def Info: Pictures/PinholeApproximation.png used on input line 4
-65.
+82.
 (pdftex.def)             Requested size: 200.2258pt x 100.78156pt.
 
-<Pictures/FieldOfViewFocalLength.png, id=810, 295.1025pt x 151.16475pt>
+<Pictures/FieldOfViewFocalLength.png, id=820, 295.1025pt x 151.16475pt>
 File: Pictures/FieldOfViewFocalLength.png Graphic file (type png)
 
 <use Pictures/FieldOfViewFocalLength.png>
 Package pdftex.def Info: Pictures/FieldOfViewFocalLength.png used on input line
- 491.
+ 508.
 (pdftex.def)             Requested size: 200.2258pt x 102.56691pt.
 
-<Pictures/PerspectiveCameraModel.png, id=811, 446.26724pt x 239.09325pt>
+<Pictures/PerspectiveCameraModel.png, id=821, 446.26724pt x 239.09325pt>
 File: Pictures/PerspectiveCameraModel.png Graphic file (type png)
 
 <use Pictures/PerspectiveCameraModel.png>
 Package pdftex.def Info: Pictures/PerspectiveCameraModel.png used on input line
- 502.
+ 519.
 (pdftex.def)             Requested size: 200.2258pt x 107.27356pt.
  [5 <./Pictures/ThinLensEquation.png> <./Pictures/BlurCircle.png> <./Pictures/P
 inholeApproximation.png> <./Pictures/FieldOfViewFocalLength.png>]
-<Pictures/PerspectiveCameraModel2.png, id=826, 314.97675pt x 242.70676pt>
+<Pictures/PerspectiveCameraModel2.png, id=836, 314.97675pt x 242.70676pt>
 File: Pictures/PerspectiveCameraModel2.png Graphic file (type png)
 
 <use Pictures/PerspectiveCameraModel2.png>
 Package pdftex.def Info: Pictures/PerspectiveCameraModel2.png used on input lin
-e 515.
+e 532.
 (pdftex.def)             Requested size: 187.72578pt x 144.65488pt.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 591.
+(hyperref)                removing `math shift' on input line 608.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 591.
+(hyperref)                removing `math shift' on input line 608.
 
-<Pictures/OnePoint.png, id=827, 271.61475pt x 154.176pt>
+<Pictures/OnePoint.png, id=837, 271.61475pt x 154.176pt>
 File: Pictures/OnePoint.png Graphic file (type png)
 
 <use Pictures/OnePoint.png>
-Package pdftex.def Info: Pictures/OnePoint.png used on input line 598.
+Package pdftex.def Info: Pictures/OnePoint.png used on input line 615.
 (pdftex.def)             Requested size: 112.63661pt x 63.93478pt.
 
-<Pictures/TwoPoints.png, id=828, 296.90926pt x 155.3805pt>
+<Pictures/TwoPoints.png, id=838, 296.90926pt x 155.3805pt>
 File: Pictures/TwoPoints.png Graphic file (type png)
 
 <use Pictures/TwoPoints.png>
-Package pdftex.def Info: Pictures/TwoPoints.png used on input line 604.
+Package pdftex.def Info: Pictures/TwoPoints.png used on input line 621.
 (pdftex.def)             Requested size: 112.63661pt x 58.9456pt.
  [6 <./Pictures/PerspectiveCameraModel.png> <./Pictures/PerspectiveCameraModel2
 .png> <./Pictures/OnePoint.png>]
-<Pictures/InscribedAngle.png, id=849, 285.4665pt x 281.853pt>
+<Pictures/InscribedAngle.png, id=859, 285.4665pt x 281.853pt>
 File: Pictures/InscribedAngle.png Graphic file (type png)
 
 <use Pictures/InscribedAngle.png>
-Package pdftex.def Info: Pictures/InscribedAngle.png used on input line 610.
+Package pdftex.def Info: Pictures/InscribedAngle.png used on input line 627.
 (pdftex.def)             Requested size: 75.08916pt x 74.1359pt.
 
-<Pictures/ThreePoints.png, id=850, 454.0965pt x 207.77625pt>
+<Pictures/ThreePoints.png, id=860, 454.0965pt x 207.77625pt>
 File: Pictures/ThreePoints.png Graphic file (type png)
 
 <use Pictures/ThreePoints.png>
-Package pdftex.def Info: Pictures/ThreePoints.png used on input line 614.
+Package pdftex.def Info: Pictures/ThreePoints.png used on input line 631.
 (pdftex.def)             Requested size: 112.63661pt x 51.53812pt.
 
 ("C:\Users\gam19\AppData\Local\Programs\MiKTeX 2.9\tex\latex\listings\lstlang1.
@@ -2940,514 +2940,406 @@ sty"
 File: lstlang1.sty 2015/06/04 1.6 listings language file
 ) [7 <./Pictures/TwoPoints.png> <./Pictures/InscribedAngle.png> <./Pictures/Thr
 eePoints.png>] [8]
-<Pictures/Transformations.png, id=883, 470.9595pt x 315.579pt>
+<Pictures/Transformations.png, id=893, 470.9595pt x 315.579pt>
 File: Pictures/Transformations.png Graphic file (type png)
 
 <use Pictures/Transformations.png>
-Package pdftex.def Info: Pictures/Transformations.png used on input line 906.
+Package pdftex.def Info: Pictures/Transformations.png used on input line 923.
 (pdftex.def)             Requested size: 280.3149pt x 187.83684pt.
 
-<Pictures/Cameras.png, id=885, 523.9575pt x 298.11375pt>
+<Pictures/Cameras.png, id=895, 523.9575pt x 298.11375pt>
 File: Pictures/Cameras.png Graphic file (type png)
 
 <use Pictures/Cameras.png>
-Package pdftex.def Info: Pictures/Cameras.png used on input line 949.
+Package pdftex.def Info: Pictures/Cameras.png used on input line 966.
 (pdftex.def)             Requested size: 240.27339pt x 136.70639pt.
  [9 <./Pictures/Transformations.png>]
-<Pictures/NonCentral.png, id=905, 240.9pt x 279.444pt>
+<Pictures/NonCentral.png, id=915, 240.9pt x 279.444pt>
 File: Pictures/NonCentral.png Graphic file (type png)
 
 <use Pictures/NonCentral.png>
-Package pdftex.def Info: Pictures/NonCentral.png used on input line 954.
+Package pdftex.def Info: Pictures/NonCentral.png used on input line 971.
 (pdftex.def)             Requested size: 180.202pt x 209.04095pt.
 
-<Pictures/Central.png, id=906, 213.1965pt x 270.41025pt>
+<Pictures/Central.png, id=916, 213.1965pt x 270.41025pt>
 File: Pictures/Central.png Graphic file (type png)
 
 <use Pictures/Central.png>
-Package pdftex.def Info: Pictures/Central.png used on input line 958.
+Package pdftex.def Info: Pictures/Central.png used on input line 975.
 (pdftex.def)             Requested size: 180.202pt x 228.56656pt.
 
-<Pictures/CentralCatadioptrics.png, id=907, 494.44725pt x 358.941pt>
+<Pictures/CentralCatadioptrics.png, id=917, 494.44725pt x 358.941pt>
 File: Pictures/CentralCatadioptrics.png Graphic file (type png)
 
 <use Pictures/CentralCatadioptrics.png>
 Package pdftex.def Info: Pictures/CentralCatadioptrics.png used on input line 9
-75.
+92.
 (pdftex.def)             Requested size: 240.27339pt x 174.42574pt.
 
-<Pictures/Omnidirectional.png, id=908, 399.29175pt x 377.0085pt>
+<Pictures/Omnidirectional.png, id=918, 399.29175pt x 377.0085pt>
 File: Pictures/Omnidirectional.png Graphic file (type png)
 
 <use Pictures/Omnidirectional.png>
-Package pdftex.def Info: Pictures/Omnidirectional.png used on input line 979.
+Package pdftex.def Info: Pictures/Omnidirectional.png used on input line 996.
 (pdftex.def)             Requested size: 200.2258pt x 189.05603pt.
  [10 <./Pictures/Cameras.png> <./Pictures/NonCentral.png> <./Pictures/Central.p
 ng> <./Pictures/CentralCatadioptrics.png> <./Pictures/Omnidirectional.png>]
-<Pictures/Convolution.png, id=920, 227.6505pt x 183.084pt>
+<Pictures/Convolution.png, id=930, 227.6505pt x 183.084pt>
 File: Pictures/Convolution.png Graphic file (type png)
 
 <use Pictures/Convolution.png>
-Package pdftex.def Info: Pictures/Convolution.png used on input line 1017.
+Package pdftex.def Info: Pictures/Convolution.png used on input line 1034.
 (pdftex.def)             Requested size: 200.2258pt x 161.03339pt.
 
-<Pictures/BoxFilter.png, id=921, 444.4605pt x 266.1945pt>
+<Pictures/BoxFilter.png, id=931, 444.4605pt x 266.1945pt>
 File: Pictures/BoxFilter.png Graphic file (type png)
 
 <use Pictures/BoxFilter.png>
-Package pdftex.def Info: Pictures/BoxFilter.png used on input line 1055.
+Package pdftex.def Info: Pictures/BoxFilter.png used on input line 1072.
 (pdftex.def)             Requested size: 180.202pt x 107.92596pt.
 
-<Pictures/GaussFilter.png, id=922, 447.47176pt x 264.38776pt>
+<Pictures/GaussFilter.png, id=932, 447.47176pt x 264.38776pt>
 File: Pictures/GaussFilter.png Graphic file (type png)
 
 <use Pictures/GaussFilter.png>
-Package pdftex.def Info: Pictures/GaussFilter.png used on input line 1055.
+Package pdftex.def Info: Pictures/GaussFilter.png used on input line 1072.
 (pdftex.def)             Requested size: 180.202pt x 106.47131pt.
  [11 <./Pictures/Convolution.png> <./Pictures/BoxFilter.png> <./Pictures/GaussF
 ilter.png>]
-<Pictures/MedianFilter.png, id=937, 291.489pt x 252.945pt>
+<Pictures/MedianFilter.png, id=947, 291.489pt x 252.945pt>
 File: Pictures/MedianFilter.png Graphic file (type png)
 
 <use Pictures/MedianFilter.png>
-Package pdftex.def Info: Pictures/MedianFilter.png used on input line 1089.
+Package pdftex.def Info: Pictures/MedianFilter.png used on input line 1106.
 (pdftex.def)             Requested size: 200.2258pt x 173.74873pt.
 
-<Pictures/LaplacianGaussian.png, id=938, 369.17924pt x 251.13824pt>
+<Pictures/LaplacianGaussian.png, id=948, 369.17924pt x 251.13824pt>
 File: Pictures/LaplacianGaussian.png Graphic file (type png)
 
 <use Pictures/LaplacianGaussian.png>
-Package pdftex.def Info: Pictures/LaplacianGaussian.png used on input line 1165
+Package pdftex.def Info: Pictures/LaplacianGaussian.png used on input line 1182
 .
 (pdftex.def)             Requested size: 200.2258pt x 136.2066pt.
  [12 <./Pictures/MedianFilter.png>]
-<Pictures/LaplacianGaussian2.png, id=965, 487.22025pt x 270.41025pt>
+<Pictures/LaplacianGaussian2.png, id=975, 487.22025pt x 270.41025pt>
 File: Pictures/LaplacianGaussian2.png Graphic file (type png)
 
 <use Pictures/LaplacianGaussian2.png>
-Package pdftex.def Info: Pictures/LaplacianGaussian2.png used on input line 116
-7.
+Package pdftex.def Info: Pictures/LaplacianGaussian2.png used on input line 118
+4.
 (pdftex.def)             Requested size: 200.2258pt x 111.12473pt.
 
-<Pictures/CensusTransform.png, id=966, 162.6075pt x 164.41425pt>
+<Pictures/CensusTransform.png, id=976, 162.6075pt x 164.41425pt>
 File: Pictures/CensusTransform.png Graphic file (type png)
 
 <use Pictures/CensusTransform.png>
-Package pdftex.def Info: Pictures/CensusTransform.png used on input line 1239.
+Package pdftex.def Info: Pictures/CensusTransform.png used on input line 1256.
 (pdftex.def)             Requested size: 120.13669pt x 121.47395pt.
  [13 <./Pictures/LaplacianGaussian.png> <./Pictures/LaplacianGaussian2.png>]
-<Pictures/Moravec.png, id=984, 176.45924pt x 166.82326pt>
+<Pictures/Moravec.png, id=994, 176.45924pt x 166.82326pt>
 File: Pictures/Moravec.png Graphic file (type png)
 
 <use Pictures/Moravec.png>
-Package pdftex.def Info: Pictures/Moravec.png used on input line 1290.
+Package pdftex.def Info: Pictures/Moravec.png used on input line 1307.
 (pdftex.def)             Requested size: 200.2258pt x 189.29718pt.
  [14 <./Pictures/CensusTransform.png> <./Pictures/Moravec.png>] <Pictures/Affin
-eWarping.png, id=997, 459.51675pt x 174.05025pt>
+eWarping.png, id=1007, 459.51675pt x 174.05025pt>
 File: Pictures/AffineWarping.png Graphic file (type png)
 
 <use Pictures/AffineWarping.png>
-Package pdftex.def Info: Pictures/AffineWarping.png used on input line 1410.
+Package pdftex.def Info: Pictures/AffineWarping.png used on input line 1427.
 (pdftex.def)             Requested size: 334.7516pt x 126.79533pt.
  [15]
-<Pictures/HOG.png, id=1017, 423.38174pt x 146.949pt>
+<Pictures/HOG.png, id=1028, 423.38174pt x 146.949pt>
 File: Pictures/HOG.png Graphic file (type png)
  <use Pictures/HOG.png>
-Package pdftex.def Info: Pictures/HOG.png used on input line 1426.
+Package pdftex.def Info: Pictures/HOG.png used on input line 1443.
 (pdftex.def)             Requested size: 353.45157pt x 122.67842pt.
 
-<Pictures/LocalMaxima.png, id=1018, 451.08525pt x 178.86826pt>
+<Pictures/LocalMaxima.png, id=1029, 451.08525pt x 178.86826pt>
 File: Pictures/LocalMaxima.png Graphic file (type png)
 
 <use Pictures/LocalMaxima.png>
-Package pdftex.def Info: Pictures/LocalMaxima.png used on input line 1464.
+Package pdftex.def Info: Pictures/LocalMaxima.png used on input line 1481.
 (pdftex.def)             Requested size: 262.81494pt x 104.21855pt.
  [16 <./Pictures/AffineWarping.png> <./Pictures/HOG.png>] <Pictures/RecapTable.
-png, id=1043, 534.798pt x 348.1005pt>
+png, id=1055, 534.798pt x 348.1005pt>
 File: Pictures/RecapTable.png Graphic file (type png)
 
 <use Pictures/RecapTable.png>
-Package pdftex.def Info: Pictures/RecapTable.png used on input line 1549.
+Package pdftex.def Info: Pictures/RecapTable.png used on input line 1566.
 (pdftex.def)             Requested size: 320.36249pt x 208.52727pt.
  [17 <./Pictures/LocalMaxima.png>]
-<Pictures/Triangulation1.png, id=1068, 258.9675pt x 172.2435pt>
+<Pictures/Triangulation1.png, id=1078, 258.9675pt x 172.2435pt>
 File: Pictures/Triangulation1.png Graphic file (type png)
 
 <use Pictures/Triangulation1.png>
-Package pdftex.def Info: Pictures/Triangulation1.png used on input line 1593.
+Package pdftex.def Info: Pictures/Triangulation1.png used on input line 1610.
 (pdftex.def)             Requested size: 240.27339pt x 159.81683pt.
 
-<Pictures/StereoVisionGeneralCase.png, id=1069, 274.02374pt x 142.73325pt>
+<Pictures/StereoVisionGeneralCase.png, id=1079, 274.02374pt x 142.73325pt>
 File: Pictures/StereoVisionGeneralCase.png Graphic file (type png)
 
 <use Pictures/StereoVisionGeneralCase.png>
 Package pdftex.def Info: Pictures/StereoVisionGeneralCase.png used on input lin
-e 1609.
+e 1626.
 (pdftex.def)             Requested size: 200.2258pt x 104.29457pt.
  [18 <./Pictures/RecapTable.png> <./Pictures/Triangulation1.png> <./Pictures/St
 ereoVisionGeneralCase.png>]
-<Pictures/Triangulation3.png, id=1082, 394.47375pt x 249.3315pt>
+<Pictures/Triangulation3.png, id=1092, 394.47375pt x 249.3315pt>
 File: Pictures/Triangulation3.png Graphic file (type png)
 
 <use Pictures/Triangulation3.png>
-Package pdftex.def Info: Pictures/Triangulation3.png used on input line 1669.
+Package pdftex.def Info: Pictures/Triangulation3.png used on input line 1686.
 (pdftex.def)             Requested size: 200.2258pt x 126.55246pt.
 
-<Pictures/Epipole.png, id=1083, 321.6015pt x 175.857pt>
+<Pictures/Epipole.png, id=1093, 321.6015pt x 175.857pt>
 File: Pictures/Epipole.png Graphic file (type png)
 
 <use Pictures/Epipole.png>
-Package pdftex.def Info: Pictures/Epipole.png used on input line 1694.
+Package pdftex.def Info: Pictures/Epipole.png used on input line 1711.
 (pdftex.def)             Requested size: 200.2258pt x 109.48906pt.
 
-<Pictures/EpipolarPlane.png, id=1084, 407.121pt x 187.902pt>
+<Pictures/EpipolarPlane.png, id=1094, 407.121pt x 187.902pt>
 File: Pictures/EpipolarPlane.png Graphic file (type png)
 
 <use Pictures/EpipolarPlane.png>
-Package pdftex.def Info: Pictures/EpipolarPlane.png used on input line 1704.
+Package pdftex.def Info: Pictures/EpipolarPlane.png used on input line 1721.
 (pdftex.def)             Requested size: 200.2258pt x 92.41397pt.
  [19 <./Pictures/Triangulation3.png> <./Pictures/Epipole.png> <./Pictures/Epipo
 larPlane.png>]
-<Pictures/StereoRectification1.png, id=1097, 449.88075pt x 168.63pt>
+<Pictures/StereoRectification1.png, id=1107, 449.88075pt x 168.63pt>
 File: Pictures/StereoRectification1.png Graphic file (type png)
 
 <use Pictures/StereoRectification1.png>
 Package pdftex.def Info: Pictures/StereoRectification1.png used on input line 1
-731.
+748.
 (pdftex.def)             Requested size: 187.72578pt x 70.3661pt.
 
-<Pictures/CorrespondenceSearch.png, id=1098, 506.49225pt x 184.89075pt>
+<Pictures/CorrespondenceSearch.png, id=1108, 506.49225pt x 184.89075pt>
 File: Pictures/CorrespondenceSearch.png Graphic file (type png)
 
 <use Pictures/CorrespondenceSearch.png>
 Package pdftex.def Info: Pictures/CorrespondenceSearch.png used on input line 1
-808.
+825.
 (pdftex.def)             Requested size: 280.3149pt x 102.33063pt.
 
-<Pictures/MultipleMatches.png, id=1099, 352.31625pt x 330.63525pt>
+<Pictures/MultipleMatches.png, id=1109, 352.31625pt x 330.63525pt>
 File: Pictures/MultipleMatches.png Graphic file (type png)
 
 <use Pictures/MultipleMatches.png>
-Package pdftex.def Info: Pictures/MultipleMatches.png used on input line 1840.
+Package pdftex.def Info: Pictures/MultipleMatches.png used on input line 1857.
 (pdftex.def)             Requested size: 200.2258pt x 187.90404pt.
  [20 <./Pictures/StereoRectification1.png> <./Pictures/CorrespondenceSearch.png
 >]
-<Pictures/EssentialEpipolar.png, id=1118, 348.70274pt x 122.25674pt>
+<Pictures/EssentialEpipolar.png, id=1128, 348.70274pt x 122.25674pt>
 File: Pictures/EssentialEpipolar.png Graphic file (type png)
 
 <use Pictures/EssentialEpipolar.png>
-Package pdftex.def Info: Pictures/EssentialEpipolar.png used on input line 1897
+Package pdftex.def Info: Pictures/EssentialEpipolar.png used on input line 1914
 .
 (pdftex.def)             Requested size: 200.2258pt x 70.20193pt.
  [21 <./Pictures/MultipleMatches.png> <./Pictures/EssentialEpipolar.png>] [22]
-<Pictures/4RTfromE.png, id=1156, 384.2355pt x 237.88875pt>
+<Pictures/4RTfromE.png, id=1183, 384.2355pt x 237.88875pt>
 File: Pictures/4RTfromE.png Graphic file (type png)
 
 <use Pictures/4RTfromE.png>
-Package pdftex.def Info: Pictures/4RTfromE.png used on input line 2010.
+Package pdftex.def Info: Pictures/4RTfromE.png used on input line 2025.
 (pdftex.def)             Requested size: 200.2258pt x 123.9642pt.
 
-<Pictures/Normalized8Points.png, id=1157, 360.74776pt x 121.05225pt>
+<Pictures/Normalized8Points.png, id=1184, 360.74776pt x 121.05225pt>
 File: Pictures/Normalized8Points.png Graphic file (type png)
 
 <use Pictures/Normalized8Points.png>
-Package pdftex.def Info: Pictures/Normalized8Points.png used on input line 2024
+Package pdftex.def Info: Pictures/Normalized8Points.png used on input line 2039
 .
 (pdftex.def)             Requested size: 200.2258pt x 67.18848pt.
 
-<Pictures/EpipolarLineDistance.png, id=1158, 312.56775pt x 166.82326pt>
+<Pictures/EpipolarLineDistance.png, id=1185, 312.56775pt x 166.82326pt>
 File: Pictures/EpipolarLineDistance.png Graphic file (type png)
 
 <use Pictures/EpipolarLineDistance.png>
 Package pdftex.def Info: Pictures/EpipolarLineDistance.png used on input line 2
-058.
+073.
 (pdftex.def)             Requested size: 200.2258pt x 106.86324pt.
- [23 <./Pictures/4RTfromE.png> <./Pictures/Normalized8Points.png>]
-<Pictures/ReprojectionError.png, id=1187, 320.397pt x 157.18726pt>
+
+<Pictures/ReprojectionError.png, id=1186, 320.397pt x 157.18726pt>
 File: Pictures/ReprojectionError.png Graphic file (type png)
 
 <use Pictures/ReprojectionError.png>
-Package pdftex.def Info: Pictures/ReprojectionError.png used on input line 2062
+Package pdftex.def Info: Pictures/ReprojectionError.png used on input line 2077
 .
 (pdftex.def)             Requested size: 200.2258pt x 98.2322pt.
- [24 <./Pictures/EpipolarLineDistance.png> <./Pictures/ReprojectionError.png>]
-<Pictures/Ackermann.png, id=1206, 443.85825pt x 151.16475pt>
+ [23 <./Pictures/4RTfromE.png> <./Pictures/Normalized8Points.png> <./Pictures/E
+pipolarLineDistance.png>]
+<Pictures/Ackermann.png, id=1197, 443.85825pt x 151.16475pt>
 File: Pictures/Ackermann.png Graphic file (type png)
 
 <use Pictures/Ackermann.png>
-Package pdftex.def Info: Pictures/Ackermann.png used on input line 2160.
+Package pdftex.def Info: Pictures/Ackermann.png used on input line 2175.
 (pdftex.def)             Requested size: 187.72578pt x 63.93391pt.
-
-<Pictures/PoseGraphOptimization.jpg, id=1207, 438.438pt x 125.87025pt>
+ [24 <./Pictures/ReprojectionError.png>]
+<Pictures/PoseGraphOptimization.jpg, id=1216, 438.438pt x 125.87025pt>
 File: Pictures/PoseGraphOptimization.jpg Graphic file (type jpg)
 
 <use Pictures/PoseGraphOptimization.jpg>
 Package pdftex.def Info: Pictures/PoseGraphOptimization.jpg used on input line 
-2188.
+2203.
 (pdftex.def)             Requested size: 280.3149pt x 80.47984pt.
 
-<Pictures/BundleAdjustment.jpg, id=1208, 442.65375pt x 208.3785pt>
+<Pictures/BundleAdjustment.jpg, id=1217, 442.65375pt x 208.3785pt>
 File: Pictures/BundleAdjustment.jpg Graphic file (type jpg)
 
 <use Pictures/BundleAdjustment.jpg>
-Package pdftex.def Info: Pictures/BundleAdjustment.jpg used on input line 2198.
+Package pdftex.def Info: Pictures/BundleAdjustment.jpg used on input line 2213.
 
 (pdftex.def)             Requested size: 280.3149pt x 131.96593pt.
- [25 <./Pictures/Ackermann.png> <./Pictures/PoseGraphOptimization.jpg> <./Pictu
-res/BundleAdjustment.jpg>]
-<Pictures/AggragatedPhotometricError.jpg, id=1216, 514.92375pt x 253.54726pt>
+
+<Pictures/AggragatedPhotometricError.jpg, id=1218, 514.92375pt x 253.54726pt>
 File: Pictures/AggragatedPhotometricError.jpg Graphic file (type jpg)
 
 <use Pictures/AggragatedPhotometricError.jpg>
 Package pdftex.def Info: Pictures/AggragatedPhotometricError.jpg used on input 
-line 2241.
+line 2256.
 (pdftex.def)             Requested size: 400.4516pt x 197.18571pt.
-
-<Pictures/TuckeyAndHuber.jpg, id=1217, 358.941pt x 229.45724pt>
+ [25 <./Pictures/Ackermann.png> <./Pictures/PoseGraphOptimization.jpg> <./Pictu
+res/BundleAdjustment.jpg>]
+<Pictures/TuckeyAndHuber.jpg, id=1228, 358.941pt x 229.45724pt>
 File: Pictures/TuckeyAndHuber.jpg Graphic file (type jpg)
 
 <use Pictures/TuckeyAndHuber.jpg>
-Package pdftex.def Info: Pictures/TuckeyAndHuber.jpg used on input line 2271.
+Package pdftex.def Info: Pictures/TuckeyAndHuber.jpg used on input line 2286.
 (pdftex.def)             Requested size: 200.2258pt x 127.99449pt.
  [26 <./Pictures/AggragatedPhotometricError.jpg> <./Pictures/TuckeyAndHuber.jpg
 >] [27] [28]
-<Pictures/LucasKanade.jpg, id=1247, 711.8595pt x 472.76625pt>
+<Pictures/LucasKanade.jpg, id=1261, 711.8595pt x 472.76625pt>
 File: Pictures/LucasKanade.jpg Graphic file (type jpg)
 
 <use Pictures/LucasKanade.jpg>
-Package pdftex.def Info: Pictures/LucasKanade.jpg used on input line 2542.
+Package pdftex.def Info: Pictures/LucasKanade.jpg used on input line 2557.
 (pdftex.def)             Requested size: 400.4516pt x 265.952pt.
 
-<Pictures/LucasKanadePyramid.jpg, id=1248, 514.92375pt x 336.65775pt>
+<Pictures/LucasKanadePyramid.jpg, id=1262, 514.92375pt x 336.65775pt>
 File: Pictures/LucasKanadePyramid.jpg Graphic file (type jpg)
 
 <use Pictures/LucasKanadePyramid.jpg>
-Package pdftex.def Info: Pictures/LucasKanadePyramid.jpg used on input line 254
-6.
+Package pdftex.def Info: Pictures/LucasKanadePyramid.jpg used on input line 256
+1.
 (pdftex.def)             Requested size: 400.4516pt x 261.82143pt.
- [29 <./Pictures/LucasKanade.jpg>]
-[30 <./Pictures/LucasKanadePyramid.jpg>]
-<Pictures/MoreWords.jpg, id=1277, 217.41225pt x 201.1515pt>
+ [29 <./Pictures/LucasKanade.jpg> <./Pictures/LucasKanadePyramid.jpg>]
+<Pictures/MoreWords.jpg, id=1274, 217.41225pt x 201.1515pt>
 File: Pictures/MoreWords.jpg Graphic file (type jpg)
 
 <use Pictures/MoreWords.jpg>
-Package pdftex.def Info: Pictures/MoreWords.jpg used on input line 2631.
+Package pdftex.def Info: Pictures/MoreWords.jpg used on input line 2646.
 (pdftex.def)             Requested size: 180.202pt x 166.7255pt.
 
-<Pictures/HigherBranchFactor.jpg, id=1278, 220.4235pt x 209.583pt>
+<Pictures/HigherBranchFactor.jpg, id=1275, 220.4235pt x 209.583pt>
 File: Pictures/HigherBranchFactor.jpg Graphic file (type jpg)
 
 <use Pictures/HigherBranchFactor.jpg>
-Package pdftex.def Info: Pictures/HigherBranchFactor.jpg used on input line 263
-1.
+Package pdftex.def Info: Pictures/HigherBranchFactor.jpg used on input line 264
+6.
 (pdftex.def)             Requested size: 180.202pt x 171.33789pt.
 
-<Pictures/MEMS.jpg, id=1279, 440.847pt x 121.6545pt>
+<Pictures/MEMS.jpg, id=1276, 440.847pt x 121.6545pt>
 File: Pictures/MEMS.jpg Graphic file (type jpg)
  <use Pictures/MEMS.jpg>
-Package pdftex.def Info: Pictures/MEMS.jpg used on input line 2646.
+Package pdftex.def Info: Pictures/MEMS.jpg used on input line 2661.
 (pdftex.def)             Requested size: 400.4516pt x 110.50713pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 2659--2669
+Overfull \hbox (12.0pt too wide) in paragraph at lines 2674--2684
 [][] 
  []
 
-<Pictures/CameraImuSystem.jpg, id=1280, 352.31625pt x 187.29974pt>
+[30 <./Pictures/MoreWords.jpg> <./Pictures/HigherBranchFactor.jpg> <./Pictures/
+MEMS.jpg>] <Pictures/CameraImuSystem.jpg, id=1289, 352.31625pt x 187.29974pt>
 File: Pictures/CameraImuSystem.jpg Graphic file (type jpg)
 
 <use Pictures/CameraImuSystem.jpg>
-Package pdftex.def Info: Pictures/CameraImuSystem.jpg used on input line 2683.
+Package pdftex.def Info: Pictures/CameraImuSystem.jpg used on input line 2698.
 (pdftex.def)             Requested size: 280.3149pt x 149.0226pt.
 
-<Pictures/CameraImuSystem2.jpg, id=1281, 330.033pt x 87.32625pt>
+<Pictures/CameraImuSystem2.jpg, id=1290, 330.033pt x 87.32625pt>
 File: Pictures/CameraImuSystem2.jpg Graphic file (type jpg)
 
 <use Pictures/CameraImuSystem2.jpg>
-Package pdftex.def Info: Pictures/CameraImuSystem2.jpg used on input line 2685.
+Package pdftex.def Info: Pictures/CameraImuSystem2.jpg used on input line 2700.
 
 (pdftex.def)             Requested size: 280.3149pt x 74.17036pt.
- [31 <./Pictures/MoreWords.jpg> <./Pictures/HigherBranchFactor.jpg> <./Pictures
-/MEMS.jpg> <./Pictures/CameraImuSystem.jpg>] <Pictures/LooselyCoupled.jpg, id=1
-288, 519.74174pt x 174.6525pt>
+
+<Pictures/LooselyCoupled.jpg, id=1291, 519.74174pt x 174.6525pt>
 File: Pictures/LooselyCoupled.jpg Graphic file (type jpg)
 
 <use Pictures/LooselyCoupled.jpg>
-Package pdftex.def Info: Pictures/LooselyCoupled.jpg used on input line 2689.
+Package pdftex.def Info: Pictures/LooselyCoupled.jpg used on input line 2704.
 (pdftex.def)             Requested size: 280.3149pt x 94.199pt.
 
-<Pictures/TightlyCoupled.jpg, id=1289, 519.74174pt x 136.71075pt>
+<Pictures/TightlyCoupled.jpg, id=1292, 519.74174pt x 136.71075pt>
 File: Pictures/TightlyCoupled.jpg Graphic file (type jpg)
 
 <use Pictures/TightlyCoupled.jpg>
-Package pdftex.def Info: Pictures/TightlyCoupled.jpg used on input line 2699.
+Package pdftex.def Info: Pictures/TightlyCoupled.jpg used on input line 2714.
 (pdftex.def)             Requested size: 280.3149pt x 73.73508pt.
 
-<Pictures/DifferentParadigms.jpg, id=1290, 491.436pt x 313.17pt>
+<Pictures/DifferentParadigms.jpg, id=1293, 491.436pt x 313.17pt>
 File: Pictures/DifferentParadigms.jpg Graphic file (type jpg)
 
 <use Pictures/DifferentParadigms.jpg>
-Package pdftex.def Info: Pictures/DifferentParadigms.jpg used on input line 272
-8.
+Package pdftex.def Info: Pictures/DifferentParadigms.jpg used on input line 274
+3.
 (pdftex.def)             Requested size: 280.3149pt x 178.63776pt.
- [32 <./Pictures/CameraImuSystem2.jpg> <./Pictures/LooselyCoupled.jpg> <./Pictu
-res/TightlyCoupled.jpg> <./Pictures/DifferentParadigms.jpg>]
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 2815
+ [31 <./Pictures/CameraImuSystem.jpg> <./Pictures/CameraImuSystem2.jpg> <./Pict
+ures/LooselyCoupled.jpg> <./Pictures/TightlyCoupled.jpg>] [32 <./Pictures/Diffe
+rentParadigms.jpg>]
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 2830
 .
 
 ("C:\Users\gam19\AppData\Local\Programs\MiKTeX 2.9\tex\latex\base\ts1cmr.fd"
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-<Pictures/HighSpeedImaging.jpg, id=1298, 378.213pt x 260.172pt>
+<Pictures/HighSpeedImaging.jpg, id=1306, 378.213pt x 260.172pt>
 File: Pictures/HighSpeedImaging.jpg Graphic file (type jpg)
 
 <use Pictures/HighSpeedImaging.jpg>
-Package pdftex.def Info: Pictures/HighSpeedImaging.jpg used on input line 2846.
+Package pdftex.def Info: Pictures/HighSpeedImaging.jpg used on input line 2861.
 
 (pdftex.def)             Requested size: 280.3149pt x 192.83786pt.
- [33]
-<Pictures/EventBasedCornerDetection.jpg, id=1304, 181.8795pt x 104.18925pt>
+ [33 <./Pictures/HighSpeedImaging.jpg>]
+<Pictures/EventBasedCornerDetection.jpg, id=1312, 181.8795pt x 104.18925pt>
 File: Pictures/EventBasedCornerDetection.jpg Graphic file (type jpg)
 
 <use Pictures/EventBasedCornerDetection.jpg>
 Package pdftex.def Info: Pictures/EventBasedCornerDetection.jpg used on input l
-ine 2927.
+ine 2942.
 (pdftex.def)             Requested size: 200.2258pt x 114.70071pt.
- [34 <./Pictures/HighSpeedImaging.jpg>]
+ [34 <./Pictures/EventBasedCornerDetection.jpg>]
 .................................................
 . LaTeX info: "xparse/define-environment"
 . 
-. Defining environment 'QandA' with sig. 'mo' on line 2964.
+. Defining environment 'QandA' with sig. 'mo' on line 2981.
 .................................................
- [35 <./Pictures/EventBasedCornerDetection.jpg>]
-Underfull \hbox (badness 5726) in paragraph at lines 3059--3060
+ [35]
+Underfull \hbox (badness 5726) in paragraph at lines 3076--3077
 []\OT1/cmr/m/n/10 Problem De-scrip-tion: \OT1/cmr/bx/n/10 Find the pose \OT1/cm
 r/m/n/10 of the cam-era from $\OML/cmm/m/it/10 n$ \OT1/cmr/bx/n/10 2D-3D-
  []
 
-[36] [37] [38] [39] [40] [41] [42] [43] [44] [45]
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-
-! Package xcolor Error: Undefined color `Definition'.
-
-See the xcolor package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.3707 ...{QandA}{Inverted File Index}[Definition]
-                                                  
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[46] [47] [48]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3863.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 3863.
+[36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47] [48]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 3901.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 3901.
  (main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3863.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3863.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 3901.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 3901.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: EAA0795A90616659ED57422CCCE8ABBF;9748.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3863.
+(rerunfilecheck)             Checksum: 79A7C02745DDBB53147FE0EAADAF6295;9811.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 3901.
  ) 
 Here is how much of TeX's memory you used:
  27563 strings out of 493323
- 505091 string characters out of 3130016
- 814355 words of memory out of 3000000
+ 505083 string characters out of 3130016
+ 815340 words of memory out of 3000000
  30172 multiletter control sequences out of 15000+200000
  550880 words of font info for 107 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -3492,9 +3384,9 @@ b><C:/Users/gam19/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts
 /cm/cmtt10.pfb><C:/Users/gam19/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/pu
 blic/esint/esint10.pfb><C:/Users/gam19/AppData/Local/Programs/MiKTeX 2.9/fonts/
 type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (48 pages, 3379467 bytes).
+Output written on main.pdf (48 pages, 3387466 bytes).
 PDF statistics:
- 1651 PDF objects out of 1728 (max. 8388607)
+ 1660 PDF objects out of 1728 (max. 8388607)
  523 named destinations out of 1000 (max. 500000)
- 1347 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1355 words of extra memory for PDF output out of 10000 (max. 10000000)
 

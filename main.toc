@@ -9,9 +9,10 @@
 \contentsline {subsection}{\numberline {2.6}Visual Inertial Fusion}{3}{subsection.2.6}
 \contentsline {subsubsection}{\numberline {2.6.1}Closed Form}{3}{subsubsection.2.6.1}
 \contentsline {subsubsection}{\numberline {2.6.2}Filters}{3}{subsubsection.2.6.2}
-\contentsline {subsubsection}{\numberline {2.6.3}Fixed-Lag Smoothers}{3}{subsubsection.2.6.3}
-\contentsline {subsubsection}{\numberline {2.6.4}Full-Smoothing Methods}{4}{subsubsection.2.6.4}
-\contentsline {subsection}{\numberline {2.7}Even Based Vision}{4}{subsection.2.7}
+\contentsline {subsection}{\numberline {2.7}Recognition}{3}{subsection.2.7}
+\contentsline {subsubsection}{\numberline {2.7.1}Fixed-Lag Smoothers}{3}{subsubsection.2.7.1}
+\contentsline {subsubsection}{\numberline {2.7.2}Full-Smoothing Methods}{4}{subsubsection.2.7.2}
+\contentsline {subsection}{\numberline {2.8}Even Based Vision}{4}{subsection.2.8}
 \contentsline {section}{\numberline {3}Basics VO}{4}{section.3}
 \contentsline {subsection}{\numberline {3.1}Working Principle}{4}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}How to find $T_k$}{4}{subsection.3.2}
@@ -56,7 +57,7 @@
 \contentsline {subsection}{\numberline {6.6}SIFT detector}{16}{subsection.6.6}
 \contentsline {subsubsection}{\numberline {6.6.1}Summary}{17}{subsubsection.6.6.1}
 \contentsline {subsection}{\numberline {6.7}Feature matching}{17}{subsection.6.7}
-\contentsline {subsection}{\numberline {6.8}Overview}{18}{subsection.6.8}
+\contentsline {subsection}{\numberline {6.8}Overview}{17}{subsection.6.8}
 \contentsline {section}{\numberline {7}Multi View Geometry}{18}{section.7}
 \contentsline {subsection}{\numberline {7.1}3D Reconstruction from Multiple Views}{18}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}Triangulation}{18}{subsection.7.2}
@@ -75,59 +76,59 @@
 \contentsline {subsubsection}{\numberline {8.3.1}Implementation of Q}{22}{subsubsection.8.3.1}
 \contentsline {subsection}{\numberline {8.4}The Fundamental Matrix}{23}{subsection.8.4}
 \contentsline {subsection}{\numberline {8.5}Normalized 8-Point Algorithm}{23}{subsection.8.5}
-\contentsline {subsection}{\numberline {8.6}Error measures}{24}{subsection.8.6}
+\contentsline {subsection}{\numberline {8.6}Error measures}{23}{subsection.8.6}
 \contentsline {subsection}{\numberline {8.7}RANSAC (RAndom SAmple Consensus)}{24}{subsection.8.7}
 \contentsline {subsubsection}{\numberline {8.7.1}Application to SFM}{24}{subsubsection.8.7.1}
-\contentsline {subsubsection}{\numberline {8.7.2}Ackerman's Steering Principle}{25}{subsubsection.8.7.2}
+\contentsline {subsubsection}{\numberline {8.7.2}Ackerman's Steering Principle}{24}{subsubsection.8.7.2}
 \contentsline {section}{\numberline {9}Refinement}{25}{section.9}
 \contentsline {subsection}{\numberline {9.1}Pose-Graph Optimization}{25}{subsection.9.1}
 \contentsline {subsection}{\numberline {9.2}Bundle Adjustment}{25}{subsection.9.2}
 \contentsline {subsection}{\numberline {9.3}BA vs. PGO}{25}{subsection.9.3}
-\contentsline {section}{\numberline {10}Dense 3D Reconstruction}{26}{section.10}
-\contentsline {subsection}{\numberline {10.1}Photometric Error (SSD)}{26}{subsection.10.1}
+\contentsline {section}{\numberline {10}Dense 3D Reconstruction}{25}{section.10}
+\contentsline {subsection}{\numberline {10.1}Photometric Error (SSD)}{25}{subsection.10.1}
 \contentsline {subsection}{\numberline {10.2}Disparity Space Image (DSI)}{26}{subsection.10.2}
 \contentsline {subsubsection}{\numberline {10.2.1}Tuckey and Huber}{26}{subsubsection.10.2.1}
-\contentsline {subsection}{\numberline {10.3}Global Methods}{27}{subsection.10.3}
-\contentsline {subsubsection}{\numberline {10.3.1}Scene depth discontinuities}{27}{subsubsection.10.3.1}
+\contentsline {subsection}{\numberline {10.3}Global Methods}{26}{subsection.10.3}
+\contentsline {subsubsection}{\numberline {10.3.1}Scene depth discontinuities}{26}{subsubsection.10.3.1}
 \contentsline {subsubsection}{\numberline {10.3.2}Baseline}{27}{subsubsection.10.3.2}
 \contentsline {subsection}{\numberline {10.4}GPU}{27}{subsection.10.4}
 \contentsline {section}{\numberline {11}Tracking}{27}{section.11}
 \contentsline {subsection}{\numberline {11.1}Point Tracking}{27}{subsection.11.1}
 \contentsline {subsubsection}{\numberline {11.1.1}Block Matching}{27}{subsubsection.11.1.1}
-\contentsline {subsubsection}{\numberline {11.1.2}Block-based vs. Differential Methods}{28}{subsubsection.11.1.2}
+\contentsline {subsubsection}{\numberline {11.1.2}Block-based vs. Differential Methods}{27}{subsubsection.11.1.2}
 \contentsline {subsection}{\numberline {11.2}Common 2D Transformations}{28}{subsection.11.2}
 \contentsline {subsubsection}{\numberline {11.2.1}Template Tracking}{28}{subsubsection.11.2.1}
 \contentsline {subsection}{\numberline {11.3}Lucas-Kanade Tracker}{28}{subsection.11.3}
-\contentsline {subsubsection}{\numberline {11.3.1}Failure Cases}{30}{subsubsection.11.3.1}
-\contentsline {subsubsection}{\numberline {11.3.2}Generalization}{30}{subsubsection.11.3.2}
-\contentsline {subsection}{\numberline {11.4}Tracking by detection of local image features}{30}{subsection.11.4}
-\contentsline {subsection}{\numberline {11.5}Tracking Issues}{30}{subsection.11.5}
+\contentsline {subsubsection}{\numberline {11.3.1}Failure Cases}{29}{subsubsection.11.3.1}
+\contentsline {subsubsection}{\numberline {11.3.2}Generalization}{29}{subsubsection.11.3.2}
+\contentsline {subsection}{\numberline {11.4}Tracking by detection of local image features}{29}{subsection.11.4}
+\contentsline {subsection}{\numberline {11.5}Tracking Issues}{29}{subsection.11.5}
 \contentsline {section}{\numberline {12}Recognition}{30}{section.12}
 \contentsline {subsection}{\numberline {12.1}K-means clustering}{30}{subsection.12.1}
 \contentsline {subsection}{\numberline {12.2}Applying k-means to Image Retrieval}{30}{subsection.12.2}
 \contentsline {subsection}{\numberline {12.3}Hierarchical Clustering}{30}{subsection.12.3}
-\contentsline {subsection}{\numberline {12.4}Robust Object/Scene Recognition}{31}{subsection.12.4}
-\contentsline {subsection}{\numberline {12.5}Performance Analysis}{31}{subsection.12.5}
-\contentsline {section}{\numberline {13}Visual Inertial Fusion}{31}{section.13}
+\contentsline {subsection}{\numberline {12.4}Robust Object/Scene Recognition}{30}{subsection.12.4}
+\contentsline {subsection}{\numberline {12.5}Performance Analysis}{30}{subsection.12.5}
+\contentsline {section}{\numberline {13}Visual Inertial Fusion}{30}{section.13}
 \contentsline {subsection}{\numberline {13.1}IMU model}{31}{subsection.13.1}
 \contentsline {subsection}{\numberline {13.2}Camera IMU System}{31}{subsection.13.2}
-\contentsline {subsection}{\numberline {13.3}Loosely Coupled Approach}{32}{subsection.13.3}
-\contentsline {subsection}{\numberline {13.4}Tightly Coupled Approach}{32}{subsection.13.4}
-\contentsline {subsection}{\numberline {13.5}Closed Form Solution}{32}{subsection.13.5}
+\contentsline {subsection}{\numberline {13.3}Loosely Coupled Approach}{31}{subsection.13.3}
+\contentsline {subsection}{\numberline {13.4}Tightly Coupled Approach}{31}{subsection.13.4}
+\contentsline {subsection}{\numberline {13.5}Closed Form Solution}{31}{subsection.13.5}
 \contentsline {subsection}{\numberline {13.6}Filtering}{32}{subsection.13.6}
 \contentsline {subsubsection}{\numberline {13.6.1}Smoothing}{32}{subsubsection.13.6.1}
-\contentsline {subsubsection}{\numberline {13.6.2}Full smoothing}{33}{subsubsection.13.6.2}
-\contentsline {subsection}{\numberline {13.7}Unsolved Problems}{33}{subsection.13.7}
-\contentsline {subsection}{\numberline {13.8}Camera-IMU Calibration}{33}{subsection.13.8}
+\contentsline {subsubsection}{\numberline {13.6.2}Full smoothing}{32}{subsubsection.13.6.2}
+\contentsline {subsection}{\numberline {13.7}Unsolved Problems}{32}{subsection.13.7}
+\contentsline {subsection}{\numberline {13.8}Camera-IMU Calibration}{32}{subsection.13.8}
 \contentsline {section}{\numberline {14}Event Based Vision}{33}{section.14}
 \contentsline {subsection}{\numberline {14.1}Comparison to existing high-speed imaging technology}{33}{subsection.14.1}
-\contentsline {subsection}{\numberline {14.2}Calibration}{34}{subsection.14.2}
-\contentsline {subsection}{\numberline {14.3}Event Processing}{34}{subsection.14.3}
-\contentsline {subsection}{\numberline {14.4}Event Generation Model}{34}{subsection.14.4}
+\contentsline {subsection}{\numberline {14.2}Calibration}{33}{subsection.14.2}
+\contentsline {subsection}{\numberline {14.3}Event Processing}{33}{subsection.14.3}
+\contentsline {subsection}{\numberline {14.4}Event Generation Model}{33}{subsection.14.4}
 \contentsline {subsection}{\numberline {14.5}DAVIS Sensor}{34}{subsection.14.5}
 \contentsline {subsection}{\numberline {14.6}Applications}{34}{subsection.14.6}
 \contentsline {subsubsection}{\numberline {14.6.1}Image Reconstruction}{34}{subsubsection.14.6.1}
 \contentsline {subsubsection}{\numberline {14.6.2}6-DoF Pose Tracking from a Photometric Depth Map}{34}{subsubsection.14.6.2}
-\contentsline {subsubsection}{\numberline {14.6.3}Event-based Corner Detection}{35}{subsubsection.14.6.3}
-\contentsline {section}{\numberline {15}Matlab}{35}{section.15}
-\contentsline {subsection}{\numberline {15.1}Apply Gauss Filter to Image}{35}{subsection.15.1}
+\contentsline {subsubsection}{\numberline {14.6.3}Event-based Corner Detection}{34}{subsubsection.14.6.3}
+\contentsline {section}{\numberline {15}Matlab}{34}{section.15}
+\contentsline {subsection}{\numberline {15.1}Apply Gauss Filter to Image}{34}{subsection.15.1}

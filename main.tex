@@ -200,6 +200,12 @@ Fast Retina Keypoint
 \end{itemize}
 \end{Paper}
 
+\begin{Paper}{Automatic Panoramic Image Stitching using Invariant Features (2007 IJCV)}{Automatic Panoramic Image Stitching using Invariant Features_2007_IJCV.pdf}
+\end{Paper}
+
+\begin{Paper}{Recognising Panoramas (2003 ICCV)}{Recognising Panoramas_2003_ICCV.pdf}
+\end{Paper}
+
 \subsection{Multi View Geometry}
 
 \begin{Paper}{Stereo Rectification (2000)}{Rectification_2000.pdf}
@@ -216,6 +222,9 @@ Direct Sparse Odometry
 
 \begin{Paper}{ORB-SLAM (2015 TRO)}{ORB-SLAM_2015_TRO.pdf}
 ORB-SLAM: a Versatile and Accurate Monocular SLAM System
+\end{Paper}
+
+\begin{Paper}{Building Rome in a Day (2009 ICCV)}{Building Rome in a Day_2009_ICCV.pdf}
 \end{Paper}
 
 \subsection{Dense 3D Reconstruction}
@@ -276,6 +285,14 @@ Ultimate SLAM? Combining Events, Images, and IMU for Robust Visual SLAM in HDR a
 
 \begin{Paper}{ROVIO (2013 RSS)}{ROVIO_2013_RSS.pdf}
 Keyframe-Based Visual-Inertial SLAM Using Nonlinear Optimization
+\end{Paper}
+
+\subsection{Recognition}
+
+\begin{Paper}{Appearance-only SLAM at Large Scale with FAB-MAP 2.0 (2011 IJRR)}{Appearance-only SLAM at Large Scale with FAB-MAP 2.0_2011_IJRR.pdf}
+\end{Paper}
+
+\begin{Paper}{Size Matters Exhaustive Geometric Verifcation for Image Retrieval (2012 ECCV)}{Size Matters Exhaustive Geometric Verifcation for Image Retrieval_2012_ECCV.pdf}
 \end{Paper}
 
 \subsubsection{Fixed-Lag Smoothers}
@@ -1344,7 +1361,7 @@ If any $\lambda$ is close to zero there is no corner.
 \item \textbf{Cornerness function} $R=\min(\lambda_1,\lambda_2)$
 
 \item The corner detector using this criterion is called \textbf{Shi-Tomasi} detector.
-\item Alternatively, to avoid the calculation of the eigenvalues, another cornerness function can be defined: $R=\lambda_1-\lambda_2-k(\lambda_1+\lambda_2)^2=\det(M)-k\text{trace}^2(M)$, where $k\in(0.04,0.15)$.
+\item Alternatively, to avoid the calculation of the eigenvalues, another cornerness function can be defined: $R=\lambda_1\lambda_2-k(\lambda_1+\lambda_2)^2=\det(M)-k\text{trace}^2(M)$, where $k\in(0.04,0.15)$.
 \end{enumerate}
 
 \begin{itemize}
@@ -1409,12 +1426,12 @@ x'&=x\cos\theta-y\sin\theta+a\\y'&=x\sin\theta+y\cos\theta+b
 \item \textbf{Affine Warping:} The second moment matrix $M$ can be used to identify the two directions of fastest and slowest change of intensity, which can be used to define an elliptic patch, that is then normalized to a circular patch.
 \mypic{AffineWarping}
 \end{itemize}
-\end{enumerate}
 \item \textbf{Disadvantages:}
 \begin{itemize}
 \item If warping not accurate the matching score decreases significantly.
 \item Computationally expensive.
 \end{itemize}
+\end{enumerate}
 \item HOG descriptor (Histogram of Oriented Gradients)
 \begin{enumerate}
 \item Multiply the patch by a Gaussian kernel.
@@ -1945,7 +1962,6 @@ E = reshape(Ev,3,3)';
 %First version according to lecture slides:
 p1_T = p1.';
 p2_T = p2.';
-
 Q = [p1_T(:,1).*p2_T(:,1),...
     p1_T(:,2).*p2_T(:,1),...
     p1_T(:,3).*p2_T(:,1),...
@@ -1958,7 +1974,6 @@ Q = [p1_T(:,1).*p2_T(:,1),...
     
 [~,~,V] = svd(Q);
 Eh = V(:,end);
-
 E = reshape(Eh,3,3)';
 
 [U,S,V] = svd(E);
@@ -2950,6 +2965,8 @@ outim = imfilter(im,h);
 imshow(outim);
 \end{TPMatlab}
 
+\newpage
+
 \section*{Understanding Checks}
 
 \NewDocumentEnvironment{QandA}{mo}
@@ -3240,7 +3257,12 @@ imshow(outim);
 \item Patch descriptors: For rotation and scale invariance: \textbf{Rescale and de-rotate} (normalisation by dominant direction of gradient) (\textbf{warping} necessary)
 \item Better solution: \textbf{HoGs} (Histograms of Oriented Gradients).
 \item For matching use comparison function and find lowest difference.
-\end{QandA}  
+\end{QandA} 
+
+\begin{QandA}{Harris Laplacian}[\Definition]
+\item Use \textbf{second moment matrix} to extract \textbf{elliptical patch} at the \textbf{scale} calculated with the \textbf{LoG} filter.
+\item \textbf{Normalize} the elliptic patch, which is \textbf{automatically de-rotated} by the Harris directions, to a \textbf{circle} using an \textbf{affine transformation}.
+\end{QandA} 
 
 \begin{QandA}
 {Keypoint Detection SIFT vs. Harris}[\Comparison]
@@ -3272,14 +3294,14 @@ imshow(outim);
 \end{QandA}   
 
 \begin{QandA}
-{Robustness of SIFT}
+{Robustness of SIFT}[\Application]
 \item Scale change of 2: No problem, just shifts feature to the next octave of the pyramid.
 \item Viewpoint change of 50 degrees: Can handle yes, example mars rover.
 \end{QandA} 
 
 \begin{QandA}
 {Illustrate the 1st to 2nd closest ratio of SIFT detection: what’s the intuitive
-reasoning behind it? Where does the 0.8 factor come from?}
+reasoning behind it? Where does the 0.8 factor come from?}[\Derivation]
 \item Intuition: The closest match for a candidate blob with the database \textbf{should be significantly closer than the next best guess}, because if not there is no certainty about the matching - a small stochastic change could tip the balance. So if we found a mismatch there are potentially many other mismatches around. The threshold of 0.8 includes many matches while discarding a large proportion of the mismatches. Optimized over a large data set.
 \end{QandA}
 
@@ -3699,12 +3721,12 @@ where
 {Alternative tracking procedures using point features}[\Application]
 \item Detecting features.
 \item Matching features.
-\item Geometric verification (RANSAC).
+\item Geometric verification (RANSAC) to reject wrongly tracked features.
 \end{QandA}
 
 \subsection*{Recognition}
 
-\begin{QandA}{Inverted File Index}[Definition]
+\begin{QandA}{Inverted File Index}[\Definition]
 \item Locations to content is an index. \textbf{Content to locations} is an inverted index. 
 \end{QandA}
 
@@ -3747,52 +3769,51 @@ where
 \end{QandA}
 
 \begin{QandA}
-{Working principle of a MEMS IMU}
-\item Accelerometer: Mass attached to two springs, acceleration-induced movement leads to a change of the electric signal generated by a capacity divider.
-\item Gyroscope: Measures the Coriolis force acting on the structure. Similar to \textbf{haltere of flies.}
+{Working principle of a MEMS IMU}[\Application]
+\item Accelerometer: \textbf{Mass} attached to two \textbf{springs}, acceleration-induced movement leads to a change of the electric signal generated by a \textbf{capacity divider}.
+\item Gyroscope: Measures the \textbf{Coriolis force} acting on the structure. Similar to \textbf{haltere of flies.}
 \end{QandA}
 
-\begin{QandA}{Why not just an IMU?}
-\item Because IMUs have the tendency to drift.
+\begin{QandA}{Why not just an IMU?}[\Application]
+\item Because IMUs have the tendency to \textbf{drift}.
 \item Integration of the angular velocities thus error increases with $t$.
 \item Double integration of the acceleration thus error increases with $t^2$.
 \end{QandA}
 
 \begin{QandA}
-{Drift of Industrial IMU}
-\item Thousands of Kilometers per hour for cheap IMU. Much better for extremely expensive ones, but not perfect.
+{Drift of Industrial IMU}[\Application]
+\item Thousands of kilometers per hour for cheap IMU. Much better for extremely expensive ones, but not perfect.
 \end{QandA}
 
 \begin{QandA}
-{What causes bias in IMU}
-\item Temperature changes, mechanical pressure, new startup.
+{What causes bias in IMU}[\Application]
+\item Sensitive to \textbf{temperature changes}, mechanical \textbf{pressure}. Also \textbf{reboot} can change bias.
 \end{QandA}
 
 \begin{QandA}
-{Definition IMU measurement model}
+{IMU measurement model}[\Definition]
 \item The rotational velocity results from a biased and noisy measurement of the gyroscope.
 \item The acceleration in world coordinates results from the de-rotated difference of the measured acceleration and the gravitational acceleration, combined with bias and noise.
 \end{QandA}
 
 \begin{QandA}
-{How to model the bias?}
+{Bias Modelling}[\Application]
 \item The derivative of the bias is white gaussian noise (random walk).
-\item \textcolor{red}{?}
 \end{QandA}
 
 \begin{QandA}
-{How to integrate acceleration?}
+{Acceleration Integration}[\Application]
 \item Simply integrate, do not forget initial conditions and gravity.
 \end{QandA}
 
 \begin{QandA}
-{Definition of loosely coupled and tightly coupled visual inertial fusion?}
-\item The loosely coupled approach treats IMU and VO as separate black boxes and fuses the resulting position, orientation (and velocity for IMU) estimations.
-\item In contrary the closely coupled approach allows for correlations between the internal states of the different measurement devices. Thus it is more accurate but requires more implementation effort.
+{Loosely coupled and tightly coupled visual inertial fusion}[\Definition]
+\item The loosely coupled approach treats IMU and VO as \textbf{separate black boxes} and fuses the resulting position, orientation (and velocity for IMU) estimations.
+\item In contrary the closely coupled approach allows for \textbf{correlations between the internal states} of the different measurement devices. Thus it is more accurate but requires more implementation effort.
 \end{QandA}
 
 \begin{QandA}
-{How can we use non-linear optimization-based approaches to solve for visual inertial fusion?}
+{Solution for visual inertial fusion through non-linear optimization-based approaches}[\Application]
 \item Use closed form solution to initialize filters and smoothers.
 \item For sensor calibration by energy minimization techniques.
 \item Fixed-lag of full smoothing, optimization of states by minimizing the IMU residuals and the reprojection residuals.
@@ -3801,17 +3822,18 @@ where
 \subsection*{Event based Vision}
 
 \begin{QandA}
-{Working principle: DVS}
+{Dynamic Vision Sensor (DVS)}[\Definition]
 \item Inspired by the human vision.
-\item Detects intensity changes in pixels asynchronously.
-\item Detection by level-crossing-sampling.
-\item Reacts to logarithmic brightness changes.
+\item Detects \textbf{intensity changes} in pixels asynchronously.
+\item Detection by \textbf{level-crossing-sampling}.
+\item Reacts to \textbf{logarithmic brightness changes}.
 
 \important{$C = |\Delta\log(I)| = |\log(I(t)+\Delta t)-\log(I(t))|$}
+\item \textbf{Asynchronous}
 \end{QandA}
 
 \begin{QandA}
-{Pros and Cons vs Standard Camera}
+{DVS vs Standard Camera}[\Comparison]
 \item[+] Low latency ($\sim\SI{1}{\micro\second}$)
 \item[+] HDR ($\SI{140}{\dB}$ instead of $\SI{60}{\dB}$)
 \item[+] High update rate ($\SI{1}{\mega\hertz}$)
@@ -3820,42 +3842,58 @@ where
 \end{QandA}
 
 \begin{QandA}
-{Are standard calibration techniques applicable?}
+{Calibration}[\Application]
 \item No, a still image of a checkerboard does not produce any events. Either the camera or the calibration image have to move. Blinking works as well.
 \end{QandA}
 
 \begin{QandA}
-{How to compute optical flow with a DVS?}
-\item Visualization using a single vertical black line in horizontal movement.
+{Computation of optical flow with a DVS}[\Application]
+\item Visualization using a \textbf{single vertical black line} in horizontal movement.
 \item Will trigger a series of events aligned vertically, travelling horizontally.
 \item The speed of the edge can be found as the the space difference of two events divided by their trigger-time difference. 
 \end{QandA}
 
 \begin{QandA}
-{Intuitive explanation of intensity reconstruction}
-\item The basic idea is to integrate the intensity changes a pixel records to recover the intensity signal.
-\item This knowledge combined with the camera motion allows the recovery of the absolute brightness.
-\item Practice the recovery of the camera motion allows building a gradient map, which is then integrated to yield a brightness map.
+{Intensity Reconstruction}[\Application]
+\item The basic idea is to \textbf{integrate the intensity changes} a pixel records to recover the intensity signal.
+\item This knowledge combined with the \textbf{camera motion} allows the recovery of the absolute brightness.
+\item In practice the recovery of the camera motion allows building a gradient map, which is then integrated to yield a brightness map.
 \end{QandA}
 
 \begin{QandA}
-{Definition: Generative Model of a DVS}
+{Generative Model of a DVS}[\Definition]
 \item Assume $I(x,y,t)=\log(I(x,y,t))$
 \item Pixel $p(x,y)$ with gradient $\nabla I(x,y)$ undergoing a motion $\vec{u}=(u,v)$ in pixels, induced by a moving 3D point $\vec{P}$
 \item An event is generated if $-\nabla I\cdot\vec{u}=C$
 \end{QandA}
 
 \begin{QandA}
-{Definition: Davis Sensor}
-\item Combines conventional image sensor with an event sensor in the same pixel array.
-\item Output images at certain framerate and events asynchronously.
+{Dynamic and Active-pixel Vision Sensor (DAVIS)}[\Definition]
+\item Combines \textbf{conventional image sensor} with an \textbf{event sensor} in the same pixel array.
+\item Output images at certain \textbf{framerate} and events \textbf{asynchronously}.
 \end{QandA}
 
 \begin{QandA}
-{Equation: Event generation model and Proof}
+{Event Generation Model}[\Derivation]
 \item Assume Brightness Constancy: Pixel value remains the same during motion.
 \item Make a first order approximation in space.
 \item Calculate the pixel difference over time.
+\end{QandA}
+
+\subsection*{Visual Odometry Project}
+
+\begin{QandA}{Triangulation of New Landmarks based on their Tracks}[\Application]
+\item Use a bearing angle threshold, which is estimated based on the distance between the two poses and the average depth of the landmark cloud.
+\end{QandA}
+
+\begin{QandA}{Keyframes}[\Definition]
+\item Keyframes are selected frames at a certain distance such that the 3D points triangulated from those frames have a sufficient depth certainty. Typically the angle threshold is set on about 0.1-0.2.
+\item Keyframes are needed for bootstrapping since we need strong landmarks for starting the visual odometry. Further they could be used for a sparse graph optimization.
+\end{QandA}
+
+\begin{QandA}{Adaptation of Monocular VO to Stereo camera}[\Application]
+\item Simplest approach: Double Monocular VO and introducing a camera-distance constraint.
+\item More involved: 3D-3D correspondences with landmark-matching.
 \end{QandA}
 
 \end{multicols*}
