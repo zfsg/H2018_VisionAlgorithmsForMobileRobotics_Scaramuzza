@@ -1,0 +1,3 @@
+[submodule "VisionAlgorithmPapers"]
+	path = VisionAlgorithmPapers
+	url = https://github.com/bpfel/VisionAlgorithmPapers

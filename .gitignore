@@ -13,4 +13,6 @@
 *.out
 *.run.xml
 *.synctex.gz
-*.toc main.pdf *.log *.toc
+*.toc 
+*.log 
+*.toc
